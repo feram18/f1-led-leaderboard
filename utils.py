@@ -2,8 +2,23 @@
 
 import os
 import logging
+import json
 from typing import Tuple
 from PIL import Image
+
+
+def read_json(filename: str) -> dict:
+    """
+    Read from JSON file and return it as a dictionary
+    :param filename: (str) JSON file
+    :return: json: (dict) JSON file as a dict
+    """
+    if os.path.isfile(filename):
+        with open(filename, 'r') as json_file:
+            logging.debug(f'Reading JSON file at {filename}')
+            return json.load(json_file)
+    else:
+        logging.error(f"Couldn't find file at {filename}")
 
 
 def load_image(filename: str, size: Tuple[int, int] = (64, 32)) -> Image:

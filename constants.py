@@ -1,6 +1,7 @@
 """Constants class"""
 
 # Directories & Files
+LAYOUT_FILE = 'config/layout/w{}h{}.json'
 CONSTRUCTOR_LOGO_PATH = 'assets/img/constructors/{}.png'
 COUNTRY_FLAG_PATH = 'assets/img/flags/{}.jpg'
 CIRCUIT_LOGO_PATH = 'assets/img/circuits/logos/{}.jpg'
