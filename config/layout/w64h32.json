@@ -1,0 +1,157 @@
+{
+    "coords": {
+        "standings": {
+            "header": {
+                "x": 0,
+                "y": 7
+            },
+            "position": {
+                "x": 1,
+                "y": 15
+            },
+            "flag": {
+                "x": 0,
+                "y": 9
+            },
+            "code": {
+                "x": 14,
+                "y": 15
+            },
+            "name": {
+                "x": 1,
+                "y": 15
+            },
+            "points": {
+                "x": 42,
+                "y": 15
+            }
+        },
+        "last-gp": {
+            "name": {
+                "x": 0,
+                "y": 32
+            },
+            "logo": {
+                "x-offset": 0,
+                "y-offset": 0
+            },
+            "podium": {
+                "1st": {
+                    "code": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "label": {
+                        "x": 30,
+                        "y": 22
+                    }
+                },
+                "2nd": {
+                    "code": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "label": {
+                        "x": 15,
+                        "y": 27
+                    }
+                },
+                "3rd": {
+                    "code": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "label": {
+                        "x": 45,
+                        "y": 29
+                    }
+                },
+                "position": {
+                    "x": 1,
+                    "y": 15
+                },
+                "code": {
+                    "x": 14,
+                    "y": 15
+                },
+                "time": {
+                    "x": 32,
+                    "y": 15
+                }
+            }
+        },
+        "schedule": {
+            "header": {
+                "x": 0,
+                "y": 6
+            },
+            "round": {
+                "x": 0,
+                "y": 14
+            },
+            "gp": {
+                "x": 0,
+                "y": 14
+            }
+        },
+        "next-gp": {
+            "name": {
+                "x": 0,
+                "y": 32
+            },
+            "logo": {
+                "x-offset": 0,
+                "y-offset": 0
+            },
+            "track": {
+                "x-offset": 0,
+                "y-offset": 0
+            },
+            "location": {
+                "x": 0,
+                "y": 32
+            },
+            "date": {
+                "x": 0,
+                "y": 26
+            },
+            "time": {
+                "x": 0,
+                "y": 32
+            }
+        },
+        "qualifying": {
+            "status": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "loading": {
+            "image": {
+                "x-offset": 0,
+                "y-offset": 0
+            },
+            "version": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "error": {
+            "image": {
+                "x": 0,
+                "y": 0
+            },
+            "message": {
+                "x": 0,
+                "y": 0
+            }
+        }
+    },
+    "fonts": {
+        "tom_thumb": "rpi-rgb-led-matrix/fonts/tom-thumb.bdf",
+        "4x6": "rpi-rgb-led-matrix/fonts/4x6.bdf",
+        "5x8": "rpi-rgb-led-matrix/fonts/5x8.bdf",
+        "6x9": "rpi-rgb-led-matrix/fonts/6x9.bdf",
+        "cherry": "assets/fonts/cherry-10-b.bdf"
+    }
+}
