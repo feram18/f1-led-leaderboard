@@ -3,6 +3,7 @@ import requests
 import constants
 from dataclasses import dataclass
 from typing import List
+from config.matrix_config import MatrixConfig
 from data.update_status import UpdateStatus
 from data.standings import ConstructorStandingsItem, DriverStandingsItem
 from data.constructor import Constructor
@@ -18,6 +19,7 @@ from data.circuit import Circuit
 @dataclass
 class Data:
     """Data class consisting of all the data to be displayed on matrix"""
+    config: MatrixConfig
     status: UpdateStatus = UpdateStatus.SUCCESS
     last_updated: float = None
     # constructors: List[Constructor] = None
