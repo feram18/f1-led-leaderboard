@@ -6,6 +6,7 @@ CONSTRUCTOR_LOGO_PATH = 'assets/img/constructors/{}.png'
 COUNTRY_FLAG_PATH = 'assets/img/flags/{}.jpg'
 CIRCUIT_LOGO_PATH = 'assets/img/circuits/logos/{}.jpg'
 TRACK_IMAGE_PATH = 'assets/img/circuits/tracks/{}.jpg'
+F1_LOGO = 'assets/img/formula-1_logo.jpg'
 
 # ERGAST F1 API
 BASE_URL = 'https://ergast.com/api/f1/current'
