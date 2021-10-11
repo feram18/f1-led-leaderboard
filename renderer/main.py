@@ -1,6 +1,7 @@
 from data.update_status import UpdateStatus
 from renderer.renderer import Renderer
 from renderer.constructor_standings import ConstructorStandings
+from renderer.driver_standings import DriverStandings
 from renderer.error import Error
 
 
@@ -24,6 +25,7 @@ class MainRenderer(Renderer):
         while self.status is UpdateStatus.SUCCESS:
             try:
                 self.render_constructor_standings()
+                self.render_driver_standings()
 
                 if self.data.should_update():
                     self.data.update()
@@ -35,6 +37,9 @@ class MainRenderer(Renderer):
 
     def render_constructor_standings(self):
         ConstructorStandings(self.matrix, self.canvas, self.data).render()
+
+    def render_driver_standings(self):
+        DriverStandings(self.matrix, self.canvas, self.data).render()
 
     def render_error(self):
         Error(self.matrix, self.canvas, self.data).render()
