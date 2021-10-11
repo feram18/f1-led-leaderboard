@@ -2,6 +2,7 @@ from data.update_status import UpdateStatus
 from renderer.renderer import Renderer
 from renderer.constructor_standings import ConstructorStandings
 from renderer.driver_standings import DriverStandings
+from renderer.next_gp import NextGP
 from renderer.error import Error
 
 
@@ -26,6 +27,7 @@ class MainRenderer(Renderer):
             try:
                 self.render_constructor_standings()
                 self.render_driver_standings()
+                self.render_next_gp()
 
                 if self.data.should_update():
                     self.data.update()
@@ -40,6 +42,9 @@ class MainRenderer(Renderer):
 
     def render_driver_standings(self):
         DriverStandings(self.matrix, self.canvas, self.data).render()
+
+    def render_next_gp(self):
+        NextGP(self.matrix, self.canvas, self.data).render()
 
     def render_error(self):
         Error(self.matrix, self.canvas, self.data).render()
