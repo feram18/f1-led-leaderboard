@@ -1,4 +1,7 @@
+import sys
 import logging
+from logging.handlers import RotatingFileHandler
+from logging import Formatter
 from rgbmatrix import RGBMatrix
 from config.matrix_config import MatrixConfig
 from data.data import Data
@@ -29,6 +32,23 @@ def main(matrix_):
 
 
 if __name__ == '__main__':
+    # Get logging level
+    if '--debug' in sys.argv:
+        LOG_LEVEL = logging.DEBUG
+        sys.argv.remove('--debug')
+    else:
+        LOG_LEVEL = logging.WARNING
+
+    # Set logger configuration
+    logger = logging.getLogger('')  # root logger
+    logger.setLevel(LOG_LEVEL)
+    handler = RotatingFileHandler(filename='f1-led-leaderboard.log',
+                                  maxBytes=5 * 1024 * 1024,  # 5MB
+                                  backupCount=4)
+    handler.setFormatter(Formatter(fmt='%(asctime)s %(levelname)s: %(message)s',
+                                   datefmt='%m/%d/%Y %I:%M:%S %p'))
+    logger.addHandler(handler)
+
     # Check matrix configuration arguments
     matrixOptions = led_matrix_options(args())
 
