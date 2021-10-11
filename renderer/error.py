@@ -6,7 +6,7 @@ from constants import ERROR_IMAGE
 from data.color import Color
 
 
-class ErrorRenderer(Renderer):
+class Error(Renderer):
     """
     Renderer for error messages
 
