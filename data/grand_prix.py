@@ -18,7 +18,7 @@ class GrandPrix:
     def __post_init__(self):
         self.name = self.name.replace('Grand Prix', 'GP')  # Abbreviate Grand Prix
         self.date, self.time = self.convert_time(self.date, self.time)  # From UTC to local timezone
-        if self.in_progress():
+        if self.in_progress(self.date, self.time):
             self.status = GrandPrixStatus.IN_PROGRESS
 
     @staticmethod
@@ -33,13 +33,13 @@ class GrandPrix:
         dt = dt.replace(tzinfo=timezone.utc).astimezone(tz=None)  # Convert to local timezone
         return dt.strftime(DATETIME_FORMAT).split(' ')  # Split date and time
 
-    def in_progress(self) -> bool:
+    @staticmethod
+    def in_progress(date: str, time: str) -> bool:
         """
         Determine (roughly) if GP is currently in progress (assuming there are no delays)
         :return: in_progress: bool
         """
         now = datetime.now()
-        start_time = datetime.strptime(f'{self.date} {self.time}', '%Y-%m-%d %H:%M')
+        start_time = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
         end_time = start_time + timedelta(hours=2)
-
         return start_time < now <= end_time
