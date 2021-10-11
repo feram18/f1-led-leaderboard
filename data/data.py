@@ -152,8 +152,7 @@ class Data:
         schedule = response['MRData']['RaceTable']['Races']
 
         remaining_gps = []
-        next_gp_id = self.next_gp.round
-        for gp in schedule[next_gp_id:]:
+        for gp in schedule[self.next_gp.round - 1:]:
             remaining_gps.append(GrandPrix(int(gp['round']),
                                            gp['raceName'],
                                            Circuit(gp['Circuit']['circuitId'],
