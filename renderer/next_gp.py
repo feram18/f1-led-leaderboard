@@ -2,6 +2,7 @@ import time
 from rgbmatrix.graphics import DrawText
 from renderer.renderer import Renderer
 from data.color import Color
+from data.gp_status import GrandPrixStatus
 from utils import load_font, align_text_center, center_image
 
 
@@ -29,6 +30,9 @@ class NextGP(Renderer):
         time (str):                                 Grand Prix's time
         time_x (int):                               Grand Prix's time x-coord
         time_y (int):                               Grand Prix's time y-coord
+        status (str):                               Grand Prix's status
+        status_x (int):                             Grand Prix's status x-coord
+        status_y (int):                             Grand Prix's status y-coord
         logo (PIL.Image):                           Grand Prix's circuit logo image
         logo_x_offset (int):                        Grand Prix's circuit logo image x-coord offset
         logo_y_offset (int):                        Grand Prix's circuit logo image y-coord offset
@@ -71,6 +75,12 @@ class NextGP(Renderer):
                                         font_width=self.font.baseline - 1)[0]
         self.time_y = self.coords['time']['y']
 
+        self.status = self.gp.status
+        self.status_x = align_text_center(self.status.value,
+                                          canvas_width=self.canvas.width,
+                                          font_width=self.font.baseline - 1)[0]
+        self.status_y = self.coords['status']['y']
+
         self.logo = self.gp.circuit.logo
         self.logo_x_offset = center_image(self.logo.size,
                                           self.canvas.width)[0]
@@ -95,7 +105,10 @@ class NextGP(Renderer):
         # Slide 2
         self.render_track()
         self.render_date()
-        self.render_time()
+        if self.status == GrandPrixStatus.UPCOMING:
+            self.render_time()
+        else:
+            self.render_status()
         time.sleep(7.5)
 
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
@@ -117,3 +130,6 @@ class NextGP(Renderer):
 
     def render_location(self):
         DrawText(self.canvas, self.font, self.location_x, self.location_y, self.text_color, self.location)
+
+    def render_status(self):
+        DrawText(self.canvas, self.font, self.status_x, self.status_y, self.text_color, self.status.value)
