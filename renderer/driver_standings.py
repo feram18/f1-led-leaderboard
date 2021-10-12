@@ -87,7 +87,7 @@ class DriverStandings(Renderer):
         time.sleep(5.0)
 
         # self.flag_y_offset = 0
-        self.position_y = self.code_y = self.points_y = self.header_y  # Reset to top
+        self.position_y = self.code_y = self.points_y = self.font.height  # Reset to top
         self.canvas.Clear()
 
     def render_row(self, i: int):

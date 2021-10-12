@@ -51,7 +51,7 @@ class Schedule(Renderer):
 
     def render_page(self, page: list):
         self.canvas.Clear()
-        self.round_y = self.gp_name_y = self.header_y  # Reset to top
+        self.round_y = self.gp_name_y = self.font.height  # Reset to top
 
         for i in range(len(page)):
             self.render_row(str(page[i].round), page[i].circuit.country)

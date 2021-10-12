@@ -75,7 +75,7 @@ class ConstructorStandings(Renderer):
             self.render_row(i)
         time.sleep(5.0)
 
-        self.name_y = self.points_y = self.header_y  # Reset to top
+        self.name_y = self.points_y = self.font.height  # Reset to top
         self.canvas.Clear()
 
     def render_row(self, i: int):
