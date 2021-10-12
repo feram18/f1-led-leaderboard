@@ -29,4 +29,4 @@ class Color(Enum):
     MCLAREN = [RGB(255, 134, 1), BLACK]
     MERCEDES = [RGB(0, 210, 190), BLACK]
     RED_BULL = [RGB(22, 25, 94), WHITE]
-    WILLIAMS = [RGB(3, 168, 235), WHITE]
+    WILLIAMS = [RGB(3, 168, 235), BLACK]
