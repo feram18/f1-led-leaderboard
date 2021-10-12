@@ -67,7 +67,7 @@ class ConstructorStandings(Renderer):
 
     def render_header(self):
         for x in range(self.canvas.width):
-            DrawLine(self.canvas, x, self.header_y - self.font.height, x, self.header_y, self.bg_color)
+            DrawLine(self.canvas, x, self.header_y - self.header_y, x, self.header_y, self.bg_color)
         DrawText(self.canvas, self.font, self.header_x, self.header_y, self.text_color, 'Constructors')
 
     def render_page(self, page: Tuple[int, int]):
