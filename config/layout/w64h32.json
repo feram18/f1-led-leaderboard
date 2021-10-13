@@ -38,46 +38,80 @@
             "podium": {
                 "1st": {
                     "code": {
-                        "x": 0,
-                        "y": 0
+                        "x": 26,
+                        "y": 15
+                    },
+                    "flag": {
+                        "x-offset": 25,
+                        "y-offset": 0
                     },
                     "label": {
                         "x": 30,
-                        "y": 22
+                        "y": 23
+                    },
+                    "limits": {
+                        "top": 17,
+                        "right": 39,
+                        "bottom": 32,
+                        "left": 24
                     }
                 },
                 "2nd": {
                     "code": {
-                        "x": 0,
-                        "y": 0
+                        "x": 11,
+                        "y": 20
+                    },
+                    "flag": {
+                        "x-offset": 10,
+                        "y-offset": 0
                     },
                     "label": {
                         "x": 15,
-                        "y": 27
+                        "y": 28
+                    },
+                    "limits": {
+                        "top": 22,
+                        "right": 24,
+                        "bottom": 32,
+                        "left": 9
                     }
                 },
                 "3rd": {
                     "code": {
-                        "x": 0,
-                        "y": 0
+                        "x": 41,
+                        "y": 22
+                    },
+                    "flag": {
+                        "x-offset": 40,
+                        "y-offset": 0
                     },
                     "label": {
                         "x": 45,
-                        "y": 29
+                        "y": 30
+                    },
+                    "limits": {
+                        "top": 24,
+                        "right": 54,
+                        "bottom": 32,
+                        "left": 39
                     }
-                },
-                "position": {
-                    "x": 1,
-                    "y": 15
-                },
-                "code": {
-                    "x": 14,
-                    "y": 15
-                },
-                "time": {
-                    "x": 32,
-                    "y": 15
                 }
+            },
+            "position": {
+                "x": 1,
+                "y": 6
+            },
+            "code": {
+                "x": 13,
+                "y": 6
+            },
+            "time": {
+                "x": 32,
+                "y": 6
+            },
+            "status": {
+                "x": 32,
+                "y": 6
             }
         },
         "schedule": {

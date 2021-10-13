@@ -96,23 +96,24 @@ class Data:
                        GrandPrixStatus.FINISHED)
 
         results = response['MRData']['RaceTable']['Races'][0]['Results']
+        driver_results = []
         for result in results:
-            results = DriverResult(Driver(result['Driver']['givenName'],
-                                          result['Driver']['familyName'],
-                                          result['Driver']['code'],
-                                          int(result['Driver']['permanentNumber']),
-                                          result['Driver']['nationality'],
-                                          Constructor(result['Constructor']['constructorId'],
-                                                      result['Constructor']['name'],
-                                                      result['Constructor']['nationality'])),
-                                   int(result['position']),
-                                   float(result['points']),
-                                   result['laps'],
-                                   FinishingStatus(result['status']).name,
-                                   result['Time']['time']
-                                   if FinishingStatus(result['status']).name == FinishingStatus.FINISHED else None,
-                                   result['FastestLap']['rank'] == "1")
-        self.last_gp = GPResult(gp, results)
+            driver_results.append(DriverResult(Driver(result['Driver']['givenName'],
+                                                      result['Driver']['familyName'],
+                                                      result['Driver']['code'],
+                                                      int(result['Driver']['permanentNumber']),
+                                                      result['Driver']['nationality'],
+                                                      Constructor(result['Constructor']['constructorId'],
+                                                                  result['Constructor']['name'],
+                                                                  result['Constructor']['nationality'])),
+                                               int(result['position']),
+                                               float(result['points']),
+                                               int(result['laps']),
+                                               FinishingStatus(result['status']),
+                                               result['Time']['time'] if
+                                               FinishingStatus(result['status']) == FinishingStatus.FINISHED else None,
+                                               result['FastestLap']['rank'] == "1"))
+        self.last_gp = GPResult(gp, driver_results)
 
     def fetch_next_gp(self):
         response = requests.get(constants.NEXT_GP_URL).json()

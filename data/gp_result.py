@@ -11,7 +11,7 @@ class DriverResult:
     driver: Driver
     position: int
     points: float
-    laps: str
+    laps: int
     status: FinishingStatus
     time: str = None
     fastest_lap: bool = False
@@ -21,4 +21,4 @@ class DriverResult:
 class GPResult:
     """Data class to represent a Grand Prix's results"""
     gp: GrandPrix
-    results: List[DriverResult]
+    driver_results: List[DriverResult]
