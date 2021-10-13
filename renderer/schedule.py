@@ -26,8 +26,8 @@ class Schedule(Renderer):
         self.header_y = self.coords['header']['y']
         self.round_x = self.coords['round']['x']
         self.round_y = self.coords['round']['y']
-        self.gp_name_x = self.coords['gp']['x']
-        self.gp_name_y = self.coords['gp']['y']
+        self.country_x = self.coords['country']['x']
+        self.country_y = self.coords['country']['y']
 
     def render(self):
         self.canvas.Clear()
@@ -50,7 +50,7 @@ class Schedule(Renderer):
 
     def render_page(self, page: list):
         self.canvas.Clear()
-        self.round_y = self.gp_name_y = self.font.height  # Reset to top
+        self.round_y = self.country_y = self.font.height  # Reset to top
 
         for i in range(len(page)):
             self.render_row(str(page[i].round), page[i].circuit.country)
@@ -62,12 +62,12 @@ class Schedule(Renderer):
         self.render_country(gp_name)
 
         self.round_y += self.offset
-        self.gp_name_y += self.offset
+        self.country_y += self.offset
 
     def render_round_number(self, round_no: str):
         # Background
-        for x in range(self.gp_name_x - 3):
-            DrawLine(self.canvas, x, self.gp_name_y - self.font.height, x, self.gp_name_y, Color.RED.value)
+        for x in range(self.country_x - 2):
+            DrawLine(self.canvas, x, self.country_y - self.font.height, x, self.country_y, Color.RED.value)
 
         # Round Number
         self.round_x = align_text_center(round_no,
@@ -77,9 +77,9 @@ class Schedule(Renderer):
 
     def render_background(self):
         self.bg_color = Color.WHITE.value
-        for x in range(self.gp_name_x - 2, self.canvas.width):
-            DrawLine(self.canvas, x, self.gp_name_y - self.font.height, x, self.gp_name_y, self.bg_color)
+        for x in range(self.country_x - 1, self.canvas.width):
+            DrawLine(self.canvas, x, self.country_y - self.font.height, x, self.country_y, self.bg_color)
 
     def render_country(self, country: str):
         self.text_color = Color.RED.value
-        DrawText(self.canvas, self.font, self.gp_name_x, self.gp_name_y, self.text_color, country)
+        DrawText(self.canvas, self.font, self.country_x, self.country_y, self.text_color, country)

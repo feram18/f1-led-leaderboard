@@ -115,7 +115,7 @@ class DriverStandings(Renderer):
 
     def render_position(self, position: str):
         # Background
-        for x in range(self.code_x - 3):
+        for x in range(self.code_x - 2):
             DrawLine(self.canvas, x, self.code_y - self.font.height, x, self.code_y, Color.WHITE.value)
 
         # Number
