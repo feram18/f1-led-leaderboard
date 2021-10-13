@@ -96,10 +96,10 @@ class DriverStandings(Renderer):
 
         self.render_background()
         # self.render_flag(self.standings[i].driver.flag)
-        self.render_position(self.standings[i].position)
+        self.render_position(str(self.standings[i].position))
         self.render_code(self.standings[i].driver.code)
         # self.render_lastname(self.standings[i].driver.lastname)
-        self.render_points(self.standings[i].points)
+        self.render_points(str(self.standings[i].points))
 
         # self.flag_y_offset += self.offset
         self.position_y += self.offset

@@ -1,9 +1,8 @@
 import time
-from typing import List
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from data.color import Color
-from utils import load_font, align_text_center
+from utils import load_font, align_text_center, split_into_pages
 
 
 class Schedule(Renderer):
@@ -38,7 +37,7 @@ class Schedule(Renderer):
             self.render_row(str(gp.round), gp.circuit.country)
         time.sleep(7.0)
 
-        pages = self.split_pages(self.schedule[3:], 4)  # From index 4 - end
+        pages = split_into_pages(self.schedule[3:], 4)  # From index 4 - end
         for page in pages:
             self.render_page(page)
 
@@ -84,7 +83,3 @@ class Schedule(Renderer):
     def render_country(self, country: str):
         self.text_color = Color.RED.value
         DrawText(self.canvas, self.font, self.gp_name_x, self.gp_name_y, self.text_color, country)
-
-    @staticmethod
-    def split_pages(lst: list, size: int) -> List[list]:
-        return [lst[i:i + size] for i in range(0, len(lst), size)]
