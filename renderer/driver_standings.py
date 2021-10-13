@@ -99,7 +99,7 @@ class DriverStandings(Renderer):
         self.render_position(str(self.standings[i].position))
         self.render_code(self.standings[i].driver.code)
         # self.render_lastname(self.standings[i].driver.lastname)
-        self.render_points(str(self.standings[i].points))
+        self.render_points(f'{self.standings[i].points:g}')
 
         # self.flag_y_offset += self.offset
         self.position_y += self.offset
@@ -107,7 +107,7 @@ class DriverStandings(Renderer):
         self.points_y += self.offset
 
     def render_background(self):
-        for x in range(self.code_x - 2, self.canvas.width):
+        for x in range(self.code_x - 1, self.canvas.width):
             DrawLine(self.canvas, x, self.code_y - self.font.height, x, self.code_y, self.bg_color)
 
     def render_flag(self, flag: Image):

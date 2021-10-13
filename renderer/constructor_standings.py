@@ -84,7 +84,7 @@ class ConstructorStandings(Renderer):
 
         self.render_background()
         self.render_name(self.standings[i].constructor.name)
-        self.render_points(str(self.standings[i].points))
+        self.render_points(f'{self.standings[i].points:g}')
 
         self.name_y += self.offset
         self.points_y += self.offset
