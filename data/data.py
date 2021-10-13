@@ -57,8 +57,8 @@ class Data:
                 ConstructorStandingsItem(Constructor(constructor['Constructor']['constructorId'],
                                                      constructor['Constructor']['name'],
                                                      constructor['Constructor']['nationality']),
-                                         constructor['position'],
-                                         constructor['points']))
+                                         int(constructor['position']),
+                                         float(constructor['points'])))
 
     def fetch_driver_standings(self):
         if self.driver_standings is not None:
@@ -73,13 +73,13 @@ class Data:
                 DriverStandingsItem(Driver(driver['Driver']['givenName'],
                                            driver['Driver']['familyName'],
                                            driver['Driver']['code'],
-                                           driver['Driver']['permanentNumber'],
+                                           int(driver['Driver']['permanentNumber']),
                                            driver['Driver']['nationality'],
                                            Constructor(driver['Constructors'][0]['constructorId'],
                                                        driver['Constructors'][0]['name'],
                                                        driver['Constructors'][0]['nationality'])),
-                                    driver['position'],
-                                    driver['points']))
+                                    int(driver['position']),
+                                    float(driver['points'])))
 
     def fetch_last_gp(self):
         response = requests.get(constants.LAST_GP_RESULTS_URL).json()
@@ -100,13 +100,13 @@ class Data:
             results = DriverResult(Driver(result['Driver']['givenName'],
                                           result['Driver']['familyName'],
                                           result['Driver']['code'],
-                                          result['Driver']['permanentNumber'],
+                                          int(result['Driver']['permanentNumber']),
                                           result['Driver']['nationality'],
                                           Constructor(result['Constructor']['constructorId'],
                                                       result['Constructor']['name'],
                                                       result['Constructor']['nationality'])),
-                                   result['position'],
-                                   result['points'],
+                                   int(result['position']),
+                                   float(result['points']),
                                    result['laps'],
                                    FinishingStatus(result['status']).name,
                                    result['Time']['time']
@@ -135,11 +135,11 @@ class Data:
             grid = [] * 20  # Qualifying results
 
             for result in results:
-                grid.append(QualifyingResultItem(result['position'],
+                grid.append(QualifyingResultItem(int(result['position']),
                                                  Driver(result['Driver']['givenName'],
                                                         result['Driver']['familyName'],
                                                         result['Driver']['code'],
-                                                        result['Driver']['permanentNumber'],
+                                                        int(result['Driver']['permanentNumber']),
                                                         result['Driver']['nationality'],
                                                         Constructor(result['Constructor']['constructorId'],
                                                                     result['Constructor']['name'],

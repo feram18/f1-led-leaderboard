@@ -6,7 +6,7 @@ from data.driver import Driver
 
 @dataclass
 class QualifyingResultItem:
-    position: str
+    position: int
     driver: Driver
     Q1: str = None
     Q2: str = None

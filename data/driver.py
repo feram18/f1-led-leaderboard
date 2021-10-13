@@ -11,7 +11,7 @@ class Driver:
     firstname: str
     lastname: str
     code: str
-    number: str
+    number: int
     nationality: str
     constructor: Constructor
     flag: Image = None

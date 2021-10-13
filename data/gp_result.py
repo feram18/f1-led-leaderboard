@@ -9,8 +9,8 @@ from data.finishing_status import FinishingStatus
 class DriverResult:
     """Data class to represent a Grand Prix's driver's result"""
     driver: Driver
-    position: str
-    points: str
+    position: int
+    points: float
     laps: str
     status: FinishingStatus
     time: str = None
