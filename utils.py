@@ -4,7 +4,7 @@ import os
 import logging
 import json
 import argparse
-from typing import Tuple, Optional
+from typing import Tuple, Optional, List
 from PIL import Image
 from rgbmatrix.graphics import Font
 from rgbmatrix import RGBMatrixOptions
@@ -98,6 +98,16 @@ def align_text_right(string: str, canvas_width: int, font_width: int) -> int:
     :return: x_coord: (int) x-coordinate
     """
     return canvas_width - (len(string)*font_width)
+
+
+def split_into_pages(lst: list, size: int) -> List[list]:
+    """
+    Split list into lists with of equal sizes, defined by size argument.
+    :param lst: (list) List to split
+    :param size: (int) chunk size
+    :return: pages: List(list) Resulting lists
+    """
+    return [lst[i:i + size] for i in range(0, len(lst), size)]
 
 
 def args() -> argparse.Namespace:
