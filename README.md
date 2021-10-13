@@ -61,7 +61,7 @@ GPIO pins.
 
 [comment]: <> (  </p>)
 
-[comment]: <> (- **Schedule**)
+- **Schedule**
 
 [comment]: <> (  <p align="center">)
 
