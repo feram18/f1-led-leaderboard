@@ -48,7 +48,7 @@ class DriverStandings(Renderer):
                                           canvas_width=self.canvas.width,
                                           font_width=self.font.baseline - 1)[0]
         self.position_y = self.coords['position']['y']
-        self.flag_y_offset = self.coords['flag']['y']
+        self.flag_y_offset = self.coords['flag']['y-offset']
         self.code_x = self.coords['code']['x']
         self.code_y = self.coords['code']['y']
         self.points_y = self.coords['points']['y']
@@ -106,7 +106,7 @@ class DriverStandings(Renderer):
             DrawLine(self.canvas, x, self.code_y - self.font.height, x, self.code_y, self.bg_color)
 
     def render_flag(self, flag: Image):
-        x_offset = self.coords['flag']['x']
+        x_offset = self.coords['flag']['x-offset']
         self.canvas.SetImage(flag, x_offset, self.flag_y_offset)
 
     def render_position(self, position: str):
