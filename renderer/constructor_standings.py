@@ -20,6 +20,7 @@ class ConstructorStandings(Renderer):
         font (rgbmatrix.graphics.Font):                 Font instance
         offset (int):                                   Row y-coord offset
         coords (dict):                                  Coordinates dictionary
+        header_x (int):                                 Table header's x-coord
         name_x (int):                                   Constructor's name x-coord
         name_y (int):                                   Constructor's name y-coord
         points_x (int):                                 Constructor's points x-coord

@@ -21,6 +21,7 @@ class DriverStandings(Renderer):
         font (rgbmatrix.graphics.Font):             Font instance
         offset (int):                               Row y-coord offset
         coords (dict):                              Coordinates dictionary
+        header_x (int):                             Table header's x-coord
         position_y (int):                           Driver's position y-coord
         flag_y_offset (int):                        Driver's flag y-coord offset
         code_x (int):                               Driver's code x-coord
