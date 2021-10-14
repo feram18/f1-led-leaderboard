@@ -36,7 +36,6 @@ script:
 branches:
   only:
     - master
-    - dev
 
 notifications:
   email:
