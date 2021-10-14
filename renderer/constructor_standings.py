@@ -41,6 +41,9 @@ class ConstructorStandings(Renderer):
 
         self.coords = self.data.config.layout['coords']['standings']
 
+        self.header_x = x = align_text_center('Constructors',
+                                              canvas_width=self.canvas.width,
+                                              font_width=self.font.baseline - 1)[0]
         self.name_x = self.coords['name']['x']
         self.name_y = self.coords['name']['y']
         self.points_x = self.coords['points']['x']
@@ -61,14 +64,11 @@ class ConstructorStandings(Renderer):
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_header(self):
-        x = align_text_center('Constructors',
-                              canvas_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)[0]
         y = self.coords['header']['y']
 
         for x in range(self.canvas.width):
             DrawLine(self.canvas, x, y - y, x, y, self.bg_color)
-        DrawText(self.canvas, self.font, x, y, self.text_color, 'Constructors')
+        DrawText(self.canvas, self.font, self.header_x, y, self.text_color, 'Constructors')
 
     def render_page(self, page: Tuple[int, int]):
         for i in range(page[0], page[1]):

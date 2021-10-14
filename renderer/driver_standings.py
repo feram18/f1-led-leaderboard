@@ -43,6 +43,9 @@ class DriverStandings(Renderer):
 
         self.coords = self.data.config.layout['coords']['standings']
 
+        self.header_x = align_text_center('Drivers',
+                                          canvas_width=self.canvas.width,
+                                          font_width=self.font.baseline - 1)[0]
         self.position_y = self.coords['position']['y']
         self.flag_y_offset = self.coords['flag']['y']
         self.code_x = self.coords['code']['x']
@@ -66,14 +69,11 @@ class DriverStandings(Renderer):
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_header(self):
-        x = align_text_center('Drivers',
-                              canvas_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)[0]
         y = self.coords['header']['y']
 
         for x in range(self.canvas.width):
             DrawLine(self.canvas, x, y - y, x, y, self.bg_color)
-        DrawText(self.canvas, self.font, x, y, self.text_color, 'Drivers')
+        DrawText(self.canvas, self.font, self.header_x, y, self.text_color, 'Drivers')
 
     def render_page(self, page: Tuple[int, int]):
         for i in range(page[0], page[1]):

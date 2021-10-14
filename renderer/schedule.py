@@ -34,6 +34,9 @@ class Schedule(Renderer):
         self.offset = self.font.height + 2
 
         self.coords = self.data.config.layout['coords']['schedule']
+        self.header_x = align_text_center('Schedule',
+                                          canvas_width=self.canvas.width,
+                                          font_width=self.font.baseline - 1)[0]
         self.round_x = self.coords['round']['x']
         self.round_y = self.coords['round']['y']
         self.country_x = self.coords['country']['x']
@@ -56,14 +59,11 @@ class Schedule(Renderer):
     def render_header(self):
         bg_color = Color.GRAY.value
         text_color = Color.WHITE.value
-        x = align_text_center('Schedule',
-                              canvas_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)[0]
         y = self.coords['header']['y']
 
         for x in range(self.canvas.width):
             DrawLine(self.canvas, x, y - y, x, y, bg_color)
-        DrawText(self.canvas, self.font, x, y, text_color, 'Schedule')
+        DrawText(self.canvas, self.font, self.header_x, y, text_color, 'Schedule')
 
     def render_page(self, page: list):
         self.canvas.Clear()
