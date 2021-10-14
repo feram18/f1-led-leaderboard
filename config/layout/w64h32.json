@@ -159,9 +159,31 @@
             }
         },
         "qualifying": {
-            "status": {
+            "header": {
                 "x": 0,
-                "y": 0
+                "y": 6
+            },
+            "grid": {
+                "odd": {
+                    "position": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "code": {
+                        "x": 0,
+                        "y": 0
+                    }
+                },
+                "even": {
+                    "position": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "code": {
+                        "x": 0,
+                        "y": 0
+                    }
+                }
             }
         },
         "loading": {
