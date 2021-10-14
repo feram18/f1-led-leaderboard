@@ -1,12 +1,14 @@
 # F1 LED Leaderboard Display
 ***
 
-[![Build Status](https://app.travis-ci.com/feram18/f1-led-leaderboard.svg?branch=main)](https://app.travis-ci.com/feram18/f1-led-leaderboard)
-![GitHub](https://img.shields.io/github/license/feram18/f1-led-leaderboard)
-![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/feram18/f1-led-leaderboard)
-![GitHub Release Date](https://img.shields.io/github/release-date/feram18/f1-led-leaderboard)
+![Travis (.org)](https://img.shields.io/travis/feram18/f1-led-leaderboard?style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/feram18/f1-led-leaderboard?style=for-the-badge)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/feram18/f1-led-leaderboard?style=for-the-badge)
+![GitHub Release Date](https://img.shields.io/github/release-date/feram18/f1-led-leaderboard?style=for-the-badge)
 
-An LED Formula 1 leaderboard. Requires a Raspberry Pi, and a 64x32 LED board connected to the Raspberry Pi via the 
+[comment]: <> (![GitHub commits since latest release &#40;by date&#41; for a branch]&#40;https://img.shields.io/github/commits-since/feram18/f1-led-leaderboard/latest/dev?style=for-the-badge&#41;)
+
+An LED Formula 1 leaderboard. Requires a Raspberry Pi, and a 64×32 LED board connected to the Raspberry Pi via the 
 GPIO pins.
 
 ## Table of Contents
@@ -46,13 +48,14 @@ GPIO pins.
 
 [comment]: <> (  </p>)
 
-[comment]: <> (- **Grand Prix Results**)
+- **Grand Prix Results**
 
 [comment]: <> (  <p align="center">)
 
 [comment]: <> (    <img src="assets/img/last_gp.gif" /><br>)
 
 [comment]: <> (  </p>)
+
 - **Next Grand Prix Information**
 
 [comment]: <> (  <p align="center">)
@@ -74,7 +77,7 @@ GPIO pins.
 Materials needed:
 - [Raspberry Pi]
 - Adafruit RGB Matrix [HAT] or [Bonnet]
-- [64x32] RGB LED matrix
+- [64×32] RGB LED matrix
 
 ### Software
 **Pre-requisites**
@@ -170,7 +173,7 @@ This application is dependent on the [Ergast] API relaying accurate and updated 
 GNU General Public License v3.0
 
 [Raspberry Pi]: <https://www.raspberrypi.org/products/>
-[64x32]: <https://www.adafruit.com/product/2279>
+[64×32]: <https://www.adafruit.com/product/2279>
 [HAT]: <https://www.adafruit.com/product/2345>
 [Bonnet]: <https://www.adafruit.com/product/3211>
 [Ergast]: <http://ergast.com/mrd/>
