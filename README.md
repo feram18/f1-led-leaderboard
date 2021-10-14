@@ -156,8 +156,8 @@ If you are experiencing issues, you can activate debug mode by running the softw
 your execution command. This will enable debugging messages to be written to the `f1-led-leaderboard.log` file.
 
 ## Roadmap
-- [ ] Race Schedule
-- [ ] Grand Prix Results
+- [X] Race Schedule
+- [X] Grand Prix Results
 - [ ] Grand Prix Qualifying Results
 - [ ] Customization options
   - [ ] Preferred Constructor Summary
