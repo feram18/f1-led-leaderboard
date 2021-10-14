@@ -43,7 +43,7 @@ class LastGP(Renderer):
 
         self.logo = self.gp_result.gp.circuit.logo if not None else self.gp_result.gp.circuit.track
 
-        self.gp_name = self.gp_result.gp.gp_name
+        self.gp_name = self.gp_result.gp.name
         self.gp_name_x = align_text_center(self.gp_name,
                                            canvas_width=self.canvas.width,
                                            font_width=self.font.baseline - 1)[0]
