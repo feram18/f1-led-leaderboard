@@ -33,7 +33,7 @@
             },
             "logo": {
                 "x-offset": 0,
-                "y-offset": 6
+                "y-offset": 7
             },
             "podium": {
                 "1st": {
@@ -135,7 +135,7 @@
             },
             "logo": {
                 "x-offset": 0,
-                "y-offset": 6
+                "y-offset": 7
             },
             "track": {
                 "x-offset": 0,
@@ -192,7 +192,7 @@
                 "y-offset": 0
             },
             "version": {
-                "x": 0,
+                "x": 22,
                 "y": 32
             }
         },
