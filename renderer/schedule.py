@@ -54,8 +54,6 @@ class Schedule(Renderer):
         for page in pages:
             self.render_page(page)
 
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
-
     def render_header(self):
         bg_color = Color.GRAY.value
         text_color = Color.WHITE.value

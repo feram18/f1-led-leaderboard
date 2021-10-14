@@ -71,8 +71,6 @@ class NextGP(Renderer):
             self.render_status()
         time.sleep(7.5)
 
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
-
     def render_gp_name(self):
         y = self.coords['name']['y']
         for x in range(self.canvas.width):

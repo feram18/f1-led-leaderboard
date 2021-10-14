@@ -68,12 +68,12 @@ class LastGP(Renderer):
         self.render_podium(self.gp_result.driver_results[:3])  # Podium winners
         time.sleep(7.0)
 
+        self.canvas.Clear()
+
         # Complete results
         pages = split_into_pages(self.gp_result.driver_results, 4)  # No.1-4, 5-9, 10-13, 14-17, 18-20
         for page in pages:
             self.render_page(page)
-
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_gp_name(self):
         y = self.coords['name']['y']
@@ -118,7 +118,6 @@ class LastGP(Renderer):
         self.canvas.SetImage(winner.flag, flag_x_offset, flag_y_offset)
 
     def render_page(self, page: list):
-        self.canvas.Clear()
         for item in page:
             self.render_row(item.driver.constructor.colors,
                             str(item.position),
@@ -128,6 +127,7 @@ class LastGP(Renderer):
         time.sleep(5.0)
 
         self.position_y = self.code_y = self.time_y = self.status_y = self.font.height  # Reset to top
+        self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_row(self, colors: Color, position: str, code: str, race_time: str, status: FinishingStatus):
         self.render_background(colors[0])
