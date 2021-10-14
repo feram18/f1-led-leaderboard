@@ -2,7 +2,7 @@
     "coords": {
         "standings": {
             "header": {
-                "x": 0,
+                "x": 8,
                 "y": 7
             },
             "position": {
@@ -10,8 +10,8 @@
                 "y": 15
             },
             "flag": {
-                "x": 0,
-                "y": 9
+                "x-offset": 0,
+                "y-offset": 9
             },
             "code": {
                 "x": 13,
@@ -29,11 +29,11 @@
         "last-gp": {
             "name": {
                 "x": 0,
-                "y": 32
+                "y": 6
             },
             "logo": {
                 "x-offset": 0,
-                "y-offset": 0
+                "y-offset": 6
             },
             "podium": {
                 "1st": {
@@ -116,7 +116,7 @@
         },
         "schedule": {
             "header": {
-                "x": 0,
+                "x": 17,
                 "y": 7
             },
             "round": {
@@ -131,11 +131,11 @@
         "next-gp": {
             "name": {
                 "x": 0,
-                "y": 32
+                "y": 6
             },
             "logo": {
                 "x-offset": 0,
-                "y-offset": 0
+                "y-offset": 6
             },
             "track": {
                 "x-offset": 0,
@@ -146,11 +146,11 @@
                 "y": 32
             },
             "date": {
-                "x": 0,
+                "x": 14,
                 "y": 26
             },
             "time": {
-                "x": 0,
+                "x": 24,
                 "y": 32
             },
             "status": {
@@ -166,22 +166,22 @@
             "grid": {
                 "odd": {
                     "position": {
-                        "x": 0,
-                        "y": 0
+                        "x": 1,
+                        "y": 6
                     },
                     "code": {
-                        "x": 0,
-                        "y": 0
+                        "x": 13,
+                        "y": 6
                     }
                 },
                 "even": {
                     "position": {
-                        "x": 0,
-                        "y": 0
+                        "x": 1,
+                        "y": 6
                     },
                     "code": {
-                        "x": 0,
-                        "y": 0
+                        "x": 13,
+                        "y": 6
                     }
                 }
             }
@@ -198,12 +198,12 @@
         },
         "error": {
             "image": {
-                "x": 0,
-                "y": 0
+                "x-offset": 0,
+                "y-offset": 0
             },
             "message": {
                 "x": 0,
-                "y": 0
+                "y": 18
             }
         }
     },
@@ -211,7 +211,6 @@
         "tom_thumb": "rpi-rgb-led-matrix/fonts/tom-thumb.bdf",
         "4x6": "rpi-rgb-led-matrix/fonts/4x6.bdf",
         "5x8": "rpi-rgb-led-matrix/fonts/5x8.bdf",
-        "6x9": "rpi-rgb-led-matrix/fonts/6x9.bdf",
-        "cherry": "assets/fonts/cherry-10-b.bdf"
+        "6x9": "rpi-rgb-led-matrix/fonts/6x9.bdf"
     }
 }
