@@ -20,8 +20,6 @@ class ConstructorStandings(Renderer):
         font (rgbmatrix.graphics.Font):                 Font instance
         offset (int):                                   Row y-coord offset
         coords (dict):                                  Coordinates dictionary
-        header_x (int):                                 Table header's x-coord
-        header_y (int):                                 Table header's y-coord
         name_x (int):                                   Constructor's name x-coord
         name_y (int):                                   Constructor's name y-coord
         points_x (int):                                 Constructor's points x-coord
@@ -34,18 +32,15 @@ class ConstructorStandings(Renderer):
 
         self.standings = self.data.constructor_standings
 
-        self.bg_color = Color.GRAY.value  # Table header's bg color
-        self.text_color = Color.WHITE.value  # Table header's text color
+        self.bg_color = Color.GRAY.value
+        self.text_color = Color.WHITE.value
 
         self.font = load_font(self.data.config.layout['fonts']['tom_thumb'])
 
         self.offset = self.font.height + 2
 
         self.coords = self.data.config.layout['coords']['standings']
-        self.header_x = align_text_center('Constructors',
-                                          canvas_width=self.canvas.width,
-                                          font_width=self.font.baseline - 1)[0]
-        self.header_y = self.coords['header']['y']
+
         self.name_x = self.coords['name']['x']
         self.name_y = self.coords['name']['y']
         self.points_x = self.coords['points']['x']
@@ -66,9 +61,14 @@ class ConstructorStandings(Renderer):
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_header(self):
+        x = align_text_center('Constructors',
+                              canvas_width=self.canvas.width,
+                              font_width=self.font.baseline - 1)[0]
+        y = self.coords['header']['y']
+
         for x in range(self.canvas.width):
-            DrawLine(self.canvas, x, self.header_y - self.header_y, x, self.header_y, self.bg_color)
-        DrawText(self.canvas, self.font, self.header_x, self.header_y, self.text_color, 'Constructors')
+            DrawLine(self.canvas, x, y - y, x, y, self.bg_color)
+        DrawText(self.canvas, self.font, x, y, self.text_color, 'Constructors')
 
     def render_page(self, page: Tuple[int, int]):
         for i in range(page[0], page[1]):

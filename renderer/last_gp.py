@@ -12,27 +12,19 @@ class LastGP(Renderer):
     Render next grand prix's information
 
     Arguments:
-        data (data.Data):                           Data instance
+        data (data.Data):                       Data instance
 
     Attributes:
-        gp_result (data.GPResult):                  Last GP's results data
-        text_color (rgbmatrix.graphics.Font):       Text color
-        font (rgbmatrix.graphics.Font):             Font instance
-        coords (dict):                              Coordinates dictionary
-        name (str):                                 Grand Prix's name
-        name_x (int):                               Grand Prix's name x-coord
-        name_y (int):                               Grand Prix's name y-coord
-        logo (PIL.Image):                           Grand Prix's circuit logo
-        logo_x_offset (int):                        Grand Prix's circuit logo x-coord offset
-        logo_y_offset (int):                        Grand Prix's circuit logo y-coord offset
-        position_x (int):                           Driver's position x-coord
-        position_y (int):                           Driver's position y-coord
-        code_x (int):                               Driver's code x-coord
-        code_y (int):                               Driver's code y-coord
-        time_x (int):                               Driver's time x-coord
-        time_y (int):                               Driver's time y-coord
-        status_x (int):                             Driver's status x-coord
-        status_y (int):                             Driver's status y-coord
+        gp_result (data.GPResult):              Last GP's results data
+        font (rgbmatrix.graphics.Font):         Font instance
+        offset (int):                           Row y-coord offset
+        coords (dict):                          Coordinates dictionary
+        logo (PIL.Image):                       Grand Prix's circuit logo
+        position_y (int):                       Driver's position y-coord
+        code_x (int):                           Driver's code x-coord
+        code_y (int):                           Driver's code y-coord
+        time_y (int):                           Driver's time y-coord
+        status_y (int):                         Driver's status y-coord
     """
 
     def __init__(self, matrix, canvas, data):
@@ -41,35 +33,18 @@ class LastGP(Renderer):
 
         self.gp_result = self.data.last_gp
 
-        self.text_color = Color.WHITE.value
-
         self.font = load_font(self.data.config.layout['fonts']['tom_thumb'])
 
         self.offset = self.font.height + 2
 
         self.coords = self.data.config.layout['coords']['last-gp']
 
-        self.name = self.gp_result.gp.name
-        self.name_x = align_text_center(self.name,
-                                        canvas_width=self.canvas.width,
-                                        font_width=self.font.baseline - 1)[0]
-        self.name_y = self.coords['name']['y']
-
         self.logo = self.gp_result.gp.circuit.logo if not None else self.gp_result.gp.circuit.track
-        self.logo_x_offset = center_image(self.logo.size,
-                                          self.canvas.width)[0]
-        self.logo_y_offset = self.coords['logo']['y-offset']
 
-        self.position_x = self.coords['position']['x']
         self.position_y = self.coords['position']['y']
-
         self.code_x = self.coords['code']['x']
         self.code_y = self.coords['code']['y']
-
-        self.time_x = self.coords['time']['x']
         self.time_y = self.coords['time']['y']
-
-        self.status_x = self.coords['status']['x']
         self.status_y = self.coords['status']['y']
 
     def render(self):
@@ -95,10 +70,18 @@ class LastGP(Renderer):
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_gp_name(self):
-        DrawText(self.canvas, self.font, self.name_x, self.name_y, self.text_color, self.name)
+        gp_name = self.gp_result.gp.name
+        x = align_text_center(gp_name,
+                              canvas_width=self.canvas.width,
+                              font_width=self.font.baseline - 1)[0]
+        y = self.coords['name']['y']
+        DrawText(self.canvas, self.font, x, y, Color.WHITE.value, gp_name)
 
     def render_logo(self):
-        self.canvas.SetImage(self.logo, self.logo_x_offset, self.logo_y_offset)
+        x_offset = center_image(self.logo.size,
+                                self.canvas.width)[0]
+        y_offset = self.coords['logo']['y-offset']
+        self.canvas.SetImage(self.logo, x_offset, y_offset)
 
     def render_podium(self, winners: list):
         places = ['1st', '2nd', '3rd']
@@ -166,18 +149,18 @@ class LastGP(Renderer):
             DrawLine(self.canvas, x, self.position_y - self.font.height, x, self.position_y, Color.WHITE.value)
 
         # Number
-        self.position_x = align_text_center(position,
-                                            canvas_width=12,
-                                            font_width=self.font.baseline - 1)[0]
-        DrawText(self.canvas, self.font, self.position_x, self.position_y, Color.BLACK.value, position)
+        x = align_text_center(position,
+                              canvas_width=12,
+                              font_width=self.font.baseline - 1)[0]
+        DrawText(self.canvas, self.font, x, self.position_y, Color.BLACK.value, position)
 
     def render_code(self, text_color: Color, code: str):
         DrawText(self.canvas, self.font, self.code_x, self.code_y, text_color, code)
 
     def render_race_time(self, text_color: Color, race_time: str):
-        self.time_x = align_text_right(race_time, self.canvas.width, self.font.baseline - 1)
-        DrawText(self.canvas, self.font, self.time_x, self.time_y, text_color, race_time)
+        x = align_text_right(race_time, self.canvas.width, self.font.baseline - 1)
+        DrawText(self.canvas, self.font, x, self.time_y, text_color, race_time)
 
     def render_status(self, text_color: Color, status: str):
-        self.status_x = align_text_right(status, self.canvas.width, self.font.baseline - 1)
-        DrawText(self.canvas, self.font, self.status_x, self.status_y, text_color, status)
+        x = align_text_right(status, self.canvas.width, self.font.baseline - 1)
+        DrawText(self.canvas, self.font, x, self.status_y, text_color, status)
