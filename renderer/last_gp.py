@@ -20,6 +20,8 @@ class LastGP(Renderer):
         offset (int):                           Row y-coord offset
         coords (dict):                          Coordinates dictionary
         logo (PIL.Image):                       Grand Prix's circuit logo
+        gp_name (str):                          Grand Prix's name
+        gp_name (int):                          Grand Prix's name x-coord
         position_y (int):                       Driver's position y-coord
         code_x (int):                           Driver's code x-coord
         code_y (int):                           Driver's code y-coord
@@ -41,6 +43,10 @@ class LastGP(Renderer):
 
         self.logo = self.gp_result.gp.circuit.logo if not None else self.gp_result.gp.circuit.track
 
+        self.gp_name = self.gp_result.gp.gp_name
+        self.gp_name_x = align_text_center(self.gp_name,
+                                           canvas_width=self.canvas.width,
+                                           font_width=self.font.baseline - 1)[0]
         self.position_y = self.coords['position']['y']
         self.code_x = self.coords['code']['x']
         self.code_y = self.coords['code']['y']
@@ -70,12 +76,10 @@ class LastGP(Renderer):
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_gp_name(self):
-        gp_name = self.gp_result.gp.name
-        x = align_text_center(gp_name,
-                              canvas_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)[0]
         y = self.coords['name']['y']
-        DrawText(self.canvas, self.font, x, y, Color.WHITE.value, gp_name)
+        for x in range(self.canvas.width):
+            DrawLine(self.canvas, x, y - self.font.height, x, y, Color.RED.value)
+        DrawText(self.canvas, self.font, self.gp_name_x, y, Color.WHITE.value, self.gp_name)
 
     def render_logo(self):
         x_offset = center_image(self.logo.size,
