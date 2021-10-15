@@ -102,4 +102,4 @@ class TestUtils:
         lst = [0, 1, 2, 5, 7, 9, 13]
         n = 2
         pages = utils.split_into_pages(lst, n)
-        assert len(pages) == 7
+        assert len(pages) == 4
