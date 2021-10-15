@@ -28,7 +28,7 @@ class Circuit:
         :return: logo: (PIL.Image)
         """
         if os.path.isfile(CIRCUIT_LOGO_PATH.format(circuit_id)):
-            return load_image(CIRCUIT_LOGO_PATH.format(circuit_id), (64, 25))
+            return load_image(CIRCUIT_LOGO_PATH.format(circuit_id), (64, 24))
         else:
             # TODO: Set to country flag
             logging.error(f'No logo image found for {circuit_id}')
