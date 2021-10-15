@@ -97,3 +97,9 @@ class TestUtils:
     def test_align_text_center_4(self):
         x, y = utils.align_text_center('Lorem ipsum')
         assert (x, y) == (0, 0)
+
+    def test_split_into_pages(self):
+        lst = [0, 1, 2, 5, 7, 9, 13]
+        n = 2
+        pages = utils.split_into_pages(lst, n)
+        assert len(pages) == 7
