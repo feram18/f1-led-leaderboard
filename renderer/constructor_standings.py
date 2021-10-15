@@ -62,6 +62,8 @@ class ConstructorStandings(Renderer):
         for page in pages:
             self.render_page(page)
 
+        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+
     def render_header(self):
         y = self.coords['header']['y']
 

@@ -75,6 +75,8 @@ class LastGP(Renderer):
         for page in pages:
             self.render_page(page)
 
+        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+
     def render_gp_name(self):
         y = self.coords['name']['y']
         for x in range(self.canvas.width):

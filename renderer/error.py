@@ -35,6 +35,8 @@ class Error(Renderer):
         self.render_error_msg()
         time.sleep(15.0)
 
+        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+
     def render_error_msg(self):
         x, y = align_text_center(self.error_msg,
                                  self.canvas.width,

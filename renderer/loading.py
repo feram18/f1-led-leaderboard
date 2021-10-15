@@ -32,6 +32,8 @@ class Loading(Renderer):
         self.render_logo()
         self.render_version()
 
+        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+
     def render_version(self):
         x = align_text_center(string=__version__,
                               canvas_width=self.canvas.width,
