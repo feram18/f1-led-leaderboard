@@ -123,6 +123,7 @@ class LastGP(Renderer):
         for item in page:
             self.render_row(item.driver.constructor.colors,
                             str(item.position),
+                            item.fastest_lap,
                             item.driver.code,
                             item.time,
                             item.status)
@@ -131,9 +132,15 @@ class LastGP(Renderer):
         self.position_y = self.code_y = self.time_y = self.status_y = self.font.height  # Reset to top
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
-    def render_row(self, colors: Color, position: str, code: str, race_time: str, status: FinishingStatus):
+    def render_row(self,
+                   colors: Color,
+                   position: str,
+                   fastest_lap: bool,
+                   code: str,
+                   race_time: str,
+                   status: FinishingStatus):
         self.render_background(colors[0])
-        self.render_position(position)
+        self.render_position(position, fastest_lap)
         self.render_code(colors[1], code)
         if status == FinishingStatus.FINISHED:
             self.render_race_time(colors[1], race_time)
@@ -149,16 +156,23 @@ class LastGP(Renderer):
         for x in range(self.code_x - 1, self.canvas.width):
             DrawLine(self.canvas, x, self.code_y - self.font.height, x, self.code_y, bg_color)
 
-    def render_position(self, position: str):
+    def render_position(self, position: str, fastest_lap: bool):
+        if fastest_lap:
+            bg_color = Color.PURPLE.value
+            text_color = Color.WHITE.value
+        else:
+            bg_color = Color.WHITE.value
+            text_color = Color.BLACK.value
+
         # Background
         for x in range(self.code_x - 2):
-            DrawLine(self.canvas, x, self.position_y - self.font.height, x, self.position_y, Color.WHITE.value)
+            DrawLine(self.canvas, x, self.position_y - self.font.height, x, self.position_y, bg_color)
 
         # Number
         x = align_text_center(position,
                               canvas_width=12,
                               font_width=self.font.baseline - 1)[0]
-        DrawText(self.canvas, self.font, x, self.position_y, Color.BLACK.value, position)
+        DrawText(self.canvas, self.font, x, self.position_y, text_color, position)
 
     def render_code(self, text_color: Color, code: str):
         DrawText(self.canvas, self.font, self.code_x, self.code_y, text_color, code)
