@@ -12,7 +12,7 @@ class Color(Enum):
     YELLOW = RGB(239, 178, 30)
     GREEN = RGB(124, 252, 0)
     BLUE = RGB(0, 45, 114)
-    PURPLE = RGB(51, 0, 111)
+    PURPLE = RGB(170, 40, 203)
     PINK = RGB(255, 143, 255)
     BROWN = RGB(65, 29, 0)
     GRAY = RGB(112, 128, 144)
