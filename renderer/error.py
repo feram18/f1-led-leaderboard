@@ -11,7 +11,7 @@ class Error(Renderer):
     Renderer for error messages
 
     Arguments:
-        data (data.Data):                       Data instance
+        data (api.Data):                        Data instance
 
     Attributes:
         font (rgbmatrix.graphics.Font):         Font instance

@@ -12,7 +12,7 @@ class DriverStandings(Renderer):
     Render driver standings
 
     Arguments:
-        data (data.Data):                           Data instance
+        data (api.Data):                            Data instance
 
     Attributes:
         standings (List[DriverStandingsItem]):      Driver standings list

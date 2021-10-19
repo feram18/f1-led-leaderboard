@@ -11,7 +11,7 @@ class ConstructorStandings(Renderer):
     Render constructor standings
 
     Arguments:
-        data (data.Data):                               Data instance
+        data (api.Data):                                Data instance
 
     Attributes:
         standings (List[ConstructorStandingsItem]):     Constructor standings list

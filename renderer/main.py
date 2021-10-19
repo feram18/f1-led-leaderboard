@@ -15,7 +15,7 @@ class MainRenderer(Renderer):
     (Constructor & Driver Standings, Schedule, Last & Next GP, & Qualifying)
 
     Arguments:
-        data (data.Data):               Data instance
+        data (api.Data):                Data instance
 
     Attributes:
         status (data.UpdateStatus):     Update status

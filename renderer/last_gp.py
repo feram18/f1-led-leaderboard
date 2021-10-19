@@ -12,7 +12,7 @@ class LastGP(Renderer):
     Render next grand prix's information
 
     Arguments:
-        data (data.Data):                       Data instance
+        data (api.Data):                        Data instance
 
     Attributes:
         gp_result (data.GPResult):              Last GP's results data

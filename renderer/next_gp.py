@@ -11,7 +11,7 @@ class NextGP(Renderer):
     Render next grand prix's information
 
     Arguments:
-        data (data.Data):                           Data instance
+        data (api.Data):                            Data instance
 
     Attributes:
         gp (data.GrandPrix):                        Next GP's data

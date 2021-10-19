@@ -4,7 +4,7 @@ from logging.handlers import RotatingFileHandler
 from logging import Formatter
 from rgbmatrix import RGBMatrix
 from config.matrix_config import MatrixConfig
-from data.data import Data
+from api.data import Data
 from renderer.loading import Loading
 from renderer.main import MainRenderer
 from version import __version__

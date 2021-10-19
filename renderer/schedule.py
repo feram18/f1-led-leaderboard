@@ -10,7 +10,7 @@ class Schedule(Renderer):
     Render schedule of remaining grand prix in the current season
 
     Arguments:
-        data (data.Data):                       Data instance
+        data (api.Data):                        Data instance
 
     Attributes:
         schedule ():                            GP schedule
