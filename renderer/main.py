@@ -5,7 +5,7 @@ from renderer.driver_standings import DriverStandings
 from renderer.last_gp import LastGP
 from renderer.schedule import Schedule
 from renderer.next_gp import NextGP
-# from renderer.qualifying import Qualifying
+from renderer.qualifying import Qualifying
 from renderer.error import Error
 
 
@@ -34,7 +34,7 @@ class MainRenderer(Renderer):
                 self.render_last_gp()
                 self.render_schedule()
                 self.render_next_gp()
-                # self.render_qualifying()
+                self.render_qualifying()
 
                 if self.data.should_update():
                     self.data.update()
@@ -59,8 +59,8 @@ class MainRenderer(Renderer):
     def render_next_gp(self):
         NextGP(self.matrix, self.canvas, self.data).render()
 
-    # def render_qualifying(self):
-    #     Qualifying(self.matrix, self.canvas, self.data).render()
+    def render_qualifying(self):
+        Qualifying(self.matrix, self.canvas, self.data).render()
 
     def render_error(self):
         Error(self.matrix, self.canvas, self.data).render()

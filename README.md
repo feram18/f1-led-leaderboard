@@ -42,7 +42,7 @@ GPIO pins.
 
 [comment]: <> (  </p>)
 
-[comment]: <> (- **Grand Prix Qualifying Results**)
+- **Grand Prix Qualifying Results**
 
 [comment]: <> (  <p align="center">)
 
@@ -147,7 +147,7 @@ More details on these flags/arguments can be found in the library's documentatio
 From the `f1-led-leaderboard` directory run the command
 
 ```sh
-sudo python3 main.py --led-gpio-mapping="adafruit-hat" --led-slowdown-gpio=2 --led-cols=64
+sudo python3 main.py --led-gpio-mapping="adafruit-hat" --led-slowdown-gpio=2 --led-cols=64 --led-brightness=60
 ```
 You can modify and include [flags](#Flags) as necessary. Running as root is necessary in order for the matrix to render.
 
