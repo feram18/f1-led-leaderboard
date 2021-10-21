@@ -4,7 +4,7 @@ from renderer.renderer import Renderer
 from data.color import Color
 from data.driver import Driver
 from data.finishing_status import FinishingStatus
-from utils import load_font, align_text_center, align_text_right, center_image, split_into_pages
+from utils import load_font, align_text_center, align_text_right, center_image, split_into_pages, load_image
 
 
 class LastGP(Renderer):
@@ -42,6 +42,7 @@ class LastGP(Renderer):
         self.coords = self.data.config.layout['coords']['last-gp']
 
         self.logo = self.gp_result.gp.circuit.logo if not None else self.gp_result.gp.circuit.track
+        self.logo = load_image(self.logo, (64, 24))
 
         self.gp_name = self.gp_result.gp.name
         self.gp_name_x = align_text_center(self.gp_name,

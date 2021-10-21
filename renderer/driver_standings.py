@@ -1,10 +1,9 @@
 import time
 from typing import List, Tuple
-from PIL import Image
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from data.color import Color
-from utils import load_font, align_text_center, align_text_right
+from utils import load_font, align_text_center, align_text_right, load_image
 
 
 class DriverStandings(Renderer):
@@ -105,7 +104,8 @@ class DriverStandings(Renderer):
         for x in range(self.code_x - 1, self.canvas.width):
             DrawLine(self.canvas, x, self.code_y - self.font.height, x, self.code_y, self.bg_color)
 
-    def render_flag(self, flag: Image):
+    def render_flag(self, flag_path: str):
+        flag = load_image(flag_path, (12, 6))
         x_offset = self.coords['flag']['x-offset']
         self.canvas.SetImage(flag, x_offset, self.flag_y_offset)
 

@@ -3,7 +3,7 @@ from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from data.color import Color
 from data.gp_status import GrandPrixStatus
-from utils import load_font, align_text_center, center_image
+from utils import load_font, align_text_center, center_image, load_image
 
 
 class NextGP(Renderer):
@@ -48,8 +48,8 @@ class NextGP(Renderer):
         self.date = self.gp.date
         self.time = self.gp.time
         self.status = self.gp.status
-        self.logo = self.gp.circuit.logo
-        self.track = self.gp.circuit.track
+        self.logo = load_image(self.gp.circuit.logo, (64, 24))
+        self.track = load_image(self.gp.circuit.track, (64, 20))
 
     def render(self):
         self.canvas.Clear()

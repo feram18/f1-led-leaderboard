@@ -1,12 +1,11 @@
-import PIL
 import logging
 from data.circuit import Circuit
 
 
 class TestCircuit:
     def test_get_logo(self):
-        image = Circuit.get_logo('americas')
-        assert isinstance(image, PIL.Image.Image)
+        image_path = Circuit.get_logo('americas')
+        assert isinstance(image_path, str)
 
     def test_get_logo_2(self, caplog):
         caplog.clear()
@@ -15,8 +14,8 @@ class TestCircuit:
         assert 'No logo image found for invalid' in caplog.text
 
     def test_get_track(self):
-        image = Circuit.get_track('americas')
-        assert isinstance(image, PIL.Image.Image)
+        image_path = Circuit.get_track('americas')
+        assert isinstance(image_path, str)
 
     def test_get_track_2(self, caplog):
         caplog.clear()

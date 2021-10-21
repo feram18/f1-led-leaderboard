@@ -1,8 +1,8 @@
+import os
+import logging
 from dataclasses import dataclass
-from PIL import Image
 from data.color import Color
 from constants import CONSTRUCTOR_LOGO_PATH
-from utils import load_image
 
 
 @dataclass
@@ -11,11 +11,17 @@ class Constructor:
     id: str
     name: str
     nationality: str
-    logo: Image = None
+    logo: str = None
     colors: Color = None
 
-    # TODO: Keep reference to image instead of loading it
     def __post_init__(self):
         self.name = self.name.replace('F1 Team', '')  # Shorten unnecessary portion
-        self.logo = load_image(CONSTRUCTOR_LOGO_PATH.format(self.id), (6, 4))
+
         self.colors = Color[self.id.upper()].value
+
+    @staticmethod
+    def get_logo(constructor_id) -> str:
+        if os.path.isfile(CONSTRUCTOR_LOGO_PATH.format(constructor_id)):
+            return CONSTRUCTOR_LOGO_PATH.format(constructor_id)
+        else:
+            logging.error(f'No logo image found for {constructor_id}')
