@@ -119,7 +119,8 @@ class LastGP(Renderer):
         DrawText(self.canvas, self.font, winner_x, winner_y, winner.constructor.colors[1], winner.code)
 
         # Winner's flag
-        self.canvas.SetImage(winner.flag, flag_x_offset, flag_y_offset)
+        flag = load_image(winner.flag, (12, 6))
+        self.canvas.SetImage(flag, flag_x_offset, flag_y_offset)
 
     def render_page(self, page: list):
         for item in page:
