@@ -73,12 +73,14 @@ class NextGP(Renderer):
 
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
+    # TODO: Name text can be too long to fit on canvas
     def render_gp_name(self):
         y = self.coords['name']['y']
         for x in range(self.canvas.width):
             DrawLine(self.canvas, x, y - self.font.height, x, y, Color.RED.value)
         DrawText(self.canvas, self.font, self.gp_name_x, y, self.text_color, self.gp_name)
 
+    # TODO: Change y-offset so it's centered taking title into account
     def render_logo(self):
         x_offset = center_image(self.logo.size,
                                 self.canvas.width)[0]

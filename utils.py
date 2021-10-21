@@ -39,6 +39,7 @@ def load_font(filename: str) -> Font:
     return font
 
 
+# TODO: Fix for usage of PNG images
 def load_image(filename: str, size: Tuple[int, int] = (64, 32)) -> Image:
     """
     Return Image object from given file.

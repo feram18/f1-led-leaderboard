@@ -77,6 +77,7 @@ class LastGP(Renderer):
 
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
+    # TODO: Name text can be too long to fit on canvas
     def render_gp_name(self):
         y = self.coords['name']['y']
         for x in range(self.canvas.width):
@@ -177,10 +178,12 @@ class LastGP(Renderer):
     def render_code(self, text_color: Color, code: str):
         DrawText(self.canvas, self.font, self.code_x, self.code_y, text_color, code)
 
+    # TODO: Time text for rance winner is too long
     def render_race_time(self, text_color: Color, race_time: str):
         x = align_text_right(race_time, self.canvas.width, self.font.baseline - 1)
         DrawText(self.canvas, self.font, x, self.time_y, text_color, race_time)
 
+    # TODO: DNF-type status too long
     def render_status(self, text_color: Color, status: str):
         x = align_text_right(status, self.canvas.width, self.font.baseline - 1)
         DrawText(self.canvas, self.font, x, self.status_y, text_color, status)

@@ -20,6 +20,7 @@ class Circuit:
         self.logo = self.get_logo(self.id)
         self.track = self.get_track(self.id)
 
+    # TODO: Keep reference to image instead of loading it
     @staticmethod
     def get_logo(circuit_id: str) -> Image:
         """
@@ -33,6 +34,7 @@ class Circuit:
             # TODO: Set to country flag
             logging.error(f'No logo image found for {circuit_id}')
 
+    # TODO: Keep reference to image instead of loading it
     @staticmethod
     def get_track(circuit_id: str) -> Image:
         """
