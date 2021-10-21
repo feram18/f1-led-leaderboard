@@ -1,7 +1,7 @@
 import time
 from rgbmatrix.graphics import DrawText
 from renderer.renderer import Renderer
-from utils import align_text_center, load_font, load_image
+from utils import align_text_center, load_image
 from constants import ERROR_IMAGE
 from data.color import Color
 
@@ -11,21 +11,18 @@ class Error(Renderer):
     Renderer for error messages
 
     Arguments:
-        data (api.Data):                        Data instance
+        data (api.Data):        Data instance
 
     Attributes:
-        font (rgbmatrix.graphics.Font):         Font instance
-        coords (dict):                          Coordinates dictionary
-        error_msg (str)                         Error message string
+        coords (dict):          Coordinates dictionary
+        error_msg (str):        Error message string
     """
 
     def __init__(self, matrix, canvas, config, data):
         super().__init__(matrix, canvas, config)
         self.data = data
 
-        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
-
-        self.coords = self.config.layout['coords']['error']
+        self.coords = self.config.layout.coords['error']
 
         self.error_msg = self.data.status
 

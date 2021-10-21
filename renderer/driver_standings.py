@@ -3,7 +3,7 @@ from typing import List, Tuple
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from data.color import Color
-from utils import load_font, align_text_center, align_text_right, load_image
+from utils import align_text_center, align_text_right, load_image
 
 
 class DriverStandings(Renderer):
@@ -17,7 +17,6 @@ class DriverStandings(Renderer):
         standings (List[DriverStandingsItem]):      Driver standings list
         bg_color (rgbmatrix.graphics.Color):        Background color
         text_color (rgbmatrix.graphics.Font):       Text color
-        font (rgbmatrix.graphics.Font):             Font instance
         offset (int):                               Row y-coord offset
         coords (dict):                              Coordinates dictionary
         header_x (int):                             Table header's x-coord
@@ -37,11 +36,9 @@ class DriverStandings(Renderer):
         self.bg_color = Color.GRAY.value
         self.text_color = Color.WHITE.value
 
-        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
-
         self.offset = self.font.height + 2
 
-        self.coords = self.config.layout['coords']['standings']
+        self.coords = self.config.layout.coords['standings']
 
         self.header_x = align_text_center('Drivers',
                                           canvas_width=self.canvas.width,

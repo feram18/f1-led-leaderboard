@@ -3,7 +3,7 @@ from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from data.color import Color
 from data.gp_status import GrandPrixStatus
-from utils import load_font, align_text_center, center_image, load_image
+from utils import align_text_center, center_image, load_image
 
 
 class NextGP(Renderer):
@@ -15,8 +15,7 @@ class NextGP(Renderer):
 
     Attributes:
         gp (data.GrandPrix):                        Next GP's data
-        text_color (rgbmatrix.graphics.Font):       Text color
-        font (rgbmatrix.graphics.Font):             Font instance
+        text_color (rgbmatrix.graphics.Color):      Text color
         coords (dict):                              Coordinates dictionary
         gp_name (str):                              Grand Prix's name
         gp_name_x (int):                            Grand Prix's name x-coord
@@ -36,9 +35,7 @@ class NextGP(Renderer):
 
         self.text_color = Color.WHITE.value
 
-        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
-
-        self.coords = self.config.layout['coords']['next-gp']
+        self.coords = self.config.layout.coords['next-gp']
 
         self.gp_name = self.gp.name
         self.gp_name_x = align_text_center(self.gp_name,

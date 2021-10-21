@@ -2,7 +2,7 @@ import time
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from data.color import Color
-from utils import load_font, align_text_center, split_into_pages
+from utils import align_text_center, split_into_pages
 
 
 class Schedule(Renderer):
@@ -14,7 +14,6 @@ class Schedule(Renderer):
 
     Attributes:
         schedule (List[data.GrandPrix]):        GP schedule
-        font (rgbmatrix.graphics.Font):         Font instance
         offset (int):                           Row y-coord offset
         coords (dict):                          Coordinates dictionary
         header_x (int):                         Table's header x-coord
@@ -30,11 +29,9 @@ class Schedule(Renderer):
 
         self.schedule = self.data.schedule
 
-        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
-
         self.offset = self.font.height + 2
 
-        self.coords = self.config.layout['coords']['schedule']
+        self.coords = self.config.layout.coords['schedule']
         self.header_x = align_text_center('Schedule',
                                           canvas_width=self.canvas.width,
                                           font_width=self.font.baseline - 1)[0]

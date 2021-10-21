@@ -2,7 +2,7 @@ import time
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from data.color import Color
-from utils import load_font, align_text_center, split_into_pages
+from utils import align_text_center, split_into_pages
 
 
 class Qualifying(Renderer):
@@ -10,18 +10,17 @@ class Qualifying(Renderer):
     Render qualifying results for upcoming grand prix
 
     Arguments:
-        data (data.Data):                           Data instance
+        data (data.Data):                   Data instance
 
     Attributes:
-        qualifying (data.Qualifying):               Qualifying data
-        font (rgbmatrix.graphics.Font):             Font instance
-        coords (dict):                              Coordinates dictionary
-        offset (int):                               Row y-coord offset
-        header_x (int):                             Table header's x-coord
-        position_x (int):                           Driver's grid position x-coord
-        position_y (int):                           Driver's grid position y-coord
-        code_x (int):                               Driver's code x-coord
-        code_y (int):                               Driver's code y-coord
+        qualifying (data.Qualifying):       Qualifying data
+        coords (dict):                      Coordinates dictionary
+        offset (int):                       Row y-coord offset
+        header_x (int):                     Table header's x-coord
+        position_x (int):                   Driver's grid position x-coord
+        position_y (int):                   Driver's grid position y-coord
+        code_x (int):                       Driver's code x-coord
+        code_y (int):                       Driver's code y-coord
     """
 
     def __init__(self, matrix, canvas, config, data):
@@ -29,9 +28,7 @@ class Qualifying(Renderer):
         self.data = data
         self.qualifying = self.data.qualifying
 
-        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
-
-        self.coords = self.config.layout['coords']['qualifying']
+        self.coords = self.config.layout.coords['qualifying']
 
         self.offset = 4
         self.header_x = align_text_center('Qualifying',

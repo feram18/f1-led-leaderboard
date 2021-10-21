@@ -1,6 +1,6 @@
 from rgbmatrix.graphics import DrawText
 from renderer.renderer import Renderer
-from utils import align_text_center, load_font, load_image, center_image
+from utils import align_text_center, load_image, center_image
 from constants import F1_LOGO
 from version import __version__
 from data.color import Color
@@ -11,16 +11,13 @@ class Loading(Renderer):
     Render a splash screen while data is fetched
 
     Attributes:
-        font (rgbmatrix.graphics.Font):         Font instance
-        coords (dict):                          Coordinates dictionary
+        coords (dict):      Coordinates dictionary
     """
 
     def __init__(self, matrix, canvas, config):
         super().__init__(matrix, canvas, config)
 
-        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
-
-        self.coords = self.config.layout['coords']['loading']
+        self.coords = self.config.layout.coords['loading']
 
     def render(self):
         self.canvas.Clear()

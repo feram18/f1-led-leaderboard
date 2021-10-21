@@ -1,216 +1,242 @@
 {
-    "coords": {
-        "standings": {
-            "header": {
-                "x": 8,
-                "y": 7
-            },
-            "position": {
-                "x": 1,
-                "y": 15
-            },
-            "flag": {
-                "x-offset": 0,
-                "y-offset": 9
-            },
-            "code": {
-                "x": 13,
-                "y": 15
-            },
-            "name": {
-                "x": 1,
-                "y": 15
-            },
-            "points": {
-                "x": 42,
-                "y": 15
-            }
+    "standings": {
+        "header": {
+            "x": 8,
+            "y": 7
         },
-        "last-gp": {
-            "name": {
-                "x": 0,
-                "y": 6
-            },
-            "logo": {
-                "x-offset": 0,
-                "y-offset": 8
-            },
-            "podium": {
-                "1st": {
-                    "code": {
-                        "x": 26,
-                        "y": 15
-                    },
-                    "flag": {
-                        "x-offset": 25,
-                        "y-offset": 0
-                    },
-                    "label": {
-                        "x": 30,
-                        "y": 23
-                    },
-                    "limits": {
-                        "top": 17,
-                        "right": 39,
-                        "bottom": 32,
-                        "left": 24
-                    }
+        "position": {
+            "x": 1,
+            "y": 15
+        },
+        "flag": {
+            "x-offset": 0,
+            "y-offset": 9
+        },
+        "code": {
+            "x": 13,
+            "y": 15
+        },
+        "name": {
+            "x": 1,
+            "y": 15
+        },
+        "points": {
+            "x": 42,
+            "y": 15
+        }
+    },
+    "last-gp": {
+        "name": {
+            "x": 0,
+            "y": 6
+        },
+        "logo": {
+            "x-offset": 0,
+            "y-offset": 8
+        },
+        "podium": {
+            "1st": {
+                "code": {
+                    "x": 26,
+                    "y": 15
                 },
-                "2nd": {
-                    "code": {
-                        "x": 11,
-                        "y": 20
-                    },
-                    "flag": {
-                        "x-offset": 10,
-                        "y-offset": 0
-                    },
-                    "label": {
-                        "x": 15,
-                        "y": 28
-                    },
-                    "limits": {
-                        "top": 22,
-                        "right": 24,
-                        "bottom": 32,
-                        "left": 9
-                    }
+                "flag": {
+                    "x-offset": 25,
+                    "y-offset": 0
                 },
-                "3rd": {
-                    "code": {
-                        "x": 41,
-                        "y": 22
-                    },
-                    "flag": {
-                        "x-offset": 40,
-                        "y-offset": 0
-                    },
-                    "label": {
-                        "x": 45,
-                        "y": 30
-                    },
-                    "limits": {
-                        "top": 24,
-                        "right": 54,
-                        "bottom": 32,
-                        "left": 39
-                    }
+                "label": {
+                    "x": 30,
+                    "y": 23
+                },
+                "limits": {
+                    "top": 17,
+                    "right": 39,
+                    "bottom": 32,
+                    "left": 24
                 }
             },
-            "position": {
-                "x": 1,
-                "y": 6
-            },
-            "code": {
-                "x": 13,
-                "y": 6
-            },
-            "time": {
-                "x": 32,
-                "y": 6
-            },
-            "status": {
-                "x": 32,
-                "y": 6
-            }
-        },
-        "schedule": {
-            "header": {
-                "x": 17,
-                "y": 7
-            },
-            "round": {
-                "x": 3,
-                "y": 15
-            },
-            "country": {
-                "x": 13,
-                "y": 15
-            }
-        },
-        "next-gp": {
-            "name": {
-                "x": 0,
-                "y": 6
-            },
-            "logo": {
-                "x-offset": 0,
-                "y-offset": 8
-            },
-            "track": {
-                "x-offset": 0,
-                "y-offset": 0
-            },
-            "location": {
-                "x": 0,
-                "y": 32
-            },
-            "date": {
-                "x": 14,
-                "y": 26
-            },
-            "time": {
-                "x": 24,
-                "y": 32
-            },
-            "status": {
-                "x": 0,
-                "y": 32
-            }
-        },
-        "qualifying": {
-            "header": {
-                "x": 0,
-                "y": 6
-            },
-            "grid": {
-                "odd": {
-                    "position": {
-                        "x": 0,
-                        "y": 6
-                    },
-                    "code": {
-                        "x": 12,
-                        "y": 6
-                    }
+            "2nd": {
+                "code": {
+                    "x": 11,
+                    "y": 20
                 },
-                "even": {
-                    "position": {
-                        "x": 32,
-                        "y": 9
-                    },
-                    "code": {
-                        "x": 44,
-                        "y": 9
-                    }
+                "flag": {
+                    "x-offset": 10,
+                    "y-offset": 0
+                },
+                "label": {
+                    "x": 15,
+                    "y": 28
+                },
+                "limits": {
+                    "top": 22,
+                    "right": 24,
+                    "bottom": 32,
+                    "left": 9
+                }
+            },
+            "3rd": {
+                "code": {
+                    "x": 41,
+                    "y": 22
+                },
+                "flag": {
+                    "x-offset": 40,
+                    "y-offset": 0
+                },
+                "label": {
+                    "x": 45,
+                    "y": 30
+                },
+                "limits": {
+                    "top": 24,
+                    "right": 54,
+                    "bottom": 32,
+                    "left": 39
                 }
             }
         },
-        "loading": {
-            "image": {
-                "x-offset": 0,
-                "y-offset": 0
-            },
-            "version": {
-                "x": 22,
-                "y": 32
-            }
+        "position": {
+            "x": 1,
+            "y": 6
         },
-        "error": {
-            "image": {
-                "x-offset": 0,
-                "y-offset": 0
+        "code": {
+            "x": 13,
+            "y": 6
+        },
+        "time": {
+            "x": 32,
+            "y": 6
+        },
+        "status": {
+            "x": 32,
+            "y": 6
+        }
+    },
+    "schedule": {
+        "header": {
+            "x": 17,
+            "y": 7
+        },
+        "round": {
+            "x": 3,
+            "y": 15
+        },
+        "country": {
+            "x": 13,
+            "y": 15
+        }
+    },
+    "next-gp": {
+        "name": {
+            "x": 0,
+            "y": 6
+        },
+        "logo": {
+            "x-offset": 0,
+            "y-offset": 8
+        },
+        "track": {
+            "x-offset": 0,
+            "y-offset": 0
+        },
+        "location": {
+            "x": 0,
+            "y": 32
+        },
+        "date": {
+            "x": 14,
+            "y": 26
+        },
+        "time": {
+            "x": 24,
+            "y": 32
+        },
+        "status": {
+            "x": 0,
+            "y": 32
+        }
+    },
+    "qualifying": {
+        "header": {
+            "x": 0,
+            "y": 6
+        },
+        "grid": {
+            "odd": {
+                "position": {
+                    "x": 0,
+                    "y": 6
+                },
+                "code": {
+                    "x": 12,
+                    "y": 6
+                }
             },
-            "message": {
-                "x": 0,
-                "y": 18
+            "even": {
+                "position": {
+                    "x": 32,
+                    "y": 9
+                },
+                "code": {
+                    "x": 44,
+                    "y": 9
+                }
             }
         }
     },
-    "fonts": {
-        "tom_thumb": "rpi-rgb-led-matrix/fonts/tom-thumb.bdf",
-        "4x6": "rpi-rgb-led-matrix/fonts/4x6.bdf",
-        "5x8": "rpi-rgb-led-matrix/fonts/5x8.bdf",
-        "6x9": "rpi-rgb-led-matrix/fonts/6x9.bdf"
+    "summary": {
+        "constructor": {
+            "name": {
+                "x": 0,
+                "y": 0
+            },
+            "logo": {
+                "x-offset": 0,
+                "y-offset": 0
+            }
+        },
+        "drivers": {
+            "a": {
+                "code": {
+                    "x": 0,
+                    "y": 0
+                },
+                "flag": {
+                    "x-offset": 0,
+                    "y-offset": 0
+                }
+            },
+            "b": {
+                "code": {
+                    "x": 0,
+                    "y": 0
+                },
+                "flag": {
+                    "x-offset": 0,
+                    "y-offset": 0
+                }
+            }
+        }
+    },
+    "loading": {
+        "image": {
+            "x-offset": 0,
+            "y-offset": 0
+        },
+        "version": {
+            "x": 22,
+            "y": 32
+        }
+    },
+    "error": {
+        "image": {
+            "x-offset": 0,
+            "y-offset": 0
+        },
+        "message": {
+            "x": 0,
+            "y": 18
+        }
     }
 }

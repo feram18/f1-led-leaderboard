@@ -4,7 +4,7 @@ from renderer.renderer import Renderer
 from data.color import Color
 from data.driver import Driver
 from data.finishing_status import FinishingStatus
-from utils import load_font, align_text_center, align_text_right, center_image, split_into_pages, load_image
+from utils import align_text_center, align_text_right, center_image, split_into_pages, load_image
 
 
 class LastGP(Renderer):
@@ -12,21 +12,20 @@ class LastGP(Renderer):
     Render last grand prix's results
 
     Arguments:
-        data (api.Data):                        Data instance
+        data (api.Data):                Data instance
 
     Attributes:
-        gp_result (data.GPResult):              Last GP's results data
-        font (rgbmatrix.graphics.Font):         Font instance
-        offset (int):                           Row y-coord offset
-        coords (dict):                          Coordinates dictionary
-        logo (PIL.Image):                       Grand Prix's circuit logo
-        gp_name (str):                          Grand Prix's name
-        gp_name_x (int):                        Grand Prix's name x-coord
-        position_y (int):                       Driver's position y-coord
-        code_x (int):                           Driver's code x-coord
-        code_y (int):                           Driver's code y-coord
-        time_y (int):                           Driver's time y-coord
-        status_y (int):                         Driver's status y-coord
+        gp_result (data.GPResult):      Last GP's results data
+        offset (int):                   Row y-coord offset
+        coords (dict):                  Coordinates dictionary
+        logo (PIL.Image):               Grand Prix's circuit logo
+        gp_name (str):                  Grand Prix's name
+        gp_name_x (int):                Grand Prix's name x-coord
+        position_y (int):               Driver's position y-coord
+        code_x (int):                   Driver's code x-coord
+        code_y (int):                   Driver's code y-coord
+        time_y (int):                   Driver's time y-coord
+        status_y (int):                 Driver's status y-coord
     """
 
     def __init__(self, matrix, canvas, config, data):
@@ -35,11 +34,9 @@ class LastGP(Renderer):
 
         self.gp_result = self.data.last_gp
 
-        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
-
         self.offset = self.font.height + 2
 
-        self.coords = self.config.layout['coords']['last-gp']
+        self.coords = self.config.layout.coords['last-gp']
 
         self.logo = self.gp_result.gp.circuit.logo if not None else self.gp_result.gp.circuit.track
         self.logo = load_image(self.logo, (64, 24))

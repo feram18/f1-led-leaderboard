@@ -3,7 +3,7 @@ from typing import List, Tuple
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from data.color import Color
-from utils import load_font, align_text_center, align_text_right
+from utils import align_text_center, align_text_right
 
 
 class ConstructorStandings(Renderer):
@@ -11,20 +11,19 @@ class ConstructorStandings(Renderer):
     Render constructor standings
 
     Arguments:
-        data (api.Data):                                Data instance
+        data (api.Data):                                    Data instance
 
     Attributes:
-        standings (List[ConstructorStandingsItem]):     Constructor standings list
-        bg_color (rgbmatrix.graphics.Color):            Background color
-        text_color (rgbmatrix.graphics.Font):           Text color
-        font (rgbmatrix.graphics.Font):                 Font instance
-        offset (int):                                   Row y-coord offset
-        coords (dict):                                  Coordinates dictionary
-        header_x (int):                                 Table header's x-coord
-        name_x (int):                                   Constructor's name x-coord
-        name_y (int):                                   Constructor's name y-coord
-        points_x (int):                                 Constructor's points x-coord
-        points_y (int):                                 Constructor's points y-coord
+        standings (List[ConstructorStandingsItem]):         Constructor standings list
+        bg_color (rgbmatrix.graphics.Color):                Background color
+        text_color (rgbmatrix.graphics.Font):               Text color
+        offset (int):                                       Row y-coord offset
+        coords (dict):                                      Coordinates dictionary
+        header_x (int):                                     Table header's x-coord
+        name_x (int):                                       Constructor's name x-coord
+        name_y (int):                                       Constructor's name y-coord
+        points_x (int):                                     Constructor's points x-coord
+        points_y (int):                                     Constructor's points y-coord
     """
 
     def __init__(self, matrix, canvas, config, data):
@@ -36,11 +35,9 @@ class ConstructorStandings(Renderer):
         self.bg_color = Color.GRAY.value
         self.text_color = Color.WHITE.value
 
-        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
-
         self.offset = self.font.height + 2
 
-        self.coords = self.config.layout['coords']['standings']
+        self.coords = self.config.layout.coords['standings']
 
         self.header_x = x = align_text_center('Constructors',
                                               canvas_width=self.canvas.width,
