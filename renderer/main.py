@@ -21,8 +21,8 @@ class MainRenderer(Renderer):
         status (data.UpdateStatus):     Update status
     """
 
-    def __init__(self, matrix, canvas, data):
-        super().__init__(matrix, canvas)
+    def __init__(self, matrix, canvas, config, data):
+        super().__init__(matrix, canvas, config)
         self.data = data
         self.status = self.data.status
 
@@ -45,22 +45,22 @@ class MainRenderer(Renderer):
         self.render_error()
 
     def render_constructor_standings(self):
-        ConstructorStandings(self.matrix, self.canvas, self.data).render()
+        ConstructorStandings(self.matrix, self.canvas, self.config, self.data).render()
 
     def render_driver_standings(self):
-        DriverStandings(self.matrix, self.canvas, self.data).render()
+        DriverStandings(self.matrix, self.canvas, self.config, self.data).render()
 
     def render_last_gp(self):
-        LastGP(self.matrix, self.canvas, self.data).render()
+        LastGP(self.matrix, self.canvas, self.config, self.data).render()
 
     def render_schedule(self):
-        Schedule(self.matrix, self.canvas, self.data).render()
+        Schedule(self.matrix, self.canvas, self.config, self.data).render()
 
     def render_next_gp(self):
-        NextGP(self.matrix, self.canvas, self.data).render()
+        NextGP(self.matrix, self.canvas, self.config, self.data).render()
 
     def render_qualifying(self):
-        Qualifying(self.matrix, self.canvas, self.data).render()
+        Qualifying(self.matrix, self.canvas, self.config, self.data).render()
 
     def render_error(self):
-        Error(self.matrix, self.canvas, self.data).render()
+        Error(self.matrix, self.canvas, self.config, self.data).render()

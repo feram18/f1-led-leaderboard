@@ -28,17 +28,17 @@ class NextGP(Renderer):
         track (PIL.Image):                          Grand Prix's track layout image
     """
 
-    def __init__(self, matrix, canvas, data):
-        super().__init__(matrix, canvas)
+    def __init__(self, matrix, canvas, config, data):
+        super().__init__(matrix, canvas, config)
         self.data = data
 
         self.gp = self.data.next_gp
 
         self.text_color = Color.WHITE.value
 
-        self.font = load_font(self.data.config.layout['fonts']['tom_thumb'])
+        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
 
-        self.coords = self.data.config.layout['coords']['next-gp']
+        self.coords = self.config.layout['coords']['next-gp']
 
         self.gp_name = self.gp.name
         self.gp_name_x = align_text_center(self.gp_name,

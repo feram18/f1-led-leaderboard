@@ -29,17 +29,17 @@ class LastGP(Renderer):
         status_y (int):                         Driver's status y-coord
     """
 
-    def __init__(self, matrix, canvas, data):
-        super().__init__(matrix, canvas)
+    def __init__(self, matrix, canvas, config, data):
+        super().__init__(matrix, canvas, config)
         self.data = data
 
         self.gp_result = self.data.last_gp
 
-        self.font = load_font(self.data.config.layout['fonts']['tom_thumb'])
+        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
 
         self.offset = self.font.height + 2
 
-        self.coords = self.data.config.layout['coords']['last-gp']
+        self.coords = self.config.layout['coords']['last-gp']
 
         self.logo = self.gp_result.gp.circuit.logo if not None else self.gp_result.gp.circuit.track
         self.logo = load_image(self.logo, (64, 24))

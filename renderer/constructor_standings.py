@@ -27,8 +27,8 @@ class ConstructorStandings(Renderer):
         points_y (int):                                 Constructor's points y-coord
     """
 
-    def __init__(self, matrix, canvas, data):
-        super().__init__(matrix, canvas)
+    def __init__(self, matrix, canvas, config, data):
+        super().__init__(matrix, canvas, config)
         self.data = data
 
         self.standings = self.data.constructor_standings
@@ -36,11 +36,11 @@ class ConstructorStandings(Renderer):
         self.bg_color = Color.GRAY.value
         self.text_color = Color.WHITE.value
 
-        self.font = load_font(self.data.config.layout['fonts']['tom_thumb'])
+        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
 
         self.offset = self.font.height + 2
 
-        self.coords = self.data.config.layout['coords']['standings']
+        self.coords = self.config.layout['coords']['standings']
 
         self.header_x = x = align_text_center('Constructors',
                                               canvas_width=self.canvas.width,

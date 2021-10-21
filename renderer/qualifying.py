@@ -24,14 +24,14 @@ class Qualifying(Renderer):
         code_y (int):                               Driver's code y-coord
     """
 
-    def __init__(self, matrix, canvas, data):
-        super().__init__(matrix, canvas)
+    def __init__(self, matrix, canvas, config, data):
+        super().__init__(matrix, canvas, config)
         self.data = data
         self.qualifying = self.data.qualifying
 
-        self.font = load_font(self.data.config.layout['fonts']['tom_thumb'])
+        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
 
-        self.coords = self.data.config.layout['coords']['qualifying']
+        self.coords = self.config.layout['coords']['qualifying']
 
         self.offset = 4
         self.header_x = align_text_center('Qualifying',

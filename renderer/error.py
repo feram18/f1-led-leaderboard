@@ -19,13 +19,13 @@ class Error(Renderer):
         error_msg (str)                         Error message string
     """
 
-    def __init__(self, matrix, canvas, data):
-        super().__init__(matrix, canvas)
+    def __init__(self, matrix, canvas, config, data):
+        super().__init__(matrix, canvas, config)
         self.data = data
 
-        self.font = load_font(self.data.config.layout['fonts']['tom_thumb'])
+        self.font = load_font(self.config.layout['fonts']['tom_thumb'])
 
-        self.coords = self.data.config.layout['coords']['error']
+        self.coords = self.config.layout['coords']['error']
 
         self.error_msg = self.data.status
 

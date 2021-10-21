@@ -10,17 +10,13 @@ class Loading(Renderer):
     """
     Render a splash screen while data is fetched
 
-    Arguments:
-        config (config.MatrixConfig):           MatrixConfig instance
-
     Attributes:
         font (rgbmatrix.graphics.Font):         Font instance
         coords (dict):                          Coordinates dictionary
     """
 
     def __init__(self, matrix, canvas, config):
-        super().__init__(matrix, canvas)
-        self.config = config
+        super().__init__(matrix, canvas, config)
 
         self.font = load_font(self.config.layout['fonts']['tom_thumb'])
 

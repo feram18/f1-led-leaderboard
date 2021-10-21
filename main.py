@@ -25,10 +25,10 @@ def main(matrix_):
     Loading(matrix_, canvas, config).render()
 
     # Fetch initial data
-    data = Data(config)
+    data = Data()
 
     # Begin rendering screen rotation
-    MainRenderer(matrix_, canvas, data).render()
+    MainRenderer(matrix_, canvas, config, data).render()
 
 
 if __name__ == '__main__':
