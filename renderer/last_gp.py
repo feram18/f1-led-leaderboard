@@ -9,7 +9,7 @@ from utils import load_font, align_text_center, align_text_right, center_image, 
 
 class LastGP(Renderer):
     """
-    Render next grand prix's information
+    Render last grand prix's results
 
     Arguments:
         data (api.Data):                        Data instance
@@ -21,7 +21,7 @@ class LastGP(Renderer):
         coords (dict):                          Coordinates dictionary
         logo (PIL.Image):                       Grand Prix's circuit logo
         gp_name (str):                          Grand Prix's name
-        gp_name (int):                          Grand Prix's name x-coord
+        gp_name_x (int):                        Grand Prix's name x-coord
         position_y (int):                       Driver's position y-coord
         code_x (int):                           Driver's code x-coord
         code_y (int):                           Driver's code y-coord

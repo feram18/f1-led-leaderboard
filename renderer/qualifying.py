@@ -16,7 +16,12 @@ class Qualifying(Renderer):
         qualifying (data.Qualifying):               Qualifying data
         font (rgbmatrix.graphics.Font):             Font instance
         coords (dict):                              Coordinates dictionary
+        offset (int):                               Row y-coord offset
         header_x (int):                             Table header's x-coord
+        position_x (int):                           Driver's grid position x-coord
+        position_y (int):                           Driver's grid position y-coord
+        code_x (int):                               Driver's code x-coord
+        code_y (int):                               Driver's code y-coord
     """
 
     def __init__(self, matrix, canvas, data):

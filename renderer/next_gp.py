@@ -19,7 +19,7 @@ class NextGP(Renderer):
         font (rgbmatrix.graphics.Font):             Font instance
         coords (dict):                              Coordinates dictionary
         gp_name (str):                              Grand Prix's name
-        gp_name (int):                              Grand Prix's name x-coord
+        gp_name_x (int):                            Grand Prix's name x-coord
         location (str):                             Grand Prix's location (city, country)
         date (str):                                 Grand Prix's date
         time (str):                                 Grand Prix's time

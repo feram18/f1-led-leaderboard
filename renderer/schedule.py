@@ -13,10 +13,11 @@ class Schedule(Renderer):
         data (api.Data):                        Data instance
 
     Attributes:
-        schedule ():                            GP schedule
+        schedule (List[data.GrandPrix]):        GP schedule
         font (rgbmatrix.graphics.Font):         Font instance
         offset (int):                           Row y-coord offset
         coords (dict):                          Coordinates dictionary
+        header_x (int):                         Table's header x-coord
         round_x (int):                          Round x-coord
         round_y (int):                          Round y-coord
         country_x (int):                        Country x-coord
