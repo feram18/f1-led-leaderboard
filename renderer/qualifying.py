@@ -47,7 +47,7 @@ class Qualifying(Renderer):
                                      self.canvas.height,
                                      self.font.baseline - 1,
                                      self.font.height)
-            DrawText(self.canvas, self.font, x, y + self.font.height, Color.WHITE.value, 'Upcoming')
+            DrawText(self.canvas, self.font, x, y, Color.WHITE.value, 'Upcoming')
             time.sleep(7.0)
         else:
             # Render grid
