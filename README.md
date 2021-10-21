@@ -158,7 +158,7 @@ your execution command. This will enable debugging messages to be written to the
 ## Roadmap
 - [X] Race Schedule
 - [X] Grand Prix Results
-- [ ] Grand Prix Qualifying Results
+- [X] Grand Prix Qualifying Results
 - [ ] Customization options
   - [ ] Preferred Constructor Summary
 
