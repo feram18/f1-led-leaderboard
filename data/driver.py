@@ -8,6 +8,7 @@ from constants import COUNTRY_FLAG_PATH
 @dataclass
 class Driver:
     """Data class to represent a driver"""
+    id: str
     firstname: str
     lastname: str
     code: str
