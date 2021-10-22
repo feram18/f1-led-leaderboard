@@ -11,6 +11,8 @@ ERROR_IMAGE = 'assets/img/error.jpg'
 
 # ERGAST F1 API
 BASE_URL = 'https://ergast.com/api/f1/current'
+CONSTRUCTORS_URL = f'{BASE_URL}/constructors.json'
+DRIVERS_URL = f'{BASE_URL}/drivers.json'
 CONSTRUCTOR_STANDINGS_URL = f'{BASE_URL}/constructorStandings.json'
 DRIVER_STANDINGS_URL = f'{BASE_URL}/driverStandings.json'
 LAST_GP_RESULTS_URL = f'{BASE_URL}/last/results.json'
