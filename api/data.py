@@ -166,7 +166,9 @@ class Data:
             for result in results:
                 grid.append(QualifyingResultItem(int(result['position']),
                                                  self.drivers.get(result['Driver']['driverId']),
-                                                 result['Q1']))
+                                                 result.get('Q1', None),
+                                                 result.get('Q2', None),
+                                                 result.get('Q3', None)))
             self.qualifying = Qualifying(self.next_gp, grid)
 
     def fetch_schedule(self):

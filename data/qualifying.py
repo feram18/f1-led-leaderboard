@@ -8,9 +8,9 @@ from data.driver import Driver
 class QualifyingResultItem:
     position: int
     driver: Driver
-    Q1: str = None
-    Q2: str = None
-    Q3: str = None
+    Q1: str
+    Q2: str
+    Q3: str
 
 
 @dataclass
