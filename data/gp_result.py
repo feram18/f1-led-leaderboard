@@ -13,8 +13,8 @@ class DriverResult:
     points: float
     laps: int
     status: FinishingStatus
-    time: str = None
-    fastest_lap: bool = False
+    time: str
+    fastest_lap: bool
 
 
 @dataclass
