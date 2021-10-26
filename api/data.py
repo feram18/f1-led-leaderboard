@@ -9,7 +9,6 @@ from data.standings import ConstructorStandingsItem, DriverStandingsItem
 from data.constructor import Constructor
 from data.driver import Driver
 from data.gp_result import GPResult, DriverResult
-from data.gp_status import GrandPrixStatus as GPStatus
 from data.finishing_status import FinishingStatus as Status
 from data.grand_prix import GrandPrix
 from data.qualifying import Qualifying, QualifyingResultItem
@@ -123,8 +122,7 @@ class Data:
                                gp['Circuit']['Location']['locality'],
                                gp['Circuit']['Location']['country']),
                        gp['date'],
-                       gp['time'],
-                       GPStatus.FINISHED)
+                       gp['time'])
 
         results = response['MRData']['RaceTable']['Races'][0]['Results']
         driver_results = []
