@@ -143,7 +143,7 @@ class LastGP(Renderer):
         self.render_position(position, fastest_lap)
         self.render_code(colors[1], code)
         if status == FinishingStatus.FINISHED:
-            self.render_race_time(colors[1], race_time)
+            self.render_race_time(colors[1], race_time[:9])
         else:
             self.render_status(colors[1], status.value)
 
@@ -177,7 +177,6 @@ class LastGP(Renderer):
     def render_code(self, text_color: Color, code: str):
         DrawText(self.canvas, self.font, self.code_x, self.code_y, text_color, code)
 
-    # TODO: Time text for rance winner is too long
     def render_race_time(self, text_color: Color, race_time: str):
         x = align_text_right(race_time, self.canvas.width, self.font.baseline - 1)
         DrawText(self.canvas, self.font, x, self.time_y, text_color, race_time)
