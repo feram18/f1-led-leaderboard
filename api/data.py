@@ -23,8 +23,8 @@ class Data:
     constructor_standings: List[ConstructorStandingsItem] = field(default_factory=list)
     driver_standings: List[DriverStandingsItem] = field(default_factory=list)
     last_gp: GPResult = field(init=False)
-    qualifying: Qualifying = field(init=False)
-    next_gp: GrandPrix = field(init=False)
+    qualifying: Qualifying = None
+    next_gp: GrandPrix = None
     schedule: List[GrandPrix] = field(default_factory=list)
     status: UpdateStatus = UpdateStatus.SUCCESS
     last_updated: float = None
