@@ -2,7 +2,7 @@ import time
 import logging
 import requests
 import constants
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 from data.update_status import UpdateStatus
 from data.standings import ConstructorStandingsItem, DriverStandingsItem
@@ -18,14 +18,14 @@ from data.circuit import Circuit
 @dataclass
 class Data:
     """Data class consisting of all the data to be displayed on matrix"""
-    constructors: dict = None
-    drivers: dict = None
-    constructor_standings: List[ConstructorStandingsItem] = None
-    driver_standings: List[DriverStandingsItem] = None
-    last_gp: GPResult = None
-    qualifying: Qualifying = None
-    next_gp: GrandPrix = None
-    schedule: List[GrandPrix] = None
+    constructors: dict = field(default_factory=dict)
+    drivers: dict = field(default_factory=dict)
+    constructor_standings: List[ConstructorStandingsItem] = field(default_factory=list)
+    driver_standings: List[DriverStandingsItem] = field(default_factory=list)
+    last_gp: GPResult = field(init=False)
+    qualifying: Qualifying = field(init=False)
+    next_gp: GrandPrix = field(init=False)
+    schedule: List[GrandPrix] = field(default_factory=list)
     status: UpdateStatus = UpdateStatus.SUCCESS
     last_updated: float = None
 
