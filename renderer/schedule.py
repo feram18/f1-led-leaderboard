@@ -16,7 +16,6 @@ class Schedule(Renderer):
         schedule (List[data.GrandPrix]):        GP schedule
         offset (int):                           Row y-coord offset
         coords (dict):                          Coordinates dictionary
-        header_x (int):                         Table's header x-coord
         round_x (int):                          Round x-coord
         round_y (int):                          Round y-coord
         country_x (int):                        Country x-coord
@@ -32,36 +31,37 @@ class Schedule(Renderer):
         self.offset = self.font.height + 2
 
         self.coords = self.config.layout.coords['schedule']
-        self.header_x = align_text_center('Schedule',
-                                          canvas_width=self.canvas.width,
-                                          font_width=self.font.baseline - 1)[0]
         self.round_x = self.coords['round']['x']
         self.round_y = self.coords['round']['y']
         self.country_x = self.coords['country']['x']
         self.country_y = self.coords['country']['y']
 
     def render(self):
-        self.canvas.Clear()
+        if self.schedule:
+            self.canvas.Clear()
 
-        self.render_header()
-        for gp in (self.schedule[:3]):  # Up to index 3
-            self.render_row(str(gp.round), gp.circuit.country)
-        time.sleep(7.0)
+            self.render_header()
+            for gp in (self.schedule[:3]):  # Up to index 3
+                self.render_row(str(gp.round), gp.circuit.country)
+            time.sleep(7.0)
 
-        pages = split_into_pages(self.schedule[3:], 4)  # From index 4 - end
-        for page in pages:
-            self.render_page(page)
+            pages = split_into_pages(self.schedule[3:], 4)  # From index 4 - end
+            for page in pages:
+                self.render_page(page)
 
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+            self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_header(self):
         bg_color = Color.GRAY.value
         text_color = Color.WHITE.value
+        header_x = align_text_center('Schedule',
+                                     canvas_width=self.canvas.width,
+                                     font_width=self.font.baseline - 1)[0]
         y = self.coords['header']['y']
 
         for x in range(self.canvas.width):
             DrawLine(self.canvas, x, y - y, x, y, bg_color)
-        DrawText(self.canvas, self.font, self.header_x, y, text_color, 'Schedule')
+        DrawText(self.canvas, self.font, header_x, y, text_color, 'Schedule')
 
     def render_page(self, page: list):
         self.canvas.Clear()
