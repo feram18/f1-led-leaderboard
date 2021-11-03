@@ -10,8 +10,10 @@ class Test(Renderer):
         self.image = Image.new('RGBA', (self.matrix.width, self.matrix.height))
 
     def render(self):
+        self.canvas.Clear()
         self.render_img()
         time.sleep(7.0)
+        self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_img(self):
         lst = ['assets/img/constructors/alfa.png',
@@ -21,8 +23,7 @@ class Test(Renderer):
                'assets/img/numbers/max_verstappen.png']
         img = Image.open(random.choice(lst)).convert('RGBA')
         self.image.paste(img, img.size, img)
-        self.canvas.SetImage(self.image.convert('RGB'), 0, 0)
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+        self.canvas.SetImage(self.image.convert('RGB'))
 
     # def draw_text(self, position, text, font, fill=None, align="left", bg_color=None, bg_offset=[1, 1, 1, 1]):
     #     width = 0
