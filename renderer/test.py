@@ -19,8 +19,8 @@ class Test(Renderer):
                'assets/img/constructors/ferrari.png',
                'assets/img/constructors/mclaren.png',
                'assets/img/numbers/max_verstappen.png']
-        img = Image.open(random.choice(lst))
-        self.image.paste(img, (0, 0, img.width, img.height), img)
+        img = Image.open(random.choice(lst)).convert('RGBA')
+        self.image.paste(img, img.size, img)
         self.canvas.SetImage(self.image.convert('RGB'), 0, 0)
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
