@@ -23,7 +23,7 @@ class Test(Renderer):
                'assets/img/numbers/max_verstappen.png']
         img = Image.open(random.choice(lst)).convert('RGBA')
         self.image.paste(img, img.size, img)
-        print(self.image.info)
+        print(self.image.size)
         self.canvas.SetImage(self.image.convert('RGB'))
 
     # def draw_text(self, position, text, font, fill=None, align="left", bg_color=None, bg_offset=[1, 1, 1, 1]):
