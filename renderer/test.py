@@ -1,6 +1,6 @@
 import time
 import random
-from PIL import Image, ImageDraw
+from PIL import Image
 from renderer.renderer import Renderer
 
 
@@ -8,21 +8,19 @@ class Test(Renderer):
     def __init__(self, matrix, canvas, config):
         super().__init__(matrix, canvas, config)
         self.image = Image.new('RGBA', (self.matrix.width, self.matrix.height))
-        self.draw = ImageDraw.Draw(self.image)
 
     def render(self):
         self.render_img()
         time.sleep(7.0)
 
     def render_img(self):
-        lst = ['assets/img/formula-1_logo.jpg',
-               'assets/img/constructors/alfa.png',
+        lst = ['assets/img/constructors/alfa.png',
                'assets/img/constructors/red_bull.png',
                'assets/img/constructors/ferrari.png',
                'assets/img/constructors/mclaren.png',
                'assets/img/numbers/max_verstappen.png']
         img = Image.open(random.choice(lst))
-        self.image.paste(img, (0, 0), img)
+        self.image.paste(img, (0, 0, img.width, img.height), img)
         self.canvas.SetImage(self.image.convert('RGB'), 0, 0)
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
