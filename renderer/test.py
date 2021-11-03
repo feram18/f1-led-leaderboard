@@ -2,6 +2,7 @@ import time
 import random
 from PIL import Image
 from renderer.renderer import Renderer
+from utils import center_image
 
 
 class Test(Renderer):
@@ -22,9 +23,11 @@ class Test(Renderer):
                'assets/img/constructors/mclaren.png',
                'assets/img/numbers/max_verstappen.png']
         img = Image.open(random.choice(lst)).convert('RGBA')
+        img.thumbnail((self.canvas.width, self.canvas.height), Image.ANTIALIAS)
         self.image.paste(img, img.size, img)
         print(self.image.size)
-        self.canvas.SetImage(self.image.convert('RGB'))
+        x, y = center_image(img.size, self.canvas.width, self.canvas.height)
+        self.canvas.SetImage(self.image.convert('RGB'), x, y)
 
     # def draw_text(self, position, text, font, fill=None, align="left", bg_color=None, bg_offset=[1, 1, 1, 1]):
     #     width = 0
