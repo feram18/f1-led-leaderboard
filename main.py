@@ -11,24 +11,24 @@ from version import __version__
 from utils import led_matrix_options, args
 
 
-def main(matrix_):
+def main():
     # Print script details on startup
-    print(f'\U0001F3C1 F1-LED-Leaderboard - v{__version__} ({matrix_.width}x{matrix_.height})')
+    print(f'\U0001F3C1 F1-LED-Leaderboard - v{__version__} ({matrix.width}x{matrix.height})')
 
     # Read software preferences from config.json
-    config = MatrixConfig(matrix_.width, matrix_.height)
+    config = MatrixConfig(matrix.width, matrix.height)
 
     # Create canvas
-    canvas = matrix_.CreateFrameCanvas()
+    canvas = matrix.CreateFrameCanvas()
 
     # Render loading splash screen
-    Loading(matrix_, canvas, config).render()
+    Loading(matrix, canvas, config).render()
 
     # Fetch initial data
     data = Data()
 
     # Begin rendering screen rotation
-    MainRenderer(matrix_, canvas, config, data).render()
+    MainRenderer(matrix, canvas, config, data).render()
 
 
 if __name__ == '__main__':
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     matrix = RGBMatrix(options=matrixOptions)
 
     try:
-        main(matrix)
+        main()
     except Exception as e:  # For any random unhandled exceptions
         logging.exception(SystemExit(e))
     finally:
