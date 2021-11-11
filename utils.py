@@ -8,6 +8,7 @@ from typing import Tuple, Optional, List
 from PIL import Image
 from rgbmatrix.graphics import Font
 from rgbmatrix import RGBMatrixOptions
+from data.color import Color
 
 
 def read_json(filename: str) -> dict:
@@ -39,9 +40,10 @@ def load_font(filename: str) -> Font:
     return font
 
 
-def load_image(filename: str, size: Tuple[int, int] = (64, 32)) -> Image:
+def load_image(filename: str, size: Tuple[int, int] = (64, 32), background: Color = Color.BLACK) -> Image:
     """
     Open Image file from given path
+    :param background: Background color for PNG images
     :param filename: Path to the image file
     :param size: Maximum width and height of the image
     :return: image: Image file
@@ -49,8 +51,10 @@ def load_image(filename: str, size: Tuple[int, int] = (64, 32)) -> Image:
     if os.path.isfile(filename):
         with Image.open(filename) as original:
             original = original.crop(original.getbbox())  # Non-empty pixels
-            image = Image.new('RGB', (original.width, original.height), (0, 0, 0, 255))  # Black background img
-            image.paste(original)
+            image = Image.new('RGB',  # Background img
+                              (original.width, original.height),
+                              (background.value.red, background.value.green, background.value.blue, 255))
+            image.paste(original)  # Paste original on background
             image.thumbnail(size)  # Resize
             return image
     else:
