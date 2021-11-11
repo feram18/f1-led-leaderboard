@@ -121,7 +121,7 @@ def align_text(text: str,
             x = abs(col_width//2 - (len(text) * font_width)//2)
         else:
             x = 0
-        if x and not y:
+        if x is not None and y is None:
             return x
 
     if y:
@@ -131,7 +131,7 @@ def align_text(text: str,
             y = col_height
         else:
             y = font_height
-        if y and not x:
+        if y is not None and x is None:
             return y
 
     return x, y
@@ -156,7 +156,7 @@ def align_image(image: Image,
             x = abs(col_width//2 - image.width//2)
         else:
             x = 0
-        if x and not y:
+        if x is not None and y is None:
             return x
 
     if y:
@@ -166,7 +166,7 @@ def align_image(image: Image,
             y = col_height - image.height
         else:
             y = 0
-        if y and not x:
+        if y is not None and x is None:
             return y
 
     return x, y
