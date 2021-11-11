@@ -39,18 +39,20 @@ def load_font(filename: str) -> Font:
     return font
 
 
-# TODO: Fix for usage of PNG images
 def load_image(filename: str, size: Tuple[int, int] = (64, 32)) -> Image:
     """
-    Return Image object from given file.
-    :param filename: (str) Location of image file
-    :param size: (int, int) Maximum width and height of image
-    :return: image: (PIL.Image) Image file
+    Open Image file from given path
+    :param filename: Path to the image file
+    :param size: Maximum width and height of the image
+    :return: image: Image file
     """
     if os.path.isfile(filename):
-        with Image.open(filename) as image:
-            image.thumbnail(size, Image.ANTIALIAS)
-            return image.convert('RGB')
+        with Image.open(filename) as original:
+            original = original.crop(original.getbbox())  # Non-empty pixels
+            image = Image.new('RGB', (original.width, original.height), (0, 0, 0, 255))  # Black background img
+            image.paste(original)
+            image.thumbnail(size)  # Resize
+            return image
     else:
         logging.error(f"Couldn't find image {filename}")
         return None
