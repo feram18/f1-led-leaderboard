@@ -1,7 +1,7 @@
 import time
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
-from utils import Color, align_text_center, split_into_pages
+from utils import Color, align_text, Position, split_into_pages
 
 
 class Schedule(Renderer):
@@ -53,9 +53,10 @@ class Schedule(Renderer):
     def render_header(self):
         bg_color = Color.GRAY.value
         text_color = Color.WHITE.value
-        header_x = align_text_center('Schedule',
-                                     canvas_width=self.canvas.width,
-                                     font_width=self.font.baseline - 1)[0]
+        header_x = align_text('Schedule',
+                              x=Position.CENTER,
+                              col_width=self.canvas.width,
+                              font_width=self.font.baseline - 1)
         y = self.coords['header']['y']
 
         for x in range(self.canvas.width):
@@ -84,9 +85,10 @@ class Schedule(Renderer):
             DrawLine(self.canvas, x, self.country_y - self.font.height, x, self.country_y, Color.RED.value)
 
         # Round Number
-        self.round_x = align_text_center(round_no,
-                                         canvas_width=12,
-                                         font_width=self.font.baseline - 1)[0]
+        self.round_x = align_text(round_no,
+                                  x=Position.CENTER,
+                                  col_width=12,
+                                  font_width=self.font.baseline - 1)
         DrawText(self.canvas, self.font, self.round_x, self.round_y, Color.WHITE.value, round_no)
 
     def render_background(self):

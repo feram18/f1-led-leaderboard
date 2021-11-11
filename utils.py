@@ -40,6 +40,14 @@ class Color(Enum):
     WILLIAMS = [RGB(3, 168, 235), BLACK]
 
 
+class Position(Enum):
+    """Enum class for positioning on matrix' canvas"""
+    TOP = 0
+    RIGHT = 1
+    CENTER = 2
+    BOTTOM = 3
+
+
 def read_json(filename: str) -> dict:
     """
     Read from JSON file and return it as a dictionary
@@ -91,49 +99,77 @@ def load_image(filename: str, size: Tuple[int, int] = (64, 32), background: Colo
         return None
 
 
-def center_image(image_size: Tuple[int, int],
-                 canvas_width: Optional[int] = 0,
-                 canvas_height: Optional[int] = 0) -> (int, int):
+def align_text(text: str,
+               x: Position = None, y: Position = None,
+               col_width: int = 0, col_height: int = 0,
+               font_width: int = 0, font_height: int = 0) -> (int, Optional[int]):
     """
-    Calculate x and y-coords to center image on canvas.
-    :param canvas_width: (int) Canvas' width
-    :param canvas_height: (int) Canvas' height
-    :param image_size: (int, int) Image size
-    :return: (x, y): (int, int) X, Y coordinates
+    Calculate x, y coords to align text on canvas
+    :param text: Text to align
+    :param x: Text's horizontal position
+    :param y: Text's vertical position
+    :param col_width: Column's width
+    :param col_height: Column's height
+    :param font_width: Font's width
+    :param font_height: Font's height
+    :return: x, y: Coordinates
     """
-    x = abs(canvas_width//2 - image_size[0]//2)
-    y = abs(canvas_height//2 - image_size[1]//2)
+    if x:
+        if x == Position.RIGHT:
+            x = col_width - (len(text) * font_width)
+        elif x == Position.CENTER:
+            x = abs(col_width//2 - (len(text) * font_width)//2)
+        else:
+            x = 0
+        if x and not y:
+            return x
+
+    if y:
+        if y == Position.CENTER:
+            y = abs(col_height//2 + font_height//2)
+        elif y == Position.BOTTOM:
+            y = col_height
+        else:
+            y = font_height
+        if y and not x:
+            return y
+
     return x, y
 
 
-def align_text_center(string: str,
-                      canvas_width: Optional[int] = 0,
-                      canvas_height: Optional[int] = 0,
-                      font_width: Optional[int] = 0,
-                      font_height: Optional[int] = 0) -> (int, int):
+def align_image(image: Image,
+                x: Position = None, y: Position = None,
+                col_width: int = 0, col_height: int = 0) -> (int, Optional[int]):
     """
-    Calculate x-coord to align text to center of canvas.
-    :param string: (str) String of text to be displayed
-    :param canvas_width: (int) Canvas' width
-    :param canvas_height: (int) Canvas' height
-    :param font_width: (int) Font's width
-    :param font_height: (int) Font's height
-    :return: (x, y): (int, int) X, Y coordinates
+    Calculate the x, y offsets to align image on canvas
+    :param image: Image to align
+    :param x: Image horizontal position
+    :param y: Image vertical position
+    :param col_width: Column's width
+    :param col_height: Column's height
+    :return: x, y: Coordinate offsets
     """
-    x = abs(canvas_width//2 - (len(string)*font_width) // 2)
-    y = abs(canvas_height//2 + font_height//2)
+    if x:
+        if x == Position.RIGHT:
+            x = col_width - image.width
+        elif x == Position.CENTER:
+            x = abs(col_width//2 - image.width//2)
+        else:
+            x = 0
+        if x and not y:
+            return x
+
+    if y:
+        if y == Position.CENTER:
+            y = abs(col_height//2 - image.height//2)
+        elif y == Position.BOTTOM:
+            y = col_height - image.height
+        else:
+            y = 0
+        if y and not x:
+            return y
+
     return x, y
-
-
-def align_text_right(string: str, canvas_width: int, font_width: int) -> int:
-    """
-    Calculate x-coord to align text to right of canvas.
-    :param string: (str) Text to align
-    :param canvas_width: (int) Canvas width
-    :param font_width: (int) Font width
-    :return: x_coord: (int) x-coordinate
-    """
-    return canvas_width - (len(string)*font_width)
 
 
 def split_into_pages(lst: list, size: int) -> List[list]:

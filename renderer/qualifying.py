@@ -1,7 +1,7 @@
 import time
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
-from utils import Color, align_text_center, split_into_pages
+from utils import Color, align_text, Position, split_into_pages
 
 
 class Qualifying(Renderer):
@@ -30,9 +30,10 @@ class Qualifying(Renderer):
         self.coords = self.config.layout.coords['qualifying']
 
         self.offset = 4
-        self.header_x = align_text_center('Qualifying',
-                                          canvas_width=self.canvas.width,
-                                          font_width=self.font.baseline - 1)[0]
+        self.header_x = align_text('Qualifying',
+                                   x=Position.CENTER,
+                                   col_width=self.canvas.width,
+                                   font_width=self.font.baseline - 1)
         self.position_x = self.coords['grid']['odd']['position']['x']
         self.position_y = self.coords['grid']['odd']['position']['y']
         self.code_x = self.coords['grid']['odd']['code']['x']
@@ -43,11 +44,13 @@ class Qualifying(Renderer):
 
         if self.qualifying is None:
             self.render_header()
-            x, y = align_text_center('Upcoming',
-                                     self.canvas.width,
-                                     self.canvas.height,
-                                     self.font.baseline - 1,
-                                     self.font.height)
+            x, y = align_text('Upcoming',
+                              Position.CENTER,
+                              Position.CENTER,
+                              self.canvas.width,
+                              self.canvas.height,
+                              self.font.baseline - 1,
+                              self.font.height)
             DrawText(self.canvas, self.font, x, y, Color.WHITE.value, 'Upcoming')
             time.sleep(7.0)
         else:
@@ -92,9 +95,10 @@ class Qualifying(Renderer):
         for x in range(self.position_x, self.code_x - 1):
             DrawLine(self.canvas, x, self.position_y - self.font.height, x, self.position_y, Color.WHITE.value)
 
-        self.position_x += align_text_center(position,
-                                             canvas_width=12,
-                                             font_width=self.font.baseline - 1)[0]
+        self.position_x += align_text(position,
+                                      Position.CENTER,
+                                      col_width=12,
+                                      font_width=self.font.baseline - 1)
 
         # Position
         DrawText(self.canvas, self.font, self.position_x, self.position_y, Color.BLACK.value, position)

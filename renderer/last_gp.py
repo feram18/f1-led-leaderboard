@@ -3,7 +3,7 @@ from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from data.driver import Driver
 from data.finishing_status import FinishingStatus
-from utils import Color, align_text_center, align_text_right, center_image, split_into_pages, load_image
+from utils import Color, align_text, Position, align_image, split_into_pages, load_image
 
 
 class LastGP(Renderer):
@@ -41,9 +41,10 @@ class LastGP(Renderer):
         self.logo = load_image(self.logo, (64, 24))
 
         self.gp_name = self.gp_result.gp.name
-        self.gp_name_x = align_text_center(self.gp_name,
-                                           canvas_width=self.canvas.width,
-                                           font_width=self.font.baseline - 1)[0]
+        self.gp_name_x = align_text(self.gp_name,
+                                    x=Position.CENTER,
+                                    col_width=self.canvas.width,
+                                    font_width=self.font.baseline - 1)
         self.position_y = self.coords['position']['y']
         self.code_x = self.coords['code']['x']
         self.code_y = self.coords['code']['y']
@@ -82,8 +83,7 @@ class LastGP(Renderer):
         DrawText(self.canvas, self.font, self.gp_name_x, y, Color.WHITE.value, self.gp_name)
 
     def render_logo(self):
-        x_offset = center_image(self.logo.size,
-                                self.canvas.width)[0]
+        x_offset = align_image(self.logo, x=Position.CENTER, col_width=self.canvas.width)
         y_offset = self.coords['logo']['y-offset']
         self.canvas.SetImage(self.logo, x_offset, y_offset)
 
@@ -168,19 +168,26 @@ class LastGP(Renderer):
             DrawLine(self.canvas, x, self.position_y - self.font.height, x, self.position_y, bg_color)
 
         # Number
-        x = align_text_center(position,
-                              canvas_width=12,
-                              font_width=self.font.baseline - 1)[0]
+        x = align_text(position,
+                       x=Position.CENTER,
+                       col_width=12,
+                       font_width=self.font.baseline - 1)
         DrawText(self.canvas, self.font, x, self.position_y, text_color, position)
 
     def render_code(self, text_color: Color, code: str):
         DrawText(self.canvas, self.font, self.code_x, self.code_y, text_color, code)
 
     def render_race_time(self, text_color: Color, race_time: str):
-        x = align_text_right(race_time, self.canvas.width, self.font.baseline - 1)
+        x = align_text(race_time,
+                       x=Position.RIGHT,
+                       col_width=self.canvas.width,
+                       font_width=self.font.baseline - 1)
         DrawText(self.canvas, self.font, x, self.time_y, text_color, race_time)
 
     # TODO: DNF-type status too long
     def render_status(self, text_color: Color, status: str):
-        x = align_text_right(status, self.canvas.width, self.font.baseline - 1)
+        x = align_text(status,
+                       x=Position.RIGHT,
+                       col_width=self.canvas.width,
+                       font_width=self.font.baseline - 1)
         DrawText(self.canvas, self.font, x, self.status_y, text_color, status)

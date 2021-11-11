@@ -2,7 +2,7 @@ import time
 from typing import List, Tuple
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
-from utils import Color, align_text_center, align_text_right
+from utils import Color, align_text, Position
 
 
 class ConstructorStandings(Renderer):
@@ -38,9 +38,10 @@ class ConstructorStandings(Renderer):
 
         self.coords = self.config.layout.coords['standings']
 
-        self.header_x = align_text_center('Constructors',
-                                          canvas_width=self.canvas.width,
-                                          font_width=self.font.baseline - 1)[0]
+        self.header_x = align_text('Constructors',
+                                   x=Position.CENTER,
+                                   col_width=self.canvas.width,
+                                   font_width=self.font.baseline - 1)
         self.name_x = self.coords['name']['x']
         self.name_y = self.coords['name']['y']
         self.points_x = self.coords['points']['x']
@@ -94,5 +95,8 @@ class ConstructorStandings(Renderer):
         DrawText(self.canvas, self.font, self.name_x, self.name_y, self.text_color, name)
 
     def render_points(self, points: str):
-        self.points_x = align_text_right(points, self.canvas.width, self.font.baseline - 1)
+        self.points_x = align_text(points,
+                                   x=Position.RIGHT,
+                                   col_width=self.canvas.width,
+                                   font_width=self.font.baseline - 1)
         DrawText(self.canvas, self.font, self.points_x, self.points_y, self.text_color, points)

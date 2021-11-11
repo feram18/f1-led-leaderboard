@@ -2,7 +2,7 @@ import time
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from data.gp_status import GrandPrixStatus
-from utils import Color, align_text_center, center_image, load_image
+from utils import Color, align_text, Position, align_image, load_image
 
 
 class NextGP(Renderer):
@@ -37,9 +37,10 @@ class NextGP(Renderer):
         self.coords = self.config.layout.coords['next-gp']
 
         self.gp_name = self.gp.name
-        self.gp_name_x = align_text_center(self.gp_name,
-                                           canvas_width=self.canvas.width,
-                                           font_width=self.font.baseline - 1)[0]
+        self.gp_name_x = align_text(self.gp_name,
+                                    x=Position.CENTER,
+                                    col_width=self.canvas.width,
+                                    font_width=self.font.baseline - 1)
         self.location = f'{self.gp.circuit.locality} {self.gp.circuit.country}'
         self.date = self.gp.date
         self.time = self.gp.time
@@ -76,30 +77,33 @@ class NextGP(Renderer):
             DrawLine(self.canvas, x, y - self.font.height, x, y, Color.RED.value)
         DrawText(self.canvas, self.font, self.gp_name_x, y, self.text_color, self.gp_name)
 
-    # TODO: Change y-offset so it's centered taking title into account
     def render_logo(self):
-        x_offset = center_image(self.logo.size,
-                                self.canvas.width)[0]
+        x_offset = align_image(self.logo,
+                               x=Position.CENTER,
+                               col_width=self.canvas.width) + self.font//2
         y_offset = self.coords['logo']['y-offset']
         self.canvas.SetImage(self.logo, x_offset, y_offset)
 
     def render_date(self):
-        x = align_text_center(self.date,
-                              canvas_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)[0]
+        x = align_text(self.date,
+                       x=Position.CENTER,
+                       col_width=self.canvas.width,
+                       font_width=self.font.baseline - 1)
         y = self.coords['date']['y']
         DrawText(self.canvas, self.font, x, y, self.text_color, self.date)
 
     def render_time(self):
-        x = align_text_center(self.time,
-                              canvas_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)[0]
+        x = align_text(self.time,
+                       x=Position.CENTER,
+                       col_width=self.canvas.width,
+                       font_width=self.font.baseline - 1)
         y = self.coords['time']['y']
         DrawText(self.canvas, self.font, x, y, self.text_color, self.time)
 
     def render_track(self):
-        x_offset = center_image(self.track.size,
-                                self.canvas.width)[0]
+        x_offset = align_image(self.track,
+                               x=Position.CENTER,
+                               col_width=self.canvas.width)
         y_offset = self.coords['track']['y-offset']
         self.canvas.SetImage(self.track, x_offset, y_offset)
 
@@ -109,8 +113,9 @@ class NextGP(Renderer):
         DrawText(self.canvas, self.font, x, y, self.text_color, self.location)
 
     def render_status(self):
-        x = align_text_center(self.status.value,
-                              canvas_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)[0]
+        x = align_text(self.status.value,
+                       x=Position.CENTER,
+                       col_width=self.canvas.width,
+                       font_width=self.font.baseline - 1)
         y = self.coords['status']['y']
         DrawText(self.canvas, self.font, x, y, self.text_color, self.status.value)

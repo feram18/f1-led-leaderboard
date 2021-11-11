@@ -1,6 +1,6 @@
 from rgbmatrix.graphics import DrawText
 from renderer.renderer import Renderer
-from utils import Color, align_text_center, load_image, center_image
+from utils import Color, align_text, Position, load_image, align_image
 from constants import F1_LOGO
 from version import __version__
 
@@ -27,15 +27,18 @@ class Loading(Renderer):
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_version(self):
-        x = align_text_center(string=__version__,
-                              canvas_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)[0]
+        x = align_text(__version__,
+                       x=Position.CENTER,
+                       col_width=self.canvas.width,
+                       font_width=self.font.baseline - 1)
         y = self.coords['version']['y']
         DrawText(self.canvas, self.font, x, y, Color.WHITE.value, __version__)
 
     def render_logo(self):
         logo = load_image(F1_LOGO, (64, 28))
-        x_offset, y_offset = center_image(logo.size,
-                                          self.canvas.width,
-                                          self.canvas.height)
+        x_offset, y_offset = align_image(logo,
+                                         Position.CENTER,
+                                         Position.CENTER,
+                                         self.canvas.width,
+                                         self.canvas.height)
         self.canvas.SetImage(logo, x_offset, y_offset)
