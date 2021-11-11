@@ -1,9 +1,8 @@
 import time
 from rgbmatrix.graphics import DrawText
 from renderer.renderer import Renderer
-from utils import align_text_center, load_image
+from utils import Color, align_text_center, load_image
 from constants import ERROR_IMAGE
-from data.color import Color
 
 
 class Error(Renderer):

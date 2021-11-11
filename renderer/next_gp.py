@@ -1,9 +1,8 @@
 import time
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
-from data.color import Color
 from data.gp_status import GrandPrixStatus
-from utils import align_text_center, center_image, load_image
+from utils import Color, align_text_center, center_image, load_image
 
 
 class NextGP(Renderer):

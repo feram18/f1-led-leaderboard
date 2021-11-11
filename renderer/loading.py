@@ -1,9 +1,8 @@
 from rgbmatrix.graphics import DrawText
 from renderer.renderer import Renderer
-from utils import align_text_center, load_image, center_image
+from utils import Color, align_text_center, load_image, center_image
 from constants import F1_LOGO
 from version import __version__
-from data.color import Color
 
 
 class Loading(Renderer):

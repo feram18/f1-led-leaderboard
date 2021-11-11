@@ -1,8 +1,7 @@
 import time
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
-from data.color import Color
-from utils import align_text_center, split_into_pages
+from utils import Color, align_text_center, split_into_pages
 
 
 class Qualifying(Renderer):

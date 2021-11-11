@@ -2,8 +2,7 @@ import time
 from typing import List, Tuple
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
-from data.color import Color
-from utils import align_text_center, align_text_right, load_image
+from utils import Color, align_text_center, align_text_right, load_image
 
 
 class DriverStandings(Renderer):

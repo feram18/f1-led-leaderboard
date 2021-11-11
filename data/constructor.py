@@ -1,7 +1,7 @@
 import os
 import logging
 from dataclasses import dataclass, field
-from data.color import Color
+from utils import Color
 from constants import CONSTRUCTOR_LOGO_PATH
 
 

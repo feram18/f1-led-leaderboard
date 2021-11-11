@@ -1,10 +1,9 @@
 import time
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
-from data.color import Color
 from data.driver import Driver
 from data.finishing_status import FinishingStatus
-from utils import align_text_center, align_text_right, center_image, split_into_pages, load_image
+from utils import Color, align_text_center, align_text_right, center_image, split_into_pages, load_image
 
 
 class LastGP(Renderer):
