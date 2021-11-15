@@ -13,7 +13,7 @@ class TestGrandPrix:
         assert (est_date, est_time) == (exp_date, exp_time)
 
     def test_get_status(self):
-        time = datetime.now().replace(year=2031, month=10, day=26, hour=8, minute=0)
+        time = datetime.now().replace(year=2031, month=10, day=26, hour=8, minute=0).astimezone(tz=None)
         result = GrandPrix.get_status(time)
         assert result == GrandPrixStatus.UPCOMING
 

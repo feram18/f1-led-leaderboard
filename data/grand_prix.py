@@ -42,7 +42,7 @@ class GrandPrix:
         :param start_time: GP's start date & time
         :return: status: GP's status
         """
-        now = datetime.now()
+        now = datetime.now().astimezone(tz=None)
         end_time = start_time + timedelta(hours=2)
         if now < start_time:
             return GrandPrixStatus.UPCOMING
