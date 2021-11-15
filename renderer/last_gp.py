@@ -184,7 +184,6 @@ class LastGP(Renderer):
                        font_width=self.font.baseline - 1)
         DrawText(self.canvas, self.font, x, self.time_y, text_color, race_time)
 
-    # TODO: DNF-type status too long
     def render_status(self, text_color: Color, status: str):
         x = align_text(status,
                        x=Position.RIGHT,
