@@ -69,9 +69,11 @@ def load_font(filename: str) -> Font:
     """
     font = Font()
     if os.path.isfile(filename):
-        return font.LoadFont(filename)
+        font.LoadFont(filename)
+        return font
     logging.warning(f"Couldn't find font {filename}. Setting font to default 4x6.")
-    return font.LoadFont('rpi-rgb-led-matrix/fonts/4x6.bdf')
+    font.LoadFont('rpi-rgb-led-matrix/fonts/4x6.bdf')
+    return font
 
 
 def load_image(filename: str,
