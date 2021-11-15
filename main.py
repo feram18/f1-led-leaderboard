@@ -15,7 +15,6 @@ def main():
     # Print script details on startup
     print(f'\U0001F3C1 F1-LED-Leaderboard - v{__version__} ({matrix.width}x{matrix.height})')
 
-    # Read software preferences from config.json
     config = MatrixConfig(matrix.width, matrix.height)
 
     # Create canvas

@@ -23,10 +23,11 @@ class Circuit:
         """
         Get path to circuit's logo image.
         :param circuit_id: (str) Circuit's Id
-        :return: logo_path: (str) Path to logo image
+        :return: img_path: (str) Path to logo image
         """
-        if os.path.isfile(CIRCUIT_LOGO_PATH.format(circuit_id)):
-            return CIRCUIT_LOGO_PATH.format(circuit_id)
+        img_path = CIRCUIT_LOGO_PATH.format(circuit_id)
+        if os.path.isfile(img_path):
+            return img_path
         else:
             # TODO: Set to country flag
             logging.error(f'No logo image found for {circuit_id}')
@@ -36,9 +37,9 @@ class Circuit:
         """
         Get path to circuit's track image.
         :param circuit_id: (str) Circuit's id
-        :return: track_path: (str) Path to track image
+        :return: img_path: (str) Path to track image
         """
-        if os.path.isfile(TRACK_IMAGE_PATH.format(circuit_id)):
-            return TRACK_IMAGE_PATH.format(circuit_id)
-        else:
-            logging.error(f'No track image found for {circuit_id}')
+        img_path = TRACK_IMAGE_PATH.format(circuit_id)
+        if os.path.isfile(img_path):
+            return img_path
+        logging.error(f'No track image found for {circuit_id}')

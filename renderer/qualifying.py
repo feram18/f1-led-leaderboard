@@ -15,7 +15,6 @@ class Qualifying(Renderer):
         qualifying (data.Qualifying):       Qualifying data
         coords (dict):                      Coordinates dictionary
         offset (int):                       Row y-coord offset
-        header_x (int):                     Table header's x-coord
         position_x (int):                   Driver's grid position x-coord
         position_y (int):                   Driver's grid position y-coord
         code_x (int):                       Driver's code x-coord
@@ -30,10 +29,6 @@ class Qualifying(Renderer):
         self.coords = self.config.layout.coords['qualifying']
 
         self.offset = 4
-        self.header_x = align_text('Qualifying',
-                                   x=Position.CENTER,
-                                   col_width=self.canvas.width,
-                                   font_width=self.font.baseline - 1)
         self.position_x = self.coords['grid']['odd']['position']['x']
         self.position_y = self.coords['grid']['odd']['position']['y']
         self.code_x = self.coords['grid']['odd']['code']['x']
@@ -62,6 +57,10 @@ class Qualifying(Renderer):
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_header(self):
+        header_x = align_text('Qualifying',
+                              x=Position.CENTER,
+                              col_width=self.canvas.width,
+                              font_width=self.font.baseline - 1)
         y = self.coords['header']['y']
 
         # Background
@@ -69,7 +68,7 @@ class Qualifying(Renderer):
             DrawLine(self.canvas, x, y - self.font.height, x, y, Color.RED.value)
 
         # Header
-        DrawText(self.canvas, self.font, self.header_x, y, Color.WHITE.value, 'Qualifying')
+        DrawText(self.canvas, self.font, header_x, y, Color.WHITE.value, 'Qualifying')
 
     def render_page(self, page: list):
         for item in page:

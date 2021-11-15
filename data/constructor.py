@@ -23,9 +23,9 @@ class Constructor:
         """
         Get path to constructor's logo image
         :param constructor_id: (str) Constructor's id
-        :return: logo_path: (str) path to logo image
+        :return: img_path: (str) path to logo image
         """
-        if os.path.isfile(CONSTRUCTOR_LOGO_PATH.format(constructor_id)):
-            return CONSTRUCTOR_LOGO_PATH.format(constructor_id)
-        else:
-            logging.error(f'No logo image found for {constructor_id}')
+        img_path = CONSTRUCTOR_LOGO_PATH.format(constructor_id)
+        if os.path.isfile(img_path):
+            return img_path
+        logging.error(f'No logo image found for {constructor_id}')

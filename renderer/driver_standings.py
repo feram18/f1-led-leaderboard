@@ -1,5 +1,5 @@
 import time
-from typing import List, Tuple
+from typing import Tuple
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
 from utils import Color, align_text, Position, load_image
@@ -18,7 +18,6 @@ class DriverStandings(Renderer):
         text_color (rgbmatrix.graphics.Font):       Text color
         offset (int):                               Row y-coord offset
         coords (dict):                              Coordinates dictionary
-        header_x (int):                             Table header's x-coord
         position_y (int):                           Driver's position y-coord
         flag_y_offset (int):                        Driver's flag y-coord offset
         code_x (int):                               Driver's code x-coord
@@ -39,10 +38,6 @@ class DriverStandings(Renderer):
 
         self.coords = self.config.layout.coords['standings']
 
-        self.header_x = align_text('Drivers',
-                                   x=Position.CENTER,
-                                   col_width=self.canvas.width,
-                                   font_width=self.font.baseline - 1)
         self.position_y = self.coords['position']['y']
         self.flag_y_offset = self.coords['flag']['y-offset']
         self.code_x = self.coords['code']['x']
@@ -66,11 +61,15 @@ class DriverStandings(Renderer):
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_header(self):
+        header_x = align_text('Drivers',
+                              x=Position.CENTER,
+                              col_width=self.canvas.width,
+                              font_width=self.font.baseline - 1)
         y = self.coords['header']['y']
 
         for x in range(self.canvas.width):
             DrawLine(self.canvas, x, y - y, x, y, self.bg_color)
-        DrawText(self.canvas, self.font, self.header_x, y, self.text_color, 'Drivers')
+        DrawText(self.canvas, self.font, header_x, y, self.text_color, 'Drivers')
 
     def render_page(self, page: Tuple[int, int]):
         for i in range(page[0], page[1]):

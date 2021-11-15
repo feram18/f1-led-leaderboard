@@ -58,8 +58,7 @@ def read_json(filename: str) -> dict:
         with open(filename, 'r') as json_file:
             logging.debug(f'Reading JSON file at {filename}')
             return json.load(json_file)
-    else:
-        logging.error(f"Couldn't find file at {filename}")
+    logging.error(f"Couldn't find file at {filename}")
 
 
 def load_font(filename: str) -> Font:
@@ -70,14 +69,14 @@ def load_font(filename: str) -> Font:
     """
     font = Font()
     if os.path.isfile(filename):
-        font.LoadFont(filename)
-    else:
-        logging.warning(f"Couldn't find font {filename}. Setting font to default 4x6.")
-        font.LoadFont('rpi-rgb-led-matrix/fonts/4x6.bdf')
-    return font
+        return font.LoadFont(filename)
+    logging.warning(f"Couldn't find font {filename}. Setting font to default 4x6.")
+    return font.LoadFont('rpi-rgb-led-matrix/fonts/4x6.bdf')
 
 
-def load_image(filename: str, size: Tuple[int, int] = (64, 32), background: Color = Color.BLACK) -> Image:
+def load_image(filename: str,
+               size: Tuple[int, int] = (64, 32),
+               background: Color = Color.BLACK) -> Image:
     """
     Open Image file from given path
     :param background: Background color for PNG images
@@ -94,9 +93,7 @@ def load_image(filename: str, size: Tuple[int, int] = (64, 32), background: Colo
             image.paste(original)  # Paste original on background
             image.thumbnail(size)  # Resize
             return image
-    else:
-        logging.error(f"Couldn't find image {filename}")
-        return None
+    logging.error(f"Couldn't find image {filename}")
 
 
 def align_text(text: str,
