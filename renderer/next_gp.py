@@ -80,7 +80,7 @@ class NextGP(Renderer):
     def render_logo(self):
         x_offset = align_image(self.logo,
                                x=Position.CENTER,
-                               col_width=self.canvas.width) + self.font.height//2
+                               col_width=self.canvas.width)
         y_offset = self.coords['logo']['y-offset']
         self.canvas.SetImage(self.logo, x_offset, y_offset)
 
