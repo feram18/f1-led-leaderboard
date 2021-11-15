@@ -22,7 +22,8 @@ QUALIFYING_RESULTS_URL = f'{BASE_URL}/next/qualifying.json'
 SCHEDULE_URL = f'{BASE_URL}.json'
 
 # Date/Time Formatting
-DATETIME_FORMAT = '%Y-%m-%d %H:%M'
+DATE_FORMAT = '%a, %b %d'  # eg. Sun, Nov 14
+TIME_FORMAT = '%H:%M'  # eg. 18:30
 
 # Software
 UPDATE_RATE = 15.0 * 60  # 15 minutes
