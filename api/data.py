@@ -39,7 +39,7 @@ class Data:
         self.fetch_driver_standings()
         self.fetch_last_gp()
         self.fetch_schedule()
-        self.fetch_next_gp()
+        self.next_gp = self.schedule[0]
         self.fetch_qualifying_results()
 
         self.last_updated = time.time()
@@ -55,7 +55,6 @@ class Data:
 
     def fetch_constructors(self):
         logging.debug('Fetching Constructors List')
-        self.constructors = {}  # Initialize dict
 
         response = requests.get(constants.CONSTRUCTORS_URL).json()
         constructors = response['MRData']['ConstructorTable']['Constructors']
@@ -67,7 +66,6 @@ class Data:
 
     def fetch_drivers(self):
         logging.debug('Fetching Drivers List')
-        self.drivers = {}  # Initialize dict
 
         response = requests.get(constants.DRIVER_STANDINGS_URL).json()
         drivers = response['MRData']['StandingsTable']['StandingsLists'][0]['DriverStandings']
@@ -90,11 +88,10 @@ class Data:
         response = requests.get(constants.CONSTRUCTOR_STANDINGS_URL).json()
         constructors = response['MRData']['StandingsTable']['StandingsLists'][0]['ConstructorStandings']
 
-        for constructor in constructors:
-            self.constructor_standings.append(
-                ConstructorStandingsItem(self.constructors.get(constructor['Constructor']['constructorId']),
-                                         int(constructor['position']),
-                                         float(constructor['points'])))
+        self.constructor_standings = [
+            ConstructorStandingsItem(self.constructors.get(constructor['Constructor']['constructorId']),
+                                     int(constructor['position']),
+                                     float(constructor['points'])) for constructor in constructors]
 
     def fetch_driver_standings(self):
         logging.debug('Fetching Driver Standings')
@@ -105,10 +102,9 @@ class Data:
         response = requests.get(constants.DRIVER_STANDINGS_URL).json()
         drivers = response['MRData']['StandingsTable']['StandingsLists'][0]['DriverStandings']
 
-        for driver in drivers:
-            self.driver_standings.append(DriverStandingsItem(self.drivers.get(driver['Driver']['driverId']),
-                                                             int(driver['position']),
-                                                             float(driver['points'])))
+        self.driver_standings = [DriverStandingsItem(self.drivers.get(driver['Driver']['driverId']),
+                                                     int(driver['position']),
+                                                     float(driver['points'])) for driver in drivers]
 
     def fetch_last_gp(self):
         logging.debug("Fetching Last Grand Prix's data")
@@ -125,16 +121,15 @@ class Data:
                        gp['time'])
 
         results = response['MRData']['RaceTable']['Races'][0]['Results']
-        driver_results = []
-        for result in results:
-            driver_results.append(
-                DriverResult(self.drivers.get(result['Driver']['driverId']),
-                             int(result['position']),
-                             float(result['points']),
-                             int(result['laps']),
-                             Status(result['status']),
-                             result['Time']['time'] if Status(result['status']) == Status.FINISHED else None,
-                             result['FastestLap']['rank'] == "1" if result.get('FastestLap') is not None else False))
+        driver_results = [
+            DriverResult(self.drivers.get(result['Driver']['driverId']),
+                         int(result['position']),
+                         float(result['points']),
+                         int(result['laps']),
+                         Status(result['status']),
+                         result['Time']['time'] if Status(result['status']) == Status.FINISHED else None,
+                         result['FastestLap']['rank'] == "1" if result.get('FastestLap') is not None else False)
+            for result in results]
         self.last_gp = GPResult(gp, driver_results)
 
     def fetch_next_gp(self):
@@ -157,14 +152,11 @@ class Data:
 
         if int(response['MRData']['total']) > 0:  # Qualifying results available
             results = response['MRData']['RaceTable']['Races'][0]['QualifyingResults']
-            grid = [] * 20  # Qualifying results
-
-            for result in results:
-                grid.append(QualifyingResultItem(int(result['position']),
-                                                 self.drivers.get(result['Driver']['driverId']),
-                                                 result.get('Q1', None),
-                                                 result.get('Q2', None),
-                                                 result.get('Q3', None)))
+            grid = [QualifyingResultItem(int(result['position']),
+                                         self.drivers.get(result['Driver']['driverId']),
+                                         result.get('Q1', None),
+                                         result.get('Q2', None),
+                                         result.get('Q3', None)) for result in results]
             self.qualifying = Qualifying(self.next_gp, grid)
 
     def fetch_schedule(self):
@@ -172,16 +164,14 @@ class Data:
         response = requests.get(constants.SCHEDULE_URL).json()
         schedule = response['MRData']['RaceTable']['Races']
 
-        remaining_gps = []
-        for gp in schedule[self.last_gp.gp.round:]:
-            remaining_gps.append(GrandPrix(int(gp['round']),
-                                           gp['raceName'],
-                                           Circuit(gp['Circuit']['circuitId'],
-                                                   gp['Circuit']['circuitName'],
-                                                   gp['Circuit']['Location']['locality'],
-                                                   gp['Circuit']['Location']['country']),
-                                           gp['date'],
-                                           gp['time']))
+        remaining_gps = [GrandPrix(int(gp['round']),
+                                   gp['raceName'],
+                                   Circuit(gp['Circuit']['circuitId'],
+                                           gp['Circuit']['circuitName'],
+                                           gp['Circuit']['Location']['locality'],
+                                           gp['Circuit']['Location']['country']),
+                                   gp['date'],
+                                   gp['time']) for gp in schedule[self.last_gp.gp.round:]]
         self.schedule = remaining_gps
 
     def should_update(self) -> bool:
