@@ -71,6 +71,7 @@ def load_font(filename: str) -> Font:
     if os.path.isfile(filename):
         font.LoadFont(filename)
         return font
+
     logging.warning(f"Couldn't find font {filename}. Setting font to default 4x6.")
     font.LoadFont('rpi-rgb-led-matrix/fonts/4x6.bdf')
     return font
@@ -88,13 +89,17 @@ def load_image(filename: str,
     """
     if os.path.isfile(filename):
         with Image.open(filename) as original:
-            original = original.crop(original.getbbox())  # Non-empty pixels
-            image = Image.new('RGB',  # Background img
-                              (original.width, original.height),
-                              (background.value.red, background.value.green, background.value.blue, 255))
-            image.paste(original)  # Paste original on background
-            image.thumbnail(size)  # Resize
-            return image
+            if '.png' in filename:
+                original = original.crop(original.getbbox())  # Non-empty pixels
+                image = Image.new('RGB',  # Background img
+                                  (original.width, original.height),
+                                  (background.value.red, background.value.green, background.value.blue, 255))
+                image.paste(original)  # Paste original on background
+                image.thumbnail(size)  # Resize
+                return image
+            else:
+                original.thumbnail(size)
+                return original.convert('RGB')
     logging.error(f"Couldn't find image {filename}")
 
 
