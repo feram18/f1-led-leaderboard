@@ -22,8 +22,8 @@ class Circuit:
     def get_logo(circuit_id: str) -> str:
         """
         Get path to circuit's logo image.
-        :param circuit_id: (str) Circuit's Id
-        :return: img_path: (str) Path to logo image
+        :param circuit_id: Circuit's Id
+        :return: img_path: Path to logo image
         """
         img_path = CIRCUIT_LOGO_PATH.format(circuit_id)
         if os.path.isfile(img_path):
@@ -36,8 +36,8 @@ class Circuit:
     def get_track(circuit_id: str) -> str:
         """
         Get path to circuit's track image.
-        :param circuit_id: (str) Circuit's id
-        :return: img_path: (str) Path to track image
+        :param circuit_id: Circuit's id
+        :return: img_path: Path to track image
         """
         img_path = TRACK_IMAGE_PATH.format(circuit_id)
         if os.path.isfile(img_path):
