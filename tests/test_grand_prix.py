@@ -18,11 +18,11 @@ class TestGrandPrix:
         assert result == GrandPrixStatus.UPCOMING
 
     def test_get_status_2(self):
-        time = datetime.now() - timedelta(hours=1)
+        time = datetime.now().astimezone(tz=None) - timedelta(hours=1)
         result = GrandPrix.get_status(time)
         assert result == GrandPrixStatus.IN_PROGRESS
 
     def test_get_status_3(self):
-        time = datetime.now() - timedelta(hours=3)
+        time = datetime.now().astimezone(tz=None) - timedelta(hours=3)
         result = GrandPrix.get_status(time)
         assert result == GrandPrixStatus.FINISHED
