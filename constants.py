@@ -26,4 +26,4 @@ DATE_FORMAT = '%a, %b %d'  # eg. Sun, Nov 14
 TIME_FORMAT = '%H:%M'  # eg. 18:30
 
 # Software
-UPDATE_RATE = 60.0 * 60  # 1 hour
+UPDATE_RATE = 30.0 * 60  # 30 minutes
