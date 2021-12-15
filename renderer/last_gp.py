@@ -17,7 +17,6 @@ class LastGP(Renderer):
         gp_result (data.GPResult):      Last GP's results data
         offset (int):                   Row y-coord offset
         coords (dict):                  Coordinates dictionary
-        logo (PIL.Image):               Grand Prix's circuit logo
         position_y (int):               Driver's position y-coord
         code_x (int):                   Driver's code x-coord
         code_y (int):                   Driver's code y-coord
@@ -28,16 +27,9 @@ class LastGP(Renderer):
     def __init__(self, matrix, canvas, config, data):
         super().__init__(matrix, canvas, config)
         self.data = data
-
         self.gp_result = self.data.last_gp
-
         self.offset = self.font.height + 2
-
         self.coords = self.config.layout.coords['last-gp']
-
-        self.logo = self.gp_result.gp.circuit.logo if not None else self.gp_result.gp.circuit.track
-        self.logo = load_image(self.logo, (64, 24))
-
         self.position_y = self.coords['position']['y']
         self.code_x = self.coords['code']['x']
         self.code_y = self.coords['code']['y']
@@ -45,28 +37,28 @@ class LastGP(Renderer):
         self.status_y = self.coords['status']['y']
 
     def render(self):
-        self.canvas.Clear()
+        if self.gp_result:
+            self.canvas.Clear()
 
-        # Slide 1
-        self.render_gp_name()
-        if self.logo is not None:
+            # Slide 1
+            self.render_gp_name()
             self.render_logo()
-        time.sleep(7.0)
+            time.sleep(7.0)
 
-        self.canvas.Clear()
+            self.canvas.Clear()
 
-        # Slide 2
-        self.render_podium(self.gp_result.driver_results[:3])  # Podium winners
-        time.sleep(7.0)
+            # Slide 2
+            self.render_podium(self.gp_result.driver_results[:3])  # Podium winners
+            time.sleep(7.0)
 
-        self.canvas.Clear()
+            self.canvas.Clear()
 
-        # Complete results
-        pages = split_into_pages(self.gp_result.driver_results, 4)  # No.1-4, 5-9, 10-13, 14-17, 18-20
-        for page in pages:
-            self.render_page(page)
+            # Complete results
+            pages = split_into_pages(self.gp_result.driver_results, 4)  # No.1-4, 5-9, 10-13, 14-17, 18-20
+            for page in pages:
+                self.render_page(page)
 
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+            self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     # TODO: Name text can be too long to fit on canvas
     def render_gp_name(self):
@@ -81,9 +73,12 @@ class LastGP(Renderer):
         DrawText(self.canvas, self.font, name_x, y, Color.WHITE.value, self.gp_result.gp.name)
 
     def render_logo(self):
-        x_offset = align_image(self.logo, x=Position.CENTER, col_width=self.canvas.width)
+        logo = self.gp_result.gp.circuit.logo if not None else self.gp_result.gp.circuit.track
+        logo = load_image(logo, (64, 24))
+
+        x_offset = align_image(logo, x=Position.CENTER, col_width=self.canvas.width)
         y_offset = self.coords['logo']['y-offset']
-        self.canvas.SetImage(self.logo, x_offset, y_offset)
+        self.canvas.SetImage(logo, x_offset, y_offset)
 
     def render_podium(self, winners: list):
         places = ['1st', '2nd', '3rd']
