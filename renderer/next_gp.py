@@ -16,7 +16,6 @@ class NextGP(Renderer):
         gp (data.GrandPrix):                        Next GP's data
         text_color (rgbmatrix.graphics.Color):      Text color
         coords (dict):                              Coordinates dictionary
-        status (str):                               Grand Prix's status
         logo (PIL.Image):                           Grand Prix's circuit logo image
         track (PIL.Image):                          Grand Prix's track layout image
     """
@@ -24,38 +23,36 @@ class NextGP(Renderer):
     def __init__(self, matrix, canvas, config, data):
         super().__init__(matrix, canvas, config)
         self.data = data
-
         self.gp = self.data.next_gp
-
         self.text_color = Color.WHITE.value
-
         self.coords = self.config.layout.coords['next-gp']
-
-        self.status = self.gp.status
-        self.logo = load_image(self.gp.circuit.logo, (64, 24))
-        self.track = load_image(self.gp.circuit.track, (64, 20))
+        self.logo = None
+        self.track = None
 
     def render(self):
-        self.canvas.Clear()
+        if self.gp:
+            self.canvas.Clear()
 
-        # Slide 1
-        if self.logo is not None:
+            self.logo = load_image(self.gp.circuit.logo, (64, 24))
+            self.track = load_image(self.gp.circuit.track, (64, 20))
+
+            # Slide 1
             self.render_logo()
-        self.render_gp_name()
-        time.sleep(7.5)
+            self.render_gp_name()
+            time.sleep(7.5)
 
-        self.canvas.Clear()
+            self.canvas.Clear()
 
-        # Slide 2
-        self.render_track()
-        self.render_date()
-        if self.status == GrandPrixStatus.UPCOMING:
-            self.render_time()
-        else:
-            self.render_status()
-        time.sleep(7.5)
+            # Slide 2
+            self.render_track()
+            self.render_date()
+            if self.gp.status == GrandPrixStatus.UPCOMING:
+                self.render_time()
+            else:
+                self.render_status()
+            time.sleep(7.5)
 
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+            self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     # TODO: Name text can be too long to fit on canvas
     def render_gp_name(self):
@@ -70,11 +67,12 @@ class NextGP(Renderer):
         DrawText(self.canvas, self.font, name_x, y, self.text_color, self.gp.name)
 
     def render_logo(self):
-        x_offset = align_image(self.logo,
-                               x=Position.CENTER,
-                               col_width=self.canvas.width)
-        y_offset = self.coords['logo']['y-offset']
-        self.canvas.SetImage(self.logo, x_offset, y_offset)
+        if self.logo:
+            x_offset = align_image(self.logo,
+                                   x=Position.CENTER,
+                                   col_width=self.canvas.width)
+            y_offset = self.coords['logo']['y-offset']
+            self.canvas.SetImage(self.logo, x_offset, y_offset)
 
     def render_date(self):
         x = align_text(self.gp.date,
@@ -93,11 +91,12 @@ class NextGP(Renderer):
         DrawText(self.canvas, self.font, x, y, self.text_color, self.gp.time)
 
     def render_track(self):
-        x_offset = align_image(self.track,
-                               x=Position.CENTER,
-                               col_width=self.canvas.width)
-        y_offset = self.coords['track']['y-offset']
-        self.canvas.SetImage(self.track, x_offset, y_offset)
+        if self.track:
+            x_offset = align_image(self.track,
+                                   x=Position.CENTER,
+                                   col_width=self.canvas.width)
+            y_offset = self.coords['track']['y-offset']
+            self.canvas.SetImage(self.track, x_offset, y_offset)
 
     def render_location(self):
         location = f'{self.gp.circuit.locality} {self.gp.circuit.country}'
@@ -106,9 +105,9 @@ class NextGP(Renderer):
         DrawText(self.canvas, self.font, x, y, self.text_color, location)
 
     def render_status(self):
-        x = align_text(self.status.value,
+        x = align_text(self.gp.status.value,
                        x=Position.CENTER,
                        col_width=self.canvas.width,
                        font_width=self.font.baseline - 1)
         y = self.coords['status']['y']
-        DrawText(self.canvas, self.font, x, y, self.text_color, self.status.value)
+        DrawText(self.canvas, self.font, x, y, self.text_color, self.gp.status.value)
