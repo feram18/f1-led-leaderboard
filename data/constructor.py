@@ -1,7 +1,7 @@
 import os
 import logging
 from dataclasses import dataclass, field
-from data.color import Color
+from utils import Color
 from constants import CONSTRUCTOR_LOGO_PATH
 
 
@@ -22,10 +22,10 @@ class Constructor:
     def get_logo(constructor_id: str) -> str:
         """
         Get path to constructor's logo image
-        :param constructor_id: (str) Constructor's id
-        :return: logo_path: (str) path to logo image
+        :param constructor_id: Constructor's id
+        :return: img_path: path to logo image
         """
-        if os.path.isfile(CONSTRUCTOR_LOGO_PATH.format(constructor_id)):
-            return CONSTRUCTOR_LOGO_PATH.format(constructor_id)
-        else:
-            logging.error(f'No logo image found for {constructor_id}')
+        img_path = CONSTRUCTOR_LOGO_PATH.format(constructor_id)
+        if os.path.isfile(img_path):
+            return img_path
+        logging.error(f'No logo image found for {constructor_id}')

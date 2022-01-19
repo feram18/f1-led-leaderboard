@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from data.circuit import Circuit
 from data.gp_status import GrandPrixStatus
-from constants import DATETIME_FORMAT
+from constants import DATE_FORMAT, TIME_FORMAT
 
 
 @dataclass
@@ -13,35 +13,36 @@ class GrandPrix:
     circuit: Circuit
     date: str
     time: str
+    dt: datetime = field(init=False)
     status: GrandPrixStatus = field(init=False)
 
     def __post_init__(self):
         self.name = self.name.replace('Grand Prix', 'GP')  # Abbreviate Grand Prix
-        self.date, self.time = self.convert_time(self.date, self.time)  # From UTC to local timezone
-        self.status = self.get_status(self.date, self.time)
+        self.dt = self.convert_time(self.date, self.time)  # From UTC to local timezone
+        self.date = self.dt.strftime(DATE_FORMAT)
+        self.time = self.dt.strftime(TIME_FORMAT)
+        self.status = self.get_status(self.dt)
 
     @staticmethod
-    def convert_time(date: str, time: str) -> list:
+    def convert_time(date: str, time: str) -> datetime:
         """
         Convert from UTC to local timezone
         :param date: GP's date (UTC)
         :param time: GP's time (UTC)
-        :return: date_time: GP's date & time (user's local timezone)
+        :return: dt: GP's date & time (user's local timezone)
         """
         dt = datetime.strptime(f'{date} {time}'.replace('Z', ''), '%Y-%m-%d %H:%M:%S')
         dt = dt.replace(tzinfo=timezone.utc).astimezone(tz=None)  # Convert to local timezone
-        return dt.strftime(DATETIME_FORMAT).split(' ')  # Split date and time
+        return dt
 
     @staticmethod
-    def get_status(date: str, time: str) -> GrandPrixStatus:
+    def get_status(start_time: datetime) -> GrandPrixStatus:
         """
-        Roughly determine the grand prix's current status. Does not (currently) account for delays.
-        :param date: GP's date
-        :param time: GP's time
+        Roughly determine the grand prix's current status. Does not account for delays.
+        :param start_time: GP's start date & time
         :return: status: GP's status
         """
-        now = datetime.now()
-        start_time = datetime.strptime(f'{date} {time}', '%Y-%m-%d %H:%M')
+        now = datetime.now().astimezone(tz=None)
         end_time = start_time + timedelta(hours=2)
         if now < start_time:
             return GrandPrixStatus.UPCOMING

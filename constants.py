@@ -5,10 +5,10 @@ LAYOUT_FILE = 'config/layout/w{}h{}.json'
 CONSTRUCTOR_LOGO_PATH = 'assets/img/constructors/{}.png'
 COUNTRY_FLAG_PATH = 'assets/img/flags/{}.jpg'
 NUMBER_IMAGE_PATH = 'assets/img/numbers/{}.png'
-CIRCUIT_LOGO_PATH = 'assets/img/circuits/logos/{}.jpg'
-TRACK_IMAGE_PATH = 'assets/img/circuits/tracks/{}.jpg'
-F1_LOGO = 'assets/img/formula-1_logo.jpg'
-ERROR_IMAGE = 'assets/img/error.jpg'
+CIRCUIT_LOGO_PATH = 'assets/img/circuits/logos/{}.png'
+TRACK_IMAGE_PATH = 'assets/img/circuits/tracks/{}.png'
+F1_LOGO = 'assets/img/formula-1_logo.png'
+ERROR_IMAGE = 'assets/img/error.png'
 
 # ERGAST F1 API
 BASE_URL = 'https://ergast.com/api/f1/current'
@@ -22,7 +22,8 @@ QUALIFYING_RESULTS_URL = f'{BASE_URL}/next/qualifying.json'
 SCHEDULE_URL = f'{BASE_URL}.json'
 
 # Date/Time Formatting
-DATETIME_FORMAT = '%Y-%m-%d %H:%M'
+DATE_FORMAT = '%a, %b %d'  # eg. Sun, Nov 14
+TIME_FORMAT = '%H:%M'  # eg. 18:30
 
 # Software
-UPDATE_RATE = 15.0 * 60  # 15 minutes
+UPDATE_RATE = 30.0 * 60  # 30 minutes

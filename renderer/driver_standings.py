@@ -1,9 +1,8 @@
 import time
-from typing import List, Tuple
+from typing import Tuple
 from rgbmatrix.graphics import DrawText, DrawLine
 from renderer.renderer import Renderer
-from data.color import Color
-from utils import align_text_center, align_text_right, load_image
+from utils import Color, align_text, Position, load_image
 
 
 class DriverStandings(Renderer):
@@ -19,7 +18,6 @@ class DriverStandings(Renderer):
         text_color (rgbmatrix.graphics.Font):       Text color
         offset (int):                               Row y-coord offset
         coords (dict):                              Coordinates dictionary
-        header_x (int):                             Table header's x-coord
         position_y (int):                           Driver's position y-coord
         flag_y_offset (int):                        Driver's flag y-coord offset
         code_x (int):                               Driver's code x-coord
@@ -40,9 +38,6 @@ class DriverStandings(Renderer):
 
         self.coords = self.config.layout.coords['standings']
 
-        self.header_x = align_text_center('Drivers',
-                                          canvas_width=self.canvas.width,
-                                          font_width=self.font.baseline - 1)[0]
         self.position_y = self.coords['position']['y']
         self.flag_y_offset = self.coords['flag']['y-offset']
         self.code_x = self.coords['code']['x']
@@ -66,11 +61,15 @@ class DriverStandings(Renderer):
         self.canvas = self.matrix.SwapOnVSync(self.canvas)
 
     def render_header(self):
+        header_x = align_text('Drivers',
+                              x=Position.CENTER,
+                              col_width=self.canvas.width,
+                              font_width=self.font.baseline - 1)
         y = self.coords['header']['y']
 
         for x in range(self.canvas.width):
             DrawLine(self.canvas, x, y - y, x, y, self.bg_color)
-        DrawText(self.canvas, self.font, self.header_x, y, self.text_color, 'Drivers')
+        DrawText(self.canvas, self.font, header_x, y, self.text_color, 'Drivers')
 
     def render_page(self, page: Tuple[int, int]):
         for i in range(page[0], page[1]):
@@ -112,9 +111,10 @@ class DriverStandings(Renderer):
             DrawLine(self.canvas, x, self.code_y - self.font.height, x, self.code_y, Color.WHITE.value)
 
         # Number
-        x = align_text_center(position,
-                              canvas_width=12,
-                              font_width=self.font.baseline - 1)[0]
+        x = align_text(position,
+                       x=Position.CENTER,
+                       col_width=12,
+                       font_width=self.font.baseline - 1)
         DrawText(self.canvas, self.font, x, self.position_y, Color.BLACK.value, position)
 
     def render_code(self, code: str):
@@ -124,5 +124,8 @@ class DriverStandings(Renderer):
         DrawText(self.canvas, self.font, self.code_x, self.code_y, self.text_color, lastname)
 
     def render_points(self, points: str):
-        x = align_text_right(points, self.canvas.width, self.font.baseline - 1)
+        x = align_text(points,
+                       x=Position.RIGHT,
+                       col_width=self.canvas.width,
+                       font_width=self.font.baseline - 1)
         DrawText(self.canvas, self.font, x, self.points_y, self.text_color, points)

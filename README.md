@@ -3,8 +3,7 @@
 
 ![Travis (.org)](https://img.shields.io/travis/feram18/f1-led-leaderboard?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/feram18/f1-led-leaderboard?style=for-the-badge)
-
-[comment]: <> (![Libraries.io dependency status for GitHub repo]&#40;https://img.shields.io/librariesio/github/feram18/f1-led-leaderboard?style=for-the-badge&#41;)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/feram18/f1-led-leaderboard?style=for-the-badge)
 
 [comment]: <> (![GitHub Release Date]&#40;https://img.shields.io/github/release-date/feram18/f1-led-leaderboard?style=for-the-badge&#41;)
 
@@ -31,14 +30,14 @@ GPIO pins.
 
 [comment]: <> (  <p align="center">)
 
-[comment]: <> (    <img src="assets/img/constructor_standings.gif" /><br>)
+[comment]: <> (    <img src="assets/img/demo/constructor_standings.gif" /><br>)
 
 [comment]: <> (  </p>)
 - **Driver Standings**
 
 [comment]: <> (  <p align="center">)
 
-[comment]: <> (    <img src="assets/img/driver_standings.gif" /><br>)
+[comment]: <> (    <img src="assets/img/demo/driver_standings.gif" /><br>)
 
 [comment]: <> (  </p>)
 
@@ -46,7 +45,7 @@ GPIO pins.
 
 [comment]: <> (  <p align="center">)
 
-[comment]: <> (    <img src="assets/img/qualifying_results.gif" /><br>)
+[comment]: <> (    <img src="assets/img/demo/qualifying_results.gif" /><br>)
 
 [comment]: <> (  </p>)
 
@@ -54,7 +53,7 @@ GPIO pins.
 
 [comment]: <> (  <p align="center">)
 
-[comment]: <> (    <img src="assets/img/last_gp.gif" /><br>)
+[comment]: <> (    <img src="assets/img/demo/last_gp.gif" /><br>)
 
 [comment]: <> (  </p>)
 
@@ -62,7 +61,7 @@ GPIO pins.
 
 [comment]: <> (  <p align="center">)
 
-[comment]: <> (    <img src="assets/img/next_gp.gif" /><br>)
+[comment]: <> (    <img src="assets/img/demo/next_gp.gif" /><br>)
 
 [comment]: <> (  </p>)
 
@@ -70,7 +69,7 @@ GPIO pins.
 
 [comment]: <> (  <p align="center">)
 
-[comment]: <> (    <img src="assets/img/schedule.gif" /><br>)
+[comment]: <> (    <img src="assets/img/demo/schedule.gif" /><br>)
 
 [comment]: <> (  </p>)
 
@@ -164,12 +163,12 @@ your execution command. This will enable debugging messages to be written to the
 
 ## Sources
 This project relies on the following:
-- [Ergast] API to retrieve the Formula 1 data.
-- [rpi-rgb-led-matrix] library to make everything work with the LED board. It is included into this repository as a 
+- [Ergast API] to retrieve Formula 1 data.
+- [rpi-rgb-led-matrix] library to make everything work with the LED matrix. It is included into this repository as a 
   submodule, so when cloning the repository it is necessary to use the `--recursive` flag.
 
 ## Disclaimer
-This application is dependent on the [Ergast] API relaying accurate and updated data.
+This application is dependent on the [Ergast API] relaying accurate and updated data.
 
 ## License
 GNU General Public License v3.0
@@ -178,5 +177,5 @@ GNU General Public License v3.0
 [64×32]: <https://www.adafruit.com/product/2279>
 [HAT]: <https://www.adafruit.com/product/2345>
 [Bonnet]: <https://www.adafruit.com/product/3211>
-[Ergast]: <http://ergast.com/mrd/>
+[Ergast API]: <http://ergast.com/mrd/>
 [rpi-rgb-led-matrix]: <https://github.com/hzeller/rpi-rgb-led-matrix>

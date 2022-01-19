@@ -1,13 +1,12 @@
 import pytest
 import time
 from api.data import Data
-from config.matrix_config import MatrixConfig
 from constants import UPDATE_RATE
 
 
 class TestData:
     def setup_method(self):
-        self.data = Data(MatrixConfig(64, 32))
+        self.data = Data()
 
     @pytest.mark.slow
     def test_should_update(self):
