@@ -14,7 +14,7 @@ function updateRepository() {
   git reset --hard
   git checkout master
   git fetch --tags
-  tag="$(git describe --tags "git rev-list --tags --max-count=1")"
+  tag="$(git describe --abbrev-0)"
   git checkout tags/"$tag"
 }
 
