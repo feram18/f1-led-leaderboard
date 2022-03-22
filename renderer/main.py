@@ -7,7 +7,6 @@ from renderer.schedule import Schedule
 from renderer.next_gp import NextGP
 from renderer.qualifying import Qualifying
 from renderer.error import Error
-from renderer.test import Test
 
 
 class MainRenderer(Renderer):
@@ -31,12 +30,11 @@ class MainRenderer(Renderer):
         while self.status is UpdateStatus.SUCCESS:
             try:
                 self.render_constructor_standings()
-                # self.render_driver_standings()
-                # self.render_last_gp()
-                # self.render_schedule()
-                # self.render_next_gp()
-                # self.render_qualifying()
-                self.render_test()
+                self.render_driver_standings()
+                self.render_last_gp()
+                self.render_schedule()
+                self.render_next_gp()
+                self.render_qualifying()
 
                 if self.data.should_update():
                     self.data.update()
@@ -66,6 +64,3 @@ class MainRenderer(Renderer):
 
     def render_error(self):
         Error(self.matrix, self.canvas, self.config, self.data).render()
-
-    def render_test(self):
-        Test(self.matrix, self.canvas, self.config).render()
