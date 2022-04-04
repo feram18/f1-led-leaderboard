@@ -76,14 +76,16 @@ GPIO pins.
 ## Installation
 ### Hardware
 Materials needed:
-- [Raspberry Pi]
+- [Raspberry Pi] (Only tested on 3B+ and 4B, but should work on other models)
 - Adafruit RGB Matrix [HAT] or [Bonnet]
 - [64×32] RGB LED matrix
 
 ### Software
 **Pre-requisites**
 
-You'll need to make sure Git and PIP are installed on your Raspberry Pi.
+- Git
+- PIP
+- Python 3.7+
 
 ```sh
 sudo apt-get update
@@ -125,7 +127,7 @@ More details on these flags/arguments can be found in the library's documentatio
 
 ```
 --led-rows                Display rows. 16 for 16x32, 32 for 32x32. (Default: 32)
---led-cols                Panel columns. Typically 32 or 64. (Default: 32)
+--led-cols                Panel columns. Typically 32 or 64. (Default: 64)
 --led-chain               Daisy-chained boards. (Default: 1)
 --led-parallel            For Plus-models or RPi2: parallel chains. 1..3. (Default: 1)
 --led-pwm-bits            Bits used for PWM. Range 1..11. (Default: 11)
@@ -146,7 +148,7 @@ More details on these flags/arguments can be found in the library's documentatio
 From the `f1-led-leaderboard` directory run the command
 
 ```sh
-sudo python3 main.py --led-gpio-mapping="adafruit-hat" --led-slowdown-gpio=2 --led-cols=64 --led-brightness=60
+sudo python3 main.py --led-gpio-mapping="adafruit-hat" --led-slowdown-gpio=2 --led-brightness=60
 ```
 You can modify and include [flags](#Flags) as necessary. Running as root is necessary in order for the matrix to render.
 
@@ -158,6 +160,8 @@ your execution command. This will enable debugging messages to be written to the
 - [X] Race Schedule
 - [X] Grand Prix Results
 - [X] Grand Prix Qualifying Results
+- [ ] World Drivers' Championship Winner
+- [ ] World Constructors' Championship Winner
 - [ ] Customization options
   - [ ] Preferred Constructor Summary
 

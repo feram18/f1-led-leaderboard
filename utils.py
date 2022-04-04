@@ -97,7 +97,7 @@ def load_image(filename: str,
                 image.paste(original)  # Paste original on background
                 image.thumbnail(size)  # Resize
                 return image
-            else:
+            else:  # Non-transparent images
                 original.thumbnail(size)
                 return original.convert('RGB')
     logging.error(f"Couldn't find image {filename}")
@@ -189,9 +189,9 @@ def split_into_pages(lst: list, size: int) -> List[list]:
 def args() -> argparse.Namespace:
     """
     CLI argument parser to configure matrix.
-    :return: arguments: (argsparse.Namespace) Argument parser
+    :return: parser: (argsparse.Namespace) Argument parser
     """
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(prog='F1-LED-Leaderboard')
 
     parser.add_argument('--led-rows',
                         action='store',
@@ -201,7 +201,7 @@ def args() -> argparse.Namespace:
     parser.add_argument('--led-cols',
                         action='store',
                         help='Panel columns. Typically 32 or 64. (Default: 32)',
-                        default=32,
+                        default=64,
                         type=int)
     parser.add_argument('--led-chain',
                         action='store',
@@ -288,7 +288,6 @@ def led_matrix_options(args_: argparse.Namespace) -> RGBMatrixOptions:
 
     if args_.led_gpio_mapping is not None:
         options.hardware_mapping = args_.led_gpio_mapping
-
     options.rows = args_.led_rows
     options.cols = args_.led_cols
     options.chain_length = args_.led_chain
