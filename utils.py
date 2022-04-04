@@ -87,7 +87,7 @@ def load_image(filename: str,
     :param size: Maximum width and height of the image
     :return: image: Image file
     """
-    if os.path.isfile(filename):
+    if filename and os.path.isfile(filename):
         with Image.open(filename) as original:
             if '.png' in filename:
                 original = original.crop(original.getbbox())  # Non-empty pixels
