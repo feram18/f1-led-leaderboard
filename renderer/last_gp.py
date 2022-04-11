@@ -73,9 +73,9 @@ class LastGP(Renderer):
         DrawText(self.canvas, self.font, name_x, y, Color.WHITE.value, self.gp_result.gp.name)
 
     def render_graphic(self):
-        logo = self.gp_result.gp.circuit.logo
-        track = self.gp_result.gp.circuit.track
-        graphic = load_image(logo, (64, 24)) if not None else load_image(track, (64, 24))
+        graphic = load_image(self.gp_result.gp.circuit.logo, (64, 24))
+        if not graphic:  # Set graphic to track image
+            graphic = load_image(self.gp_result.gp.circuit.track, (64, 24))
 
         x_offset = align_image(graphic, x=Position.CENTER, col_width=self.canvas.width)
         y_offset = self.coords['graphic']['y-offset']
