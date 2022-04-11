@@ -42,7 +42,7 @@ class LastGP(Renderer):
 
             # Slide 1
             self.render_gp_name()
-            self.render_logo()
+            self.render_graphic()
             time.sleep(7.0)
 
             self.canvas.Clear()
@@ -72,13 +72,14 @@ class LastGP(Renderer):
             DrawLine(self.canvas, x, y - self.font.height, x, y, Color.RED.value)
         DrawText(self.canvas, self.font, name_x, y, Color.WHITE.value, self.gp_result.gp.name)
 
-    def render_logo(self):
-        logo = self.gp_result.gp.circuit.logo if not None else self.gp_result.gp.circuit.track
-        logo = load_image(logo, (64, 24))
+    def render_graphic(self):
+        logo = self.gp_result.gp.circuit.logo
+        track = self.gp_result.gp.circuit.track
+        graphic = load_image(logo, (64, 24)) if not None else load_image(track, (64, 24))
 
-        x_offset = align_image(logo, x=Position.CENTER, col_width=self.canvas.width)
-        y_offset = self.coords['logo']['y-offset']
-        self.canvas.SetImage(logo, x_offset, y_offset)
+        x_offset = align_image(graphic, x=Position.CENTER, col_width=self.canvas.width)
+        y_offset = self.coords['graphic']['y-offset']
+        self.canvas.SetImage(graphic, x_offset, y_offset)
 
     def render_podium(self, winners: list):
         places = ['1st', '2nd', '3rd']
