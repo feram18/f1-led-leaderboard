@@ -4,10 +4,9 @@
 ![Travis (.org)](https://img.shields.io/travis/feram18/f1-led-leaderboard?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/feram18/f1-led-leaderboard?style=for-the-badge)
 ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/feram18/f1-led-leaderboard?style=for-the-badge)
+![GitHub Release Date](https://img.shields.io/github/release-date/feram18/f1-led-leaderboard?style=for-the-badge)
 
-[comment]: <> (![GitHub Release Date]&#40;https://img.shields.io/github/release-date/feram18/f1-led-leaderboard?style=for-the-badge&#41;)
-
-[comment]: <> (![GitHub commits since latest release &#40;by date&#41; for a branch]&#40;https://img.shields.io/github/commits-since/feram18/f1-led-leaderboard/latest/dev?style=for-the-badge&#41;)
+[//]: # (![GitHub commits since latest release &#40;by date&#41; for a branch]&#40;https://img.shields.io/github/commits-since/feram18/f1-led-leaderboard/latest/dev?style=for-the-badge&#41;)
 
 An LED Formula 1 leaderboard. Requires a Raspberry Pi, and a 64×32 LED board connected to the Raspberry Pi via the 
 GPIO pins.
