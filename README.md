@@ -126,8 +126,8 @@ The LED matrix is configured with the flags provided by the [rpi-rgb-led-matrix]
 More details on these flags/arguments can be found in the library's documentation.
 
 ```
---led-rows                Display rows. 16 for 16x32, 32 for 32x32. (Default: 32)
---led-cols                Panel columns. Typically 32 or 64. (Default: 64)
+--led-rows                Display panel rows. (Default: 32)
+--led-cols                Display panel columns. (Default: 64)
 --led-chain               Daisy-chained boards. (Default: 1)
 --led-parallel            For Plus-models or RPi2: parallel chains. 1..3. (Default: 1)
 --led-pwm-bits            Bits used for PWM. Range 1..11. (Default: 11)
