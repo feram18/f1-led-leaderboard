@@ -5,7 +5,7 @@ import constants
 from dataclasses import dataclass, field
 from typing import List, Optional
 from data.update_status import UpdateStatus
-from data.standings import ConstructorStandingsItem, DriverStandingsItem
+from data.standings import StandingsItem, Standings
 from data.constructor import Constructor
 from data.driver import Driver
 from data.gp_result import GPResult, DriverResult
@@ -20,12 +20,12 @@ class Data:
     """Data class consisting of all the data to be displayed on matrix"""
     constructors: dict = field(default_factory=dict)
     drivers: dict = field(default_factory=dict)
-    constructor_standings: List[ConstructorStandingsItem] = field(default_factory=list)
-    driver_standings: List[DriverStandingsItem] = field(default_factory=list)
-    last_gp: GPResult = field(init=False)
+    constructor_standings: Standings = None
+    driver_standings: Standings = None
+    last_gp: GPResult = None
     qualifying: Qualifying = None
     next_gp: GrandPrix = None
-    schedule: List[GrandPrix] = field(default_factory=list)
+    schedule: List[GrandPrix] = None
     status: UpdateStatus = UpdateStatus.SUCCESS
     last_updated: float = None
 
@@ -81,41 +81,33 @@ class Data:
                                                                 self.constructors.get(
                                                                     driver['Constructors'][0]['constructorId']))
 
-    def fetch_constructor_standings(self) -> List[ConstructorStandingsItem]:
+    def fetch_constructor_standings(self) -> Standings:
         """
         Fetch current constructor standings
         :return: standings: Constructor standings
         """
         logging.debug('Fetching Constructor Standings')
 
-        if self.constructor_standings:
-            self.constructor_standings.clear()  # Clear any existing data
-        self.constructor_standings = [] * 10  # Initialize list
-
         response = requests.get(constants.CONSTRUCTOR_STANDINGS_URL).json()
         constructors = response['MRData']['StandingsTable']['StandingsLists'][0]['ConstructorStandings']
 
-        return [ConstructorStandingsItem(self.constructors.get(constructor['Constructor']['constructorId']),
-                                         int(constructor['position']),
-                                         float(constructor['points'])) for constructor in constructors]
+        return Standings([StandingsItem(self.constructors.get(constructor['Constructor']['constructorId']),
+                                        int(constructor['position']),
+                                        float(constructor['points'])) for constructor in constructors])
 
-    def fetch_driver_standings(self) -> List[DriverStandingsItem]:
+    def fetch_driver_standings(self) -> Standings:
         """
         Fetch current driver standings
         :return: standings: Driver standings
         """
         logging.debug('Fetching Driver Standings')
 
-        if self.driver_standings:
-            self.driver_standings.clear()  # Clear any existing data
-        self.driver_standings = []  # Initialize list
-
         response = requests.get(constants.DRIVER_STANDINGS_URL).json()
         drivers = response['MRData']['StandingsTable']['StandingsLists'][0]['DriverStandings']
 
-        return [DriverStandingsItem(self.drivers.get(driver['Driver']['driverId']),
-                                    int(driver['position']),
-                                    float(driver['points'])) for driver in drivers]
+        return Standings([StandingsItem(self.drivers.get(driver['Driver']['driverId']),
+                                        int(driver['position']),
+                                        float(driver['points'])) for driver in drivers])
 
     def fetch_last_gp(self) -> GPResult:
         """

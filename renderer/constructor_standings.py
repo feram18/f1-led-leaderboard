@@ -10,23 +10,23 @@ class ConstructorStandings(Renderer):
     Render constructor standings
 
     Arguments:
-        data (api.Data):                                    Data instance
+        data (api.Data):                            Data instance
 
     Attributes:
-        standings (List[ConstructorStandingsItem]):         Constructor standings list
-        bg_color (rgbmatrix.graphics.Color):                Background color
-        text_color (rgbmatrix.graphics.Font):               Text color
-        offset (int):                                       Row y-coord offset
-        coords (dict):                                      Coordinates dictionary
-        name_y (int):                                       Constructor's name y-coord
-        points_y (int):                                     Constructor's points y-coord
+        standings (list[StandingsItem]):            Constructor standings
+        bg_color (rgbmatrix.graphics.Color):        Background color
+        text_color (rgbmatrix.graphics.Font):       Text color
+        offset (int):                               Row y-coord offset
+        coords (dict):                              Coordinates dictionary
+        name_y (int):                               Constructor's name y-coord
+        points_y (int):                             Constructor's points y-coord
     """
 
     def __init__(self, matrix, canvas, config, data):
         super().__init__(matrix, canvas, config)
         self.data = data
 
-        self.standings = self.data.constructor_standings
+        self.standings = self.data.constructor_standings.items
 
         self.bg_color = Color.GRAY.value
         self.text_color = Color.WHITE.value
@@ -72,11 +72,11 @@ class ConstructorStandings(Renderer):
         self.canvas.Clear()
 
     def render_row(self, i: int):
-        self.bg_color = self.standings[i].constructor.colors[0]
-        self.text_color = self.standings[i].constructor.colors[1]
+        self.bg_color = self.standings[i].item.colors[0]
+        self.text_color = self.standings[i].item.colors[1]
 
         self.render_background()
-        self.render_name(self.standings[i].constructor.name)
+        self.render_name(self.standings[i].item.name)
         self.render_points(f'{self.standings[i].points:g}')
 
         self.name_y += self.offset

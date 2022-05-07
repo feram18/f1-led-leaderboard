@@ -13,13 +13,13 @@ class DriverStandings(Renderer):
         data (api.Data):                            Data instance
 
     Attributes:
-        standings (List[DriverStandingsItem]):      Driver standings list
+        standings (list[StandingsItem]):            Driver standings list
         bg_color (rgbmatrix.graphics.Color):        Background color
         text_color (rgbmatrix.graphics.Font):       Text color
         offset (int):                               Row y-coord offset
         coords (dict):                              Coordinates dictionary
         position_y (int):                           Driver's position y-coord
-        flag_y_offset (int):                        Driver's flag y-coord offset
+        flag_y_offset (int):                         Driver's flag y-coord offset
         code_x (int):                               Driver's code x-coord
         code_y (int):                               Driver's code y-coord
         points_y (int):                             Driver's points y-coord
@@ -29,7 +29,7 @@ class DriverStandings(Renderer):
         super().__init__(matrix, canvas, config)
         self.data = data
 
-        self.standings = self.data.driver_standings
+        self.standings = self.data.driver_standings.items
 
         self.bg_color = Color.GRAY.value
         self.text_color = Color.WHITE.value
@@ -81,14 +81,14 @@ class DriverStandings(Renderer):
         self.canvas.Clear()
 
     def render_row(self, i: int):
-        self.bg_color = self.standings[i].driver.constructor.colors[0]
-        self.text_color = self.standings[i].driver.constructor.colors[1]
+        self.bg_color = self.standings[i].item.constructor.colors[0]
+        self.text_color = self.standings[i].item.constructor.colors[1]
 
         self.render_background()
-        # self.render_flag(self.standings[i].driver.flag)
+        # self.render_flag(self.standings[i].item.flag)
         self.render_position(str(self.standings[i].position))
-        self.render_code(self.standings[i].driver.code)
-        # self.render_lastname(self.standings[i].driver.lastname)
+        self.render_code(self.standings[i].item.code)
+        # self.render_lastname(self.standings[i].item.lastname)
         self.render_points(f'{self.standings[i].points:g}')
 
         # self.flag_y_offset += self.offset
