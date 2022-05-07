@@ -5,6 +5,7 @@ import logging
 import json
 import argparse
 from enum import Enum
+from datetime import datetime
 from typing import Tuple, Optional, List
 from PIL import Image
 from rgbmatrix.graphics import Font, Color as RGB
@@ -184,6 +185,19 @@ def split_into_pages(lst: list, size: int) -> List[list]:
     :return: pages: List(list) Resulting lists
     """
     return [lst[i:i + size] for i in range(0, len(lst), size)]
+
+
+def race_weekend(date: datetime) -> bool:
+    """
+    Determine if today is race weekend (i.e. Practice, Qualifying or Race day).
+    :param date: GP's date
+    :return: race_weekend: bool
+    """
+    today = datetime.today()
+    if today.weekday() > 3:  # is weekend
+        gp_day = date.date().day
+        return gp_day - 2 <= today.day <= gp_day
+    return False
 
 
 def args() -> argparse.Namespace:

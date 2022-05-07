@@ -13,6 +13,7 @@ from data.finishing_status import FinishingStatus as Status
 from data.grand_prix import GrandPrix
 from data.qualifying import Qualifying, QualifyingResultItem
 from data.circuit import Circuit
+from utils import race_weekend
 
 
 @dataclass
@@ -188,9 +189,11 @@ class Data:
     def should_update(self) -> bool:
         """
         Determines if data should be updated.
-        i.e. If 15 minutes have passed since data was last fetched, an update is needed.
+        i.e. If it is a race weekend and 15 minutes have passed since data was last fetched, an update is needed.
         :return: should_update: (bool)
         """
-        current_time = time.time()
-        time_delta = current_time - self.last_updated
-        return time_delta >= constants.UPDATE_RATE
+        if race_weekend(self.next_gp.dt):
+            current_time = time.time()
+            time_delta = current_time - self.last_updated
+            return time_delta >= constants.UPDATE_RATE
+        return False
