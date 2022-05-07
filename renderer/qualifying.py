@@ -1,5 +1,6 @@
 import time
 from rgbmatrix.graphics import DrawText, DrawLine
+from data.gp_status import GrandPrixStatus
 from renderer.renderer import Renderer
 from utils import Color, align_text, Position, split_into_pages
 
@@ -38,14 +39,14 @@ class Qualifying(Renderer):
 
             if not self.qualifying:
                 self.render_header()
-                x, y = align_text('Upcoming',
+                x, y = align_text(GrandPrixStatus.UPCOMING.value,
                                   Position.CENTER,
                                   Position.CENTER,
                                   self.canvas.width,
                                   self.canvas.height,
                                   self.font.baseline - 1,
                                   self.font.height)
-                DrawText(self.canvas, self.font, x, y, Color.WHITE.value, 'Upcoming')
+                DrawText(self.canvas, self.font, x, y, Color.WHITE.value, GrandPrixStatus.UPCOMING.value)
                 time.sleep(7.0)
             else:
                 # Render grid

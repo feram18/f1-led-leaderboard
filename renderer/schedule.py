@@ -23,11 +23,8 @@ class Schedule(Renderer):
     def __init__(self, matrix, canvas, config, data):
         super().__init__(matrix, canvas, config)
         self.data = data
-
         self.schedule = self.data.schedule
-
         self.offset = self.font.height + 2
-
         self.coords = self.config.layout.coords['schedule']
         self.round_y = self.coords['round']['y']
         self.country_x = self.coords['country']['x']
