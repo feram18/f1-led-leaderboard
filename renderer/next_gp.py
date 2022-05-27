@@ -68,11 +68,11 @@ class NextGP(Renderer):
 
     def render_logo(self):
         if self.logo:
-            x_offset = align_image(self.logo,
-                                   x=Position.CENTER,
-                                   col_width=self.canvas.width)
-            y_offset = self.coords['logo']['y-offset']
-            self.canvas.SetImage(self.logo, x_offset, y_offset)
+            offset = self.coords['logo']['y-offset']
+            x, y = align_image(self.logo,
+                               Position.CENTER, Position.CENTER,
+                               self.canvas.width, self.canvas.height - offset)
+            self.canvas.SetImage(self.logo, x, y + offset)
 
     def render_date(self):
         x = align_text(self.gp.date,

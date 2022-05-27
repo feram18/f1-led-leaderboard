@@ -77,9 +77,11 @@ class LastGP(Renderer):
         if not graphic:  # Set graphic to track image
             graphic = load_image(self.gp_result.gp.circuit.track, (64, 24))
 
-        x_offset = align_image(graphic, x=Position.CENTER, col_width=self.canvas.width)
-        y_offset = self.coords['graphic']['y-offset']
-        self.canvas.SetImage(graphic, x_offset, y_offset)
+        offset = self.coords['graphic']['y-offset']
+        x, y = align_image(graphic,
+                           Position.CENTER, Position.CENTER,
+                           self.canvas.width, self.canvas.height - offset)
+        self.canvas.SetImage(graphic, x, y + offset)
 
     def render_podium(self, winners: list):
         places = ['1st', '2nd', '3rd']
