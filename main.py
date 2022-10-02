@@ -1,37 +1,28 @@
-import sys
 import logging
+import sys
 from logging.handlers import RotatingFileHandler
-from logging import Formatter
+
+from PIL import Image, ImageDraw
 from rgbmatrix import RGBMatrix
-from config.matrix_config import MatrixConfig
+
 from api.data import Data
+from config.layout import Layout
 from renderer.loading import Loading
 from renderer.main import MainRenderer
-from version import __version__
 from utils import led_matrix_options, args
+from version import __version__
 
 
 def main():
-    # Print script details on startup
     print(f'\U0001F3C1 F1-LED-Leaderboard - v{__version__} ({matrix.width}x{matrix.height})')
-
-    config = MatrixConfig(matrix.width, matrix.height)
-
-    # Create canvas
-    canvas = matrix.CreateFrameCanvas()
-
-    # Render loading splash screen
-    Loading(matrix, canvas, config).render()
-
-    # Fetch initial data
+    layout = Layout(matrix.width, matrix.height)
+    Loading(matrix, canvas, draw, layout)
     data = Data()
-
-    # Begin rendering screen rotation
-    MainRenderer(matrix, canvas, config, data).render()
+    MainRenderer(matrix, canvas, draw, layout, data)
 
 
 if __name__ == '__main__':
-    # Get logging level
+    # Set logging level
     if '--debug' in sys.argv:
         LOG_LEVEL = logging.DEBUG
         sys.argv.remove('--debug')
@@ -44,15 +35,15 @@ if __name__ == '__main__':
     handler = RotatingFileHandler(filename='f1-led-leaderboard.log',
                                   maxBytes=5 * 1024 * 1024,  # 5MB
                                   backupCount=4)
-    handler.setFormatter(Formatter(fmt='%(asctime)s %(levelname)s: %(message)s',
-                                   datefmt='%m/%d/%Y %I:%M:%S %p'))
+    handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)s: %(message)s',
+                                           datefmt='%m/%d/%Y %I:%M:%S %p'))
     logger.addHandler(handler)
 
-    # Check matrix configuration arguments
-    matrixOptions = led_matrix_options(args())
-
     # Initialize the matrix
-    matrix = RGBMatrix(options=matrixOptions)
+    matrix = RGBMatrix(options=led_matrix_options(args()))
+    canvas = Image.new('RGB', (matrix.width, matrix.height))
+    draw = ImageDraw.Draw(canvas)
+    matrix.SetImage(canvas)
 
     try:
         main()

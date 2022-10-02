@@ -1,7 +1,6 @@
-import time
-from rgbmatrix.graphics import DrawText, DrawLine
+from data.grand_prix import GrandPrix
 from renderer.renderer import Renderer
-from utils import Color, align_text, Position, split_into_pages
+from utils import Color, align_text, Position
 
 
 class Schedule(Renderer):
@@ -15,78 +14,57 @@ class Schedule(Renderer):
         schedule (List[data.GrandPrix]):        GP schedule
         offset (int):                           Row y-coord offset
         coords (dict):                          Coordinates dictionary
-        round_y (int):                          Round y-coord
+        text_y (int):                           Round & Country y-coord
         country_x (int):                        Country x-coord
-        country_y (int):                        Country y-coord
     """
 
-    def __init__(self, matrix, canvas, config, data):
-        super().__init__(matrix, canvas, config)
+    def __init__(self, matrix, canvas, draw, layout, data):
+        super().__init__(matrix, canvas, draw, layout)
         self.data = data
         self.schedule = self.data.schedule
-        self.offset = self.font.height + 2
-        self.coords = self.config.layout.coords['schedule']
-        self.round_y = self.coords['round']['y']
+        self.offset = self.font_height + 2
+        self.coords = self.layout.coords['schedule']
         self.country_x = self.coords['country']['x']
-        self.country_y = self.coords['country']['y']
+        self.text_y = self.coords['round']['y']
 
     def render(self):
         if self.schedule:
-            self.canvas.Clear()
-
+            self.new_canvas(self.matrix.width, self.coords['row_height'] * (len(self.schedule) + 1) + 1)
             self.render_header()
-            for gp in self.schedule[:3]:  # Up to index 3
-                self.render_row(str(gp.round), gp.circuit.country)
-            time.sleep(7.0)
-
-            pages = split_into_pages(self.schedule[3:], 4)  # From index 4 - end
-            for page in pages:
-                self.render_page(page)
-
-            self.canvas = self.matrix.SwapOnVSync(self.canvas)
+            for gp in self.schedule:
+                self.render_row(gp)
+            self.scroll_up(self.canvas)
+            self.text_y = self.coords['round']['y']  # Reset
 
     def render_header(self):
-        header_x = align_text('Schedule',
-                              x=Position.CENTER,
-                              col_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)
-        y = self.coords['header']['y']
+        x, y = align_text(self.font.getsize('Schedule'),
+                          self.matrix.width,
+                          self.matrix.height,
+                          Position.CENTER,
+                          Position.TOP)
+        y += self.coords['header']['y']
 
-        for x in range(self.canvas.width):
-            DrawLine(self.canvas, x, y - y, x, y, Color.GRAY.value)
-        DrawText(self.canvas, self.font, header_x, y, Color.WHITE.value, 'Schedule')
+        self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height - 1)), fill=Color.GRAY)
+        self.draw.text((x, y), 'Schedule', fill=Color.WHITE, font=self.font)
 
-    def render_page(self, page: list):
-        self.canvas.Clear()
-        self.round_y = self.country_y = self.font.height  # Reset to top
+    def render_row(self, gp: GrandPrix):
+        self.render_round_no(str(gp.round))
+        self.render_country(gp.circuit.country)
 
-        for gp in page:
-            self.render_row(str(gp.round), gp.circuit.country)
-        time.sleep(5.0)
+        self.text_y += self.offset
 
-    def render_row(self, round_no: str, country: str):
-        self.render_round_number(round_no)
-        self.render_background()
-        self.render_country(country)
+    def render_round_no(self, round_no: str):
+        self.draw.rectangle(((0, self.text_y - 1),
+                             (self.country_x - 3, self.text_y + self.font_height - 1)),
+                            fill=Color.RED)
 
-        self.round_y += self.offset
-        self.country_y += self.offset
-
-    def render_round_number(self, round_no: str):
-        # Background
-        for x in range(self.country_x - 2):
-            DrawLine(self.canvas, x, self.country_y - self.font.height, x, self.country_y, Color.RED.value)
-
-        # Round Number
-        x = align_text(round_no,
-                       x=Position.CENTER,
+        x = align_text(self.font.getsize(round_no),
                        col_width=12,
-                       font_width=self.font.baseline - 1)
-        DrawText(self.canvas, self.font, x, self.round_y, Color.WHITE.value, round_no)
-
-    def render_background(self):
-        for x in range(self.country_x - 1, self.canvas.width):
-            DrawLine(self.canvas, x, self.country_y - self.font.height, x, self.country_y, Color.WHITE.value)
+                       x=Position.CENTER)[0]
+        self.draw.text((x, self.text_y), round_no, fill=Color.WHITE, font=self.font)
 
     def render_country(self, country: str):
-        DrawText(self.canvas, self.font, self.country_x, self.country_y, Color.RED.value, country)
+        self.draw.rectangle(((self.country_x - 1, self.text_y - 1),
+                             (self.matrix.width, self.text_y + self.font_height - 1)),
+                            fill=Color.WHITE)
+        self.draw.text((self.country_x, self.text_y), country, fill=Color.RED, font=self.font)

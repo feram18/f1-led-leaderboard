@@ -1,8 +1,24 @@
-import os
 import logging
+import os
 from dataclasses import dataclass, field
-from utils import Color
+from typing import List
+
 from constants import CONSTRUCTOR_LOGO_PATH
+from utils import Color
+
+# Constructors' Background & Text Colors
+COLORS = {   # [Background, Text]
+    "ALFA": [(153, 0, 0), Color.WHITE],
+    "ALPHATAURI": [(39, 40, 79), Color.WHITE],
+    "ALPINE": [(14, 29, 45), Color.WHITE],
+    "ASTON_MARTIN": [(3, 87, 78), Color.WHITE],
+    "FERRARI":  [(255, 0, 0), Color.BLACK],
+    "HAAS": [(236, 27, 59), Color.WHITE],
+    "MCLAREN": [(255, 134, 1), Color.BLACK],
+    "MERCEDES": [(0, 210, 190), Color.BLACK],
+    "RED_BULL": [(22, 25, 94), Color.WHITE],
+    "WILLIAMS": [(3, 168, 235), Color.BLACK]
+}
 
 
 @dataclass
@@ -12,11 +28,11 @@ class Constructor:
     name: str
     nationality: str
     logo: str = field(init=False)  # Path to logo image
-    colors: Color = field(init=False)
+    colors: List[tuple] = field(init=False)
 
     def __post_init__(self):
         self.name = self.name.replace('F1 Team', '')  # Shorten unnecessary portion
-        self.colors = Color[self.id.upper()].value
+        self.colors = COLORS[self.id.upper()]
 
     @staticmethod
     def get_logo(constructor_id: str) -> str:

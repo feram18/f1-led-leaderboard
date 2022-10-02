@@ -1,6 +1,4 @@
-import time
-from typing import Tuple
-from rgbmatrix.graphics import DrawText, DrawLine
+from data.standings import StandingsItem
 from renderer.renderer import Renderer
 from utils import Color, align_text, Position
 
@@ -10,89 +8,64 @@ class ConstructorStandings(Renderer):
     Render constructor standings
 
     Arguments:
-        data (api.Data):                            Data instance
+        data (api.Data):                        Data instance
 
     Attributes:
-        standings (list[StandingsItem]):            Constructor standings
-        bg_color (rgbmatrix.graphics.Color):        Background color
-        text_color (rgbmatrix.graphics.Font):       Text color
-        offset (int):                               Row y-coord offset
-        coords (dict):                              Coordinates dictionary
-        name_y (int):                               Constructor's name y-coord
-        points_y (int):                             Constructor's points y-coord
+        standings (list[StandingsItem]):        Constructor standings
+        text_color (tuple):                     Text color
+        offset (int):                           Row y-coord offset
+        coords (dict):                          Coordinates dictionary
+        text_y (int):                           Constructor's name & points y-coord
     """
 
-    def __init__(self, matrix, canvas, config, data):
-        super().__init__(matrix, canvas, config)
+    def __init__(self, matrix, canvas, draw, layout, data):
+        super().__init__(matrix, canvas, draw, layout)
         self.data = data
-
         self.standings = self.data.constructor_standings.items
-
-        self.bg_color = Color.GRAY.value
-        self.text_color = Color.WHITE.value
-
-        self.offset = self.font.height + 2
-
-        self.coords = self.config.layout.coords['standings']
-
-        self.name_y = self.coords['name']['y']
-        self.points_y = self.coords['points']['y']
+        self.text_color = Color.WHITE
+        self.offset = self.font_height + 2
+        self.coords = self.layout.coords['standings']['constructors']
+        self.text_y = self.coords['name']['y']
 
     def render(self):
-        self.canvas.Clear()
-
+        self.new_canvas(self.matrix.width, self.coords['row_height'] * (len(self.standings) + 1) + 1)
         self.render_header()
-
-        pages = [(0, 3),  # No.1 - 3
-                 (3, 7),  # No.4 - 7
-                 (7, len(self.standings))]  # No.8 - 10
-
-        for page in pages:
-            self.render_page(page)
-
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+        for constructor in self.standings:
+            self.render_row(constructor)
+        self.scroll_up(self.canvas)
+        self.text_y = self.coords['name']['y']  # Reset
 
     def render_header(self):
-        header_x = align_text('Constructors',
-                              x=Position.CENTER,
-                              col_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)
-        y = self.coords['header']['y']
+        x, y = align_text(self.font.getsize('Constructors'),
+                          self.matrix.width,
+                          self.matrix.height,
+                          Position.CENTER,
+                          Position.TOP)
+        y += self.coords['header']['offset']['y']
 
-        for x in range(self.canvas.width):
-            DrawLine(self.canvas, x, y - y, x, y, self.bg_color)
-        DrawText(self.canvas, self.font, header_x, y, self.text_color, 'Constructors')
+        self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height - 1)), fill=Color.GRAY)
+        self.draw.text((x, y), 'Constructors', fill=Color.WHITE, font=self.font)
 
-    def render_page(self, page: Tuple[int, int]):
-        for i in range(page[0], page[1]):
-            self.render_row(i)
-        time.sleep(5.0)
+    def render_row(self, constructor: StandingsItem):
+        bg_color, self.text_color = constructor.item.colors
 
-        self.name_y = self.points_y = self.font.height  # Reset to top
-        self.canvas.Clear()
+        self.render_background(bg_color)
+        self.render_name(constructor.item.name)
+        self.render_points(f'{constructor.points:g}')
 
-    def render_row(self, i: int):
-        self.bg_color = self.standings[i].item.colors[0]
-        self.text_color = self.standings[i].item.colors[1]
+        self.text_y += self.offset
 
-        self.render_background()
-        self.render_name(self.standings[i].item.name)
-        self.render_points(f'{self.standings[i].points:g}')
-
-        self.name_y += self.offset
-        self.points_y += self.offset
-
-    def render_background(self):
-        for x in range(self.canvas.width):
-            DrawLine(self.canvas, x, self.name_y - self.font.height, x, self.name_y, self.bg_color)
+    def render_background(self, color: tuple):
+        self.draw.rectangle(((0, self.text_y - 1),
+                             (self.matrix.width, self.text_y + self.font_height - 1)),
+                            fill=color)
 
     def render_name(self, name: str):
         x = self.coords['name']['x']
-        DrawText(self.canvas, self.font, x, self.name_y, self.text_color, name)
+        self.draw.text((x, self.text_y), name, fill=self.text_color, font=self.font)
 
     def render_points(self, points: str):
-        x = align_text(points,
-                       x=Position.RIGHT,
-                       col_width=self.canvas.width,
-                       font_width=self.font.baseline - 1)
-        DrawText(self.canvas, self.font, x, self.points_y, self.text_color, points)
+        x = align_text(self.font.getsize(points),
+                       col_width=self.matrix.width,
+                       x=Position.RIGHT)[0]
+        self.draw.text((x, self.text_y), points, fill=self.text_color, font=self.font)

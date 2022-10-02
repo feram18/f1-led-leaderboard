@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
-from rgbmatrix.graphics import Font
+
+from PIL import ImageFont
+
 from utils import read_json, load_font
 from constants import LAYOUT_FILE
 
@@ -10,8 +12,8 @@ class Layout:
     width: int
     height: int
     coords: dict = field(init=False)
-    font: Font = field(init=False)
+    font: ImageFont = field(init=False)
 
     def __post_init__(self):
         self.coords = read_json(LAYOUT_FILE.format(self.width, self.height))
-        self.font = load_font('rpi-rgb-led-matrix/fonts/tom-thumb.bdf')
+        self.font = load_font(self.coords['font'])

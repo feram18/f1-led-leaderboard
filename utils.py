@@ -1,52 +1,40 @@
 """Class with utility functions"""
-
-import os
-import logging
-import json
 import argparse
-from enum import Enum
+import json
+import logging
+import os
 from datetime import datetime
-from typing import Tuple, Optional, List
-from PIL import Image
-from rgbmatrix.graphics import Font, Color as RGB
-from rgbmatrix import RGBMatrixOptions
+from enum import Enum
+from typing import Tuple, Optional
+
+from PIL import Image, ImageFont
+from RGBMatrixEmulator import RGBMatrixOptions
 
 
-class Color(Enum):
-    """Colors enum class"""
+class Color:
+    """Colors utility class"""
 
     # Standard colors
-    RED = RGB(171, 0, 3)
-    ORANGE = RGB(128, 128, 128)
-    YELLOW = RGB(239, 178, 30)
-    GREEN = RGB(124, 252, 0)
-    BLUE = RGB(0, 45, 114)
-    PURPLE = RGB(170, 40, 203)
-    PINK = RGB(255, 143, 255)
-    BROWN = RGB(65, 29, 0)
-    GRAY = RGB(112, 128, 144)
-    BLACK = RGB(0, 0, 0)
-    WHITE = RGB(255, 255, 255)
-
-    # Constructors' Background & Text Colors
-    ALFA = [RGB(153, 0, 0),  WHITE]  # [Background, Text]
-    ALPHATAURI = [RGB(39, 40, 79), WHITE]
-    ALPINE = [RGB(14, 29, 45), WHITE]
-    ASTON_MARTIN = [RGB(3, 87, 78), WHITE]
-    FERRARI = [RGB(255, 0, 0), BLACK]
-    HAAS = [RGB(236, 27, 59), WHITE]
-    MCLAREN = [RGB(255, 134, 1), BLACK]
-    MERCEDES = [RGB(0, 210, 190), BLACK]
-    RED_BULL = [RGB(22, 25, 94), WHITE]
-    WILLIAMS = [RGB(3, 168, 235), BLACK]
+    RED = 171, 0, 3, 255
+    ORANGE = 128, 128, 128, 255
+    YELLOW = 239, 178, 30, 255
+    GREEN = 124, 252, 0, 255
+    BLUE = 0, 45, 114, 255
+    PURPLE = 170, 40, 203, 255
+    PINK = 255, 143, 255, 255
+    BROWN = 65, 29, 0, 255
+    GRAY = 112, 128, 144, 255
+    BLACK = 0, 0, 0, 255
+    WHITE = 255, 255, 255, 255
 
 
 class Position(Enum):
     """Enum class for positioning on matrix' canvas"""
-    TOP = 0
-    RIGHT = 1
-    CENTER = 2
-    BOTTOM = 3
+    TOP = "top"
+    RIGHT = "right"
+    CENTER = "center"
+    BOTTOM = "bottom"
+    LEFT = "left"
 
 
 def read_json(filename: str) -> dict:
@@ -62,30 +50,25 @@ def read_json(filename: str) -> dict:
     logging.error(f"Couldn't find file at {filename}")
 
 
-def load_font(filename: str) -> Font:
+def load_font(filename: str) -> ImageFont:
     """
-    Return Font object from given path. If file at path does not exist, set default 4x6 font.
-    :param filename: (str) Location of font file
-    :return: font: (rgbmatrix.graphics.Font) Font object
+    Return ImageFont object from given file.
+    :param filename: (str) Font file
+    :return: font.py: (PIL.ImageFont) ImageFont object
     """
-    font = Font()
     if os.path.isfile(filename):
-        font.LoadFont(filename)
-        return font
-
-    logging.warning(f"Couldn't find font {filename}. Setting font to default 4x6.")
-    font.LoadFont('rpi-rgb-led-matrix/fonts/4x6.bdf')
-    return font
+        return ImageFont.load(filename)
+    logging.warning(f"Couldn't find font {filename}.")
 
 
 def load_image(filename: str,
-               size: Tuple[int, int] = (64, 32),
-               background: Color = Color.BLACK) -> Image:
+               size: Tuple[int, int],
+               background: tuple = Color.BLACK) -> Image:
     """
     Open Image file from given path
-    :param background: Background color for PNG images
     :param filename: Path to the image file
     :param size: Maximum width and height of the image
+    :param background: Background color for PNG images
     :return: image: Image file
     """
     if filename and os.path.isfile(filename):
@@ -94,7 +77,7 @@ def load_image(filename: str,
                 original = original.crop(original.getbbox())  # Non-empty pixels
                 image = Image.new('RGB',  # Background img
                                   (original.width, original.height),
-                                  (background.value.red, background.value.green, background.value.blue, 255))
+                                  background)
                 image.paste(original)  # Paste original on background
                 image.thumbnail(size)  # Resize
                 return image
@@ -104,87 +87,62 @@ def load_image(filename: str,
     logging.error(f"Couldn't find image {filename}")
 
 
-def align_text(text: str,
-               x: Position = None, y: Position = None,
+def align_text(text_size: Tuple[int, int],
                col_width: int = 0, col_height: int = 0,
-               font_width: int = 0, font_height: int = 0) -> (int, Optional[int]):
+               x: Position = Position.CENTER, y: Position = Position.CENTER) -> (int, Optional[int]):
     """
     Calculate x, y coords to align text on canvas
-    :param text: Text to align
+    :param text_size: (width, height) in pixels
     :param x: Text's horizontal position
     :param y: Text's vertical position
     :param col_width: Column's width
     :param col_height: Column's height
-    :param font_width: Font's width
-    :param font_height: Font's height
     :return: x, y: Coordinates
     """
-    if x:
-        if x == Position.RIGHT:
-            x = col_width - (len(text) * font_width)
-        elif x == Position.CENTER:
-            x = abs(col_width//2 - (len(text) * font_width)//2)
-        else:
-            x = 0
-        if x is not None and y is None:
-            return x
+    if x == Position.RIGHT:
+        x = col_width - text_size[0]
+    elif x == Position.CENTER:
+        x = abs(col_width//2 - text_size[0]//2)
+    elif x == Position.LEFT:
+        x = 0
 
-    if y:
-        if y == Position.CENTER:
-            y = abs(col_height//2 + font_height//2)
-        elif y == Position.BOTTOM:
-            y = col_height
-        else:
-            y = font_height
-        if y is not None and x is None:
-            return y
+    if y == Position.CENTER:
+        y = abs(col_height//2 + text_size[1]//2)
+    elif y == Position.BOTTOM:
+        y = col_height - text_size[1] + 1
+    elif y == Position.TOP:
+        y = 0
 
     return x, y
 
 
 def align_image(image: Image,
-                x: Position = None, y: Position = None,
-                col_width: int = 0, col_height: int = 0) -> (int, Optional[int]):
+                col_width: int = 0, col_height: int = 0,
+                x: Position = Position.CENTER, y: Position = Position.CENTER) -> (int, int):
     """
     Calculate the x, y offsets to align image on canvas
     :param image: Image to align
-    :param x: Image horizontal position
-    :param y: Image vertical position
     :param col_width: Column's width
     :param col_height: Column's height
+    :param x: Image horizontal position
+    :param y: Image vertical position
     :return: x, y: Coordinate offsets
     """
-    if x:
-        if x == Position.RIGHT:
-            x = col_width - image.width
-        elif x == Position.CENTER:
-            x = abs(col_width//2 - image.width//2)
-        else:
-            x = 0
-        if x is not None and y is None:
-            return x
+    if x == Position.RIGHT:
+        x = col_width - image.width
+    elif x == Position.CENTER:
+        x = abs(col_width//2 - image.width//2)
+    elif x == Position.LEFT:
+        x = 0
 
-    if y:
-        if y == Position.CENTER:
-            y = abs(col_height//2 - image.height//2)
-        elif y == Position.BOTTOM:
-            y = col_height - image.height
-        else:
-            y = 0
-        if y is not None and x is None:
-            return y
+    if y == Position.CENTER:
+        y = abs(col_height//2 - image.height//2)
+    elif y == Position.BOTTOM:
+        y = col_height - image.height
+    elif y == Position.TOP:
+        y = 0
 
     return x, y
-
-
-def split_into_pages(lst: list, size: int) -> List[list]:
-    """
-    Split list into lists with of equal sizes, defined by size argument.
-    :param lst: (list) List to split
-    :param size: (int) chunk size
-    :return: pages: List(list) Resulting lists
-    """
-    return [lst[i:i + size] for i in range(0, len(lst), size)]
 
 
 def race_weekend(date: datetime) -> bool:

@@ -1,9 +1,11 @@
 import time
-from rgbmatrix.graphics import DrawText, DrawLine
-from renderer.renderer import Renderer
+
+from constants import SLIDE_DELAY
 from data.driver import Driver
 from data.finishing_status import FinishingStatus
-from utils import Color, align_text, Position, align_image, split_into_pages, load_image
+from data.gp_result import DriverResult
+from renderer.renderer import Renderer
+from utils import align_text, Position, Color, load_image, align_image
 
 
 class LastGP(Renderer):
@@ -17,172 +19,139 @@ class LastGP(Renderer):
         gp_result (data.GPResult):      Last GP's results data
         offset (int):                   Row y-coord offset
         coords (dict):                  Coordinates dictionary
-        position_y (int):               Driver's position y-coord
+        text_y (int):                   Driver's position, code, time, status y-coord
         code_x (int):                   Driver's code x-coord
-        code_y (int):                   Driver's code y-coord
-        time_y (int):                   Driver's time y-coord
-        status_y (int):                 Driver's status y-coord
     """
 
-    def __init__(self, matrix, canvas, config, data):
-        super().__init__(matrix, canvas, config)
+    def __init__(self, matrix, canvas, draw, layout, data):
+        super().__init__(matrix, canvas, draw, layout)
         self.data = data
         self.gp_result = self.data.last_gp
-        self.offset = self.font.height + 2
-        self.coords = self.config.layout.coords['last-gp']
-        self.position_y = self.coords['position']['y']
+        self.offset = self.font_height + 2
+        self.coords = self.layout.coords['last-gp']
+        self.text_y = self.coords['result']['position']['y']
         self.code_x = self.coords['code']['x']
-        self.code_y = self.coords['code']['y']
-        self.time_y = self.coords['time']['y']
-        self.status_y = self.coords['status']['y']
 
     def render(self):
         if self.gp_result:
-            self.canvas.Clear()
+            self.new_canvas(self.matrix.width, self.coords['row_height'] * len(self.gp_result.driver_results))
 
-            # Slide 1
+            # GP Name & Track Logo/Layout
             self.render_gp_name()
             self.render_graphic()
-            time.sleep(7.0)
+            self.matrix.SetImage(self.canvas)
+            time.sleep(SLIDE_DELAY)
 
-            self.canvas.Clear()
+            self.clear()
 
-            # Slide 2
-            self.render_podium(self.gp_result.driver_results[:3])  # Podium winners
-            time.sleep(7.0)
+            # Podium
+            self.render_podiums(self.gp_result.driver_results[:3])
+            self.matrix.SetImage(self.canvas)
+            time.sleep(SLIDE_DELAY)
 
-            self.canvas.Clear()
+            self.clear()
 
             # Complete results
-            pages = split_into_pages(self.gp_result.driver_results, 4)  # No.1-4, 5-9, 10-13, 14-17, 18-20
-            for page in pages:
-                self.render_page(page)
+            for result in self.gp_result.driver_results:
+                self.render_row(result)
+            self.scroll_up(self.canvas)
 
-            self.canvas = self.matrix.SwapOnVSync(self.canvas)
+            self.text_y = self.coords['result']['position']['y']  # Reset
 
     # TODO: Name text can be too long to fit on canvas
     def render_gp_name(self):
-        name_x = align_text(self.gp_result.gp.name,
-                            x=Position.CENTER,
-                            col_width=self.canvas.width,
-                            font_width=self.font.baseline - 1)
-        y = self.coords['name']['y']
-
-        for x in range(self.canvas.width):
-            DrawLine(self.canvas, x, y - self.font.height, x, y, Color.RED.value)
-        DrawText(self.canvas, self.font, name_x, y, Color.WHITE.value, self.gp_result.gp.name)
+        x, y = align_text(self.font.getsize(self.gp_result.gp.name),
+                          self.matrix.width,
+                          self.matrix.height,
+                          Position.CENTER,
+                          Position.TOP)
+        self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height)), fill=Color.RED)
+        self.draw.text((x, y + 1), self.gp_result.gp.name, fill=Color.WHITE, font=self.font)
 
     def render_graphic(self):
-        graphic = load_image(self.gp_result.gp.circuit.logo, (64, 24))
+        graphic = load_image(self.gp_result.gp.circuit.logo, tuple(self.coords['graphic']['size']))
         if not graphic:  # Set graphic to track image
-            graphic = load_image(self.gp_result.gp.circuit.track, (64, 24))
+            graphic = load_image(self.gp_result.gp.circuit.track, tuple(self.coords['graphic']['size']))
 
-        offset = self.coords['graphic']['y-offset']
         x, y = align_image(graphic,
-                           Position.CENTER, Position.CENTER,
-                           self.canvas.width, self.canvas.height - offset)
-        self.canvas.SetImage(graphic, x, y + offset)
+                           self.matrix.width,
+                           self.matrix.height,
+                           Position.CENTER,
+                           Position.BOTTOM)
+        self.canvas.paste(graphic, (x, y))
 
-    def render_podium(self, winners: list):
-        places = ['1st', '2nd', '3rd']
-        for place, winner in zip(places, winners):
-            self.render_podium_place(place, winner.driver)
+    def render_podiums(self, winners: list):
+        podiums = ['1st', '2nd', '3rd']
+        for podium, winner in zip(podiums, winners):
+            self.render_podium_place(podium, winner.driver)
 
     def render_podium_place(self, place: str, winner: Driver):
+        # Podium
         top = self.coords['podium'][place]['limits']['top']
         right = self.coords['podium'][place]['limits']['right']
         bottom = self.coords['podium'][place]['limits']['bottom']
         left = self.coords['podium'][place]['limits']['left']
-        flag_x_offset = self.coords['podium'][place]['flag']['x-offset']
-        flag_y_offset = self.coords['podium'][place]['flag']['y-offset']
-        winner_x = self.coords['podium'][place]['code']['x']
-        winner_y = self.coords['podium'][place]['code']['y']
         label_x = self.coords['podium'][place]['label']['x']
         label_y = self.coords['podium'][place]['label']['y']
 
-        # Podium
-        for x in range(left, right):
-            DrawLine(self.canvas, x, top, x, bottom, Color.WHITE.value)
-        DrawText(self.canvas, self.font, label_x, label_y, Color.BLACK.value, place[0])
+        self.draw.rectangle(((left, top), (right, bottom)), fill=Color.WHITE)
+        self.draw.text((label_x, label_y), place[0], fill=Color.BLACK, font=self.font)
 
-        # Winner
-        for x in range(left + 1, right - 1):
-            DrawLine(self.canvas, x, winner_y - self.font.height, x, winner_y, winner.constructor.colors[0])
-        DrawText(self.canvas, self.font, winner_x, winner_y, winner.constructor.colors[1], winner.code)
+        # Driver
+        driver_x = self.coords['podium'][place]['code']['x']
+        driver_y = self.coords['podium'][place]['code']['y']
 
-        # Winner's flag
-        flag = load_image(winner.flag, (12, 6))
-        self.canvas.SetImage(flag, flag_x_offset, flag_y_offset)
+        self.draw.rectangle(((left + 1, driver_y - 1), (right - 1, driver_y + self.font_height - 1)),
+                            fill=winner.constructor.colors[0])
+        self.draw.text((driver_x, driver_y), winner.code, fill=winner.constructor.colors[1], font=self.font)
 
-    def render_page(self, page: list):
-        for item in page:
-            self.render_row(item.driver.constructor.colors,
-                            str(item.position),
-                            item.fastest_lap,
-                            item.driver.code,
-                            item.time,
-                            item.status)
-        time.sleep(5.0)
+        # Driver's flag
+        flag_x = self.coords['podium'][place]['flag']['position']['x']
+        flag_y = self.coords['podium'][place]['flag']['position']['y']
+        flag = load_image(winner.flag, tuple(self.coords['podium'][place]['flag']['size']))
 
-        self.position_y = self.code_y = self.time_y = self.status_y = self.font.height  # Reset to top
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+        self.canvas.paste(flag, (flag_x, flag_y))
 
-    def render_row(self,
-                   colors: Color,
-                   position: str,
-                   fastest_lap: bool,
-                   code: str,
-                   race_time: str,
-                   status: FinishingStatus):
-        self.render_background(colors[0])
-        self.render_position(position, fastest_lap)
-        self.render_code(colors[1], code)
-        if status == FinishingStatus.FINISHED:
-            self.render_race_time(colors[1], race_time[:9])
+    def render_row(self, result: DriverResult):
+        bg, text = result.driver.constructor.colors
+        self.render_background(bg)
+        self.render_position(str(result.position), result.fastest_lap)
+        self.render_code(text, result.driver.code)
+        # TODO: Fit full string
+        if result.status == FinishingStatus.FINISHED:
+            self.render_result(text, result.time[:9])
         else:
-            self.render_status(colors[1], status.value)
+            self.render_result(text, str(result.status.value))
 
-        self.position_y += self.offset
-        self.code_y += self.offset
-        self.time_y += self.offset
-        self.status_y += self.offset
+        self.text_y += self.offset
 
-    def render_background(self, bg_color: Color):
-        for x in range(self.code_x - 1, self.canvas.width):
-            DrawLine(self.canvas, x, self.code_y - self.font.height, x, self.code_y, bg_color)
+    def render_background(self, bg_color: tuple):
+        self.draw.rectangle(((self.code_x - 1, self.text_y - 1),
+                             (self.matrix.width, self.text_y + self.font_height - 1)),
+                            fill=bg_color)
 
     def render_position(self, position: str, fastest_lap: bool):
         if fastest_lap:
-            bg_color = Color.PURPLE.value
-            text_color = Color.WHITE.value
+            bg_color = Color.PURPLE
+            text_color = Color.WHITE
         else:
-            bg_color = Color.WHITE.value
-            text_color = Color.BLACK.value
+            bg_color = Color.WHITE
+            text_color = Color.BLACK
 
-        # Background
-        for x in range(self.code_x - 2):
-            DrawLine(self.canvas, x, self.position_y - self.font.height, x, self.position_y, bg_color)
+        self.draw.rectangle(((0, self.text_y - 1),
+                             (self.code_x - 3, self.text_y + self.font_height - 1)),
+                            fill=bg_color)
 
-        # Number
-        x = align_text(position,
-                       x=Position.CENTER,
-                       col_width=12,
-                       font_width=self.font.baseline - 1)
-        DrawText(self.canvas, self.font, x, self.position_y, text_color, position)
+        x = align_text(self.font.getsize(position),
+                       col_width=self.coords['result']['width'],
+                       x=Position.CENTER)[0]
+        self.draw.text((x, self.text_y), position, fill=text_color, font=self.font)
 
-    def render_code(self, text_color: Color, code: str):
-        DrawText(self.canvas, self.font, self.code_x, self.code_y, text_color, code)
+    def render_code(self, text_color: tuple, code: str):
+        self.draw.text((self.code_x, self.text_y), code, fill=text_color, font=self.font)
 
-    def render_race_time(self, text_color: Color, race_time: str):
-        x = align_text(race_time,
-                       x=Position.RIGHT,
-                       col_width=self.canvas.width,
-                       font_width=self.font.baseline - 1)
-        DrawText(self.canvas, self.font, x, self.time_y, text_color, race_time)
-
-    def render_status(self, text_color: Color, status: str):
-        x = align_text(status,
-                       x=Position.RIGHT,
-                       col_width=self.canvas.width,
-                       font_width=self.font.baseline - 1)
-        DrawText(self.canvas, self.font, x, self.status_y, text_color, status)
+    def render_result(self, text_color: tuple, text: str):
+        x = align_text(self.font.getsize(text),
+                       col_width=self.matrix.width,
+                       x=Position.RIGHT)[0]
+        self.draw.text((x, self.text_y), text, fill=text_color, font=self.font)

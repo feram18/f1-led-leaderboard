@@ -1,7 +1,6 @@
-from rgbmatrix.graphics import DrawText
+from constants import F1_LOGO
 from renderer.renderer import Renderer
 from utils import Color, align_text, Position, load_image, align_image
-from constants import F1_LOGO
 from version import __version__
 
 
@@ -13,32 +12,27 @@ class Loading(Renderer):
         coords (dict):      Coordinates dictionary
     """
 
-    def __init__(self, matrix, canvas, config):
-        super().__init__(matrix, canvas, config)
-
-        self.coords = self.config.layout.coords['loading']
+    def __init__(self, matrix, canvas, draw, layout):
+        super().__init__(matrix, canvas, draw, layout)
+        self.coords = self.layout.coords['loading']
+        self.render()
 
     def render(self):
-        self.canvas.Clear()
-
         self.render_logo()
         self.render_version()
-
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+        self.matrix.SetImage(self.canvas)
 
     def render_version(self):
-        x = align_text(__version__,
-                       x=Position.CENTER,
-                       col_width=self.canvas.width,
-                       font_width=self.font.baseline - 1)
-        y = self.coords['version']['y']
-        DrawText(self.canvas, self.font, x, y, Color.WHITE.value, __version__)
+        x, y = align_text(self.font.getsize(__version__),
+                          self.matrix.width,
+                          self.matrix.height,
+                          Position.CENTER,
+                          Position.BOTTOM)
+        self.draw.text((x, y), __version__, fill=Color.WHITE, font=self.font)
 
     def render_logo(self):
-        logo = load_image(F1_LOGO, (64, 28))
-        x_offset, y_offset = align_image(logo,
-                                         Position.CENTER,
-                                         Position.CENTER,
-                                         self.canvas.width,
-                                         self.canvas.height)
-        self.canvas.SetImage(logo, x_offset, y_offset)
+        logo = load_image(F1_LOGO, tuple(self.coords['image']['size']))
+        x, y = align_image(logo,
+                           self.matrix.width,
+                           self.matrix.height)
+        self.canvas.paste(logo, (x, y))

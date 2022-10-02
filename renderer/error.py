@@ -1,8 +1,8 @@
 import time
-from rgbmatrix.graphics import DrawText
+
+from constants import ERROR_IMAGE, SLIDE_DELAY
 from renderer.renderer import Renderer
-from utils import Color, align_text, Position, load_image
-from constants import ERROR_IMAGE
+from utils import Color, align_text, Position, load_image, align_image
 
 
 class Error(Renderer):
@@ -14,37 +14,33 @@ class Error(Renderer):
 
     Attributes:
         coords (dict):          Coordinates dictionary
-        error_msg (str):        Error message string
+        msg (str):              Error message string
     """
 
-    def __init__(self, matrix, canvas, config, data):
-        super().__init__(matrix, canvas, config)
+    def __init__(self, matrix, canvas, draw, layout, data):
+        super().__init__(matrix, canvas, draw, layout)
         self.data = data
-
-        self.coords = self.config.layout.coords['error']
-
-        self.error_msg = self.data.status
+        self.coords = self.layout.coords['error']
+        self.msg = self.data.status
 
     def render(self):
-        self.canvas.Clear()
-
+        self.clear()
+        self.render_image()
         self.render_error_msg()
-        time.sleep(15.0)
-
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+        self.matrix.SetImage(self.canvas)
+        time.sleep(SLIDE_DELAY * 2)
 
     def render_error_msg(self):
-        x, y = align_text(self.error_msg,
-                          Position.CENTER,
-                          Position.CENTER,
-                          self.canvas.width,
-                          self.canvas.height,
-                          self.font.baseline - 1,
-                          self.font.height)
-        DrawText(self.canvas, self.font, x, y, Color.RED.value, self.error_msg)
+        x, y = align_text(self.font.getsize(self.msg),
+                          self.matrix.width,
+                          self.matrix.height)
+        self.draw.text((x, y), self.msg, fill=Color.RED, font=self.font)
 
     def render_image(self):
-        error_image = load_image(ERROR_IMAGE, (4, 6))
-        x_offset = self.coords['image']['x-offset']
-        y_offset = self.coords['image']['y-offset']
-        self.canvas.SetImage(error_image, x_offset, y_offset)
+        img = load_image(ERROR_IMAGE, tuple(self.coords['image']['size']))
+        x, y = align_image(img,
+                           self.matrix.width,
+                           self.matrix.height,
+                           Position.CENTER,
+                           Position.TOP)
+        self.canvas.paste(img, (x, y + 1))

@@ -1,8 +1,11 @@
 import time
-from rgbmatrix.graphics import DrawText, DrawLine
+from typing import List
+
+from constants import SLIDE_DELAY
 from data.gp_status import GrandPrixStatus
+from data.qualifying import QualifyingResultItem
 from renderer.renderer import Renderer
-from utils import Color, align_text, Position, split_into_pages
+from utils import Color, align_text, Position
 
 
 class Qualifying(Renderer):
@@ -17,95 +20,78 @@ class Qualifying(Renderer):
         coords (dict):                      Coordinates dictionary
         offset (int):                       Row y-coord offset
         position_x (int):                   Driver's grid position x-coord
-        position_y (int):                   Driver's grid position y-coord
+        text_y (int):                       Driver's grid position & code y-coord
         code_x (int):                       Driver's code x-coord
-        code_y (int):                       Driver's code y-coord
     """
 
-    def __init__(self, matrix, canvas, config, data):
-        super().__init__(matrix, canvas, config)
+    def __init__(self, matrix, canvas, draw, layout, data):
+        super().__init__(matrix, canvas, draw, layout)
         self.data = data
         self.qualifying = self.data.qualifying
-        self.coords = self.config.layout.coords['qualifying']
-        self.offset = 4
-        self.position_x = self.coords['grid']['odd']['position']['x']
-        self.position_y = self.coords['grid']['odd']['position']['y']
+        self.coords = self.layout.coords['qualifying']
+        self.offset = self.coords['row']['height'] // 2
+        self.position_x = self.coords['grid']['odd']['result']['position']['x']
+        self.text_y = self.coords['grid']['odd']['result']['position']['y']
         self.code_x = self.coords['grid']['odd']['code']['x']
-        self.code_y = self.coords['grid']['odd']['code']['y']
 
     def render(self):
         if self.data.next_gp:
-            self.canvas.Clear()
+            self.new_canvas(self.matrix.width,
+                            (self.coords['row']['height'] *
+                             (len(self.qualifying.grid) // 2)) + self.coords['row']['height'] // 2)
 
             if not self.qualifying:
                 self.render_header()
-                x, y = align_text(GrandPrixStatus.UPCOMING.value,
-                                  Position.CENTER,
-                                  Position.CENTER,
-                                  self.canvas.width,
-                                  self.canvas.height,
-                                  self.font.baseline - 1,
-                                  self.font.height)
-                DrawText(self.canvas, self.font, x, y, Color.WHITE.value, GrandPrixStatus.UPCOMING.value)
-                time.sleep(7.0)
+                self.render_status()
+                time.sleep(SLIDE_DELAY)
             else:
                 # Render grid
-                pages = split_into_pages(self.qualifying.grid, 7)  # 1-7, 8-14, 15-20
-                for page in pages:
-                    self.render_page(page)
-
-            self.canvas = self.matrix.SwapOnVSync(self.canvas)
+                for item in self.qualifying.grid:
+                    self.render_row(item)
+                self.scroll_up(self.canvas)
+            self.text_y = self.coords['grid']['odd']['result']['position']['y']  # Reset
 
     def render_header(self):
-        header_x = align_text('Qualifying',
-                              x=Position.CENTER,
-                              col_width=self.canvas.width,
-                              font_width=self.font.baseline - 1)
-        y = self.coords['header']['y']
+        x, y = align_text(self.font.getsize('Qualifying'),
+                          self.matrix.width,
+                          self.matrix.height,
+                          Position.CENTER,
+                          Position.TOP)
+        y += self.coords['header']['offset']['y']
 
-        # Background
-        for x in range(self.canvas.width):
-            DrawLine(self.canvas, x, y - self.font.height, x, y, Color.RED.value)
+        self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height - 1)), fill=Color.RED)
+        self.draw.text((x, y), 'Qualifying', fill=Color.WHITE, font=self.font)
 
-        # Header
-        DrawText(self.canvas, self.font, header_x, y, Color.WHITE.value, 'Qualifying')
+    def render_status(self):
+        status = GrandPrixStatus.UPCOMING.value
+        x, y = align_text(self.font.getsize(status),
+                          self.matrix.width,
+                          self.matrix.height)
+        self.draw.text((x, y), status, fill=Color.WHITE, font=self.font)
 
-    def render_page(self, page: list):
-        for item in page:
-            self.render_row(item.position, item.driver.code, item.driver.constructor.colors)
-        time.sleep(7.0)
-
-        self.position_y = self.code_y = self.font.height  # Reset to top
-        self.canvas.Clear()
-
-    def render_row(self, position: int, code: str, colors: Color):
-        parity = 'even' if position % 2 == 0 else 'odd'
-        self.position_x = self.coords['grid'][parity]['position']['x']
+    def render_row(self, item: QualifyingResultItem):
+        parity = 'even' if item.position % 2 == 0 else 'odd'
+        self.position_x = self.coords['grid'][parity]['result']['position']['x']
         self.code_x = self.coords['grid'][parity]['code']['x']
 
-        self.render_code(code, colors[0], colors[1])
-        self.render_position(str(position))
+        self.render_code(item.driver.code, item.driver.constructor.colors)
+        self.render_position(str(item.position), self.coords['grid'][parity]['result']['width'])
 
-        self.position_y += self.offset
-        self.code_y += self.offset
+        self.text_y += self.offset
 
-    def render_position(self, position: str):
-        # Background
-        for x in range(self.position_x, self.code_x - 1):
-            DrawLine(self.canvas, x, self.position_y - self.font.height, x, self.position_y, Color.WHITE.value)
+    def render_position(self, position: str, pos_width: int):
+        self.draw.rectangle(((self.position_x, self.text_y - 1),
+                             (self.code_x - 2, self.text_y + self.font_height - 1)),
+                            fill=Color.WHITE)
 
-        self.position_x += align_text(position,
-                                      Position.CENTER,
-                                      col_width=12,
-                                      font_width=self.font.baseline - 1)
+        self.position_x += align_text(self.font.getsize(position),
+                                      col_width=pos_width,
+                                      x=Position.CENTER)[0]
+        self.draw.text((self.position_x, self.text_y), position, fill=Color.BLACK, font=self.font)
 
-        # Position
-        DrawText(self.canvas, self.font, self.position_x, self.position_y, Color.BLACK.value, position)
-
-    def render_code(self, code: str, bg_color: Color, text_color: Color):
-        # Background
-        for x in range(self.code_x - 1, self.code_x + 20):
-            DrawLine(self.canvas, x, self.code_y - self.font.height, x, self.code_y, bg_color)
-
-        # Code
-        DrawText(self.canvas, self.font, self.code_x, self.code_y, text_color, code)
+    def render_code(self, code: str, colors: List[tuple]):
+        bg, text = colors
+        self.draw.rectangle(((self.code_x - 1, self.text_y - 1),
+                             (self.code_x + self.coords['row']['width'] - 1, self.text_y + self.font_height - 1)),
+                            fill=bg)
+        self.draw.text((self.code_x, self.text_y), code, fill=text, font=self.font)
