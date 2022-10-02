@@ -8,7 +8,7 @@ from enum import Enum
 from typing import Tuple, Optional
 
 from PIL import Image, ImageFont
-from RGBMatrixEmulator import RGBMatrixOptions
+from rgbmatrix import RGBMatrixOptions
 
 
 class Color:

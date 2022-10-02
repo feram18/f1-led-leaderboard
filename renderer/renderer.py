@@ -2,7 +2,7 @@ import time
 from abc import ABC, abstractmethod
 
 from PIL import Image, ImageDraw, ImageFont
-from RGBMatrixEmulator import RGBMatrix
+from rgbmatrix import RGBMatrix
 
 from config.layout import Layout
 from constants import DELAY, SCROLL_DELAY
