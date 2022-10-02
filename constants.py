@@ -27,3 +27,6 @@ TIME_FORMAT = '%H:%M'  # eg. 18:30
 
 # Software
 UPDATE_RATE = 30.0 * 60  # 30 minutes
+SCROLL_DELAY = 0.5  # seconds
+SLIDE_DELAY = 7.5  # seconds
+DELAY = 3  # seconds
