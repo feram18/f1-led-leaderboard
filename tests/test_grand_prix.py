@@ -1,7 +1,9 @@
-import pytest
 from datetime import datetime, timedelta
-from data.grand_prix import GrandPrix
+
+import pytest
+
 from data.gp_status import GrandPrixStatus
+from data.grand_prix import GrandPrix
 
 
 class TestGrandPrix:

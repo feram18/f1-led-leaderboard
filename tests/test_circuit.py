@@ -1,4 +1,5 @@
 import logging
+
 from data.circuit import Circuit
 
 

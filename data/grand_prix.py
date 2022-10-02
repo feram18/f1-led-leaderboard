@@ -1,8 +1,9 @@
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
+
+from constants import DATE_FORMAT, TIME_FORMAT
 from data.circuit import Circuit
 from data.gp_status import GrandPrixStatus
-from constants import DATE_FORMAT, TIME_FORMAT
 
 
 @dataclass

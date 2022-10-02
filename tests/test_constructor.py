@@ -1,4 +1,5 @@
 import logging
+
 from data.constructor import Constructor
 
 

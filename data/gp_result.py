@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 from typing import List
+
 from data.driver import Driver
-from data.grand_prix import GrandPrix
 from data.finishing_status import FinishingStatus
+from data.grand_prix import GrandPrix
 
 
 @dataclass

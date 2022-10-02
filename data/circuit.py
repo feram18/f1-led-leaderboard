@@ -1,7 +1,8 @@
-import os
 import logging
+import os
 from dataclasses import dataclass, field
-from constants import CIRCUIT_LOGO_PATH, TRACK_IMAGE_PATH
+
+from constants import CIRCUIT_LOGO_PATH, TRACK_IMAGE_PATH, COUNTRY_FLAG_PATH
 
 
 @dataclass

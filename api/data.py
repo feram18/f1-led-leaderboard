@@ -1,18 +1,20 @@
-import time
 import logging
-import requests
-import constants
+import time
 from dataclasses import dataclass, field
 from typing import List, Optional
-from data.update_status import UpdateStatus
-from data.standings import StandingsItem, Standings
+
+import requests
+
+import constants
+from data.circuit import Circuit
 from data.constructor import Constructor
 from data.driver import Driver
-from data.gp_result import GPResult, DriverResult
 from data.finishing_status import FinishingStatus as Status
+from data.gp_result import GPResult, DriverResult
 from data.grand_prix import GrandPrix
 from data.qualifying import Qualifying, QualifyingResultItem
-from data.circuit import Circuit
+from data.standings import Standings, StandingsItem
+from data.update_status import UpdateStatus
 from utils import race_weekend
 
 

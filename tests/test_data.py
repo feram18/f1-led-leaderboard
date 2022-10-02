@@ -1,5 +1,7 @@
-import pytest
 import time
+
+import pytest
+
 from api.data import Data
 from constants import UPDATE_RATE
 
