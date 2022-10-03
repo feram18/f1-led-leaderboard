@@ -33,10 +33,6 @@ class TestUtils:
             utils.load_font('invalid.bdf')
         assert f"Couldn't find font invalid.bdf" in caplog.text
 
-    def test_load_font_5(self):
-        font = utils.load_font('invalid.bdf')
-        assert isinstance(font, ImageFont.ImageFont)
-
     def test_load_image(self):
         image = utils.load_image('assets/img/error.png', (15, 15))
         assert isinstance(image, Image.Image)
@@ -60,20 +56,20 @@ class TestUtils:
         assert (x, y) == (10, 19)
 
     def test_align_text_2(self):
-        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_width=64, x=utils.Position.CENTER)
+        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_width=64, x=utils.Position.CENTER)[0]
         assert x == 10
 
     def test_align_text_3(self):
-        y = utils.align_text(self.font.getsize('Lorem ipsum'), col_height=32, y=utils.Position.CENTER)
+        y = utils.align_text(self.font.getsize('Lorem ipsum'), col_height=32, y=utils.Position.CENTER)[1]
         assert y == 19
 
     def test_align_text_4(self):
-        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_width=64, x=utils.Position.RIGHT)
+        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_width=64, x=utils.Position.RIGHT)[0]
         assert x == 20
 
     def test_align_text_5(self):
-        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_height=32, y=utils.Position.BOTTOM)
-        assert x == 32
+        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_height=32, y=utils.Position.BOTTOM)[0]
+        assert x == 22
 
     def test_align_image(self):
         img = utils.load_image('assets/img/error.png', (15, 15))
