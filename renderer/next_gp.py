@@ -62,9 +62,10 @@ class NextGP(Renderer):
         if logo:
             x, y = align_image(logo,
                                self.matrix.width,
-                               self.matrix.height,
+                               self.matrix.height - self.font_height - 1,
                                Position.CENTER,
-                               Position.BOTTOM)
+                               Position.CENTER)
+            y += self.font_height + 1
             self.canvas.paste(logo, (x, y))
 
     def render_date(self):
