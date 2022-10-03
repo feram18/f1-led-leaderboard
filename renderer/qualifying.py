@@ -46,13 +46,14 @@ class Qualifying(Renderer):
             if not self.qualifying:
                 self.render_header()
                 self.render_status()
+                self.matrix.SetImage(self.canvas)
                 time.sleep(SLIDE_DELAY)
             else:
                 # Render grid
                 for item in self.qualifying.grid:
                     self.render_row(item)
                 self.scroll_up(self.canvas)
-            self.text_y = self.coords['grid']['odd']['result']['position']['y']  # Reset
+                self.text_y = self.coords['grid']['odd']['result']['position']['y']  # Reset
 
     def render_header(self):
         x, y = align_text(self.font.getsize('Qualifying'),
