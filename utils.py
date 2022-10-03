@@ -54,7 +54,7 @@ def load_font(filename: str) -> ImageFont:
     """
     Return ImageFont object from given file.
     :param filename: (str) Font file
-    :return: font.py: (PIL.ImageFont) ImageFont object
+    :return: font: (PIL.ImageFont) ImageFont object
     """
     if os.path.isfile(filename):
         return ImageFont.load(filename)
@@ -88,8 +88,10 @@ def load_image(filename: str,
 
 
 def align_text(text_size: Tuple[int, int],
-               col_width: int = 0, col_height: int = 0,
-               x: Position = Position.CENTER, y: Position = Position.CENTER) -> (int, Optional[int]):
+               col_width: int = 0,
+               col_height: int = 0,
+               x: Position = Position.CENTER,
+               y: Position = Position.CENTER) -> Tuple[int, int]:
     """
     Calculate x, y coords to align text on canvas
     :param text_size: (width, height) in pixels
@@ -117,8 +119,10 @@ def align_text(text_size: Tuple[int, int],
 
 
 def align_image(image: Image,
-                col_width: int = 0, col_height: int = 0,
-                x: Position = Position.CENTER, y: Position = Position.CENTER) -> (int, int):
+                col_width: int = 0,
+                col_height: int = 0,
+                x: Position = Position.CENTER,
+                y: Position = Position.CENTER) -> Tuple[int, int]:
     """
     Calculate the x, y offsets to align image on canvas
     :param image: Image to align
@@ -126,7 +130,7 @@ def align_image(image: Image,
     :param col_height: Column's height
     :param x: Image horizontal position
     :param y: Image vertical position
-    :return: x, y: Coordinate offsets
+    :return: x, y: Coordinates
     """
     if x == Position.RIGHT:
         x = col_width - image.width
