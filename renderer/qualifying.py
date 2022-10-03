@@ -36,9 +36,12 @@ class Qualifying(Renderer):
 
     def render(self):
         if self.data.next_gp:
-            self.new_canvas(self.matrix.width,
-                            (self.coords['row']['height'] *
-                             (len(self.qualifying.grid) // 2)) + self.coords['row']['height'] // 2)
+            if self.qualifying:
+                height = (self.coords['row']['height'] *
+                          (len(self.qualifying.grid) // 2)) + self.coords['row']['height'] // 2
+            else:
+                height = self.matrix.height
+            self.new_canvas(self.matrix.width, height)
 
             if not self.qualifying:
                 self.render_header()
