@@ -117,9 +117,9 @@ class LastGP(Renderer):
         self.render_background(bg)
         self.render_position(str(result.position), result.fastest_lap)
         self.render_code(text, result.driver.code)
-        # TODO: Fit full string
         if result.status == FinishingStatus.FINISHED:
-            self.render_result(text, result.time[:9])
+            rt = result.time if self.coords['options']['full_string'] else result.time[:9]
+            self.render_result(text, rt)
         else:
             self.render_result(text, str(result.status.value))
 

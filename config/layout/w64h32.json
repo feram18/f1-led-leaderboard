@@ -51,6 +51,9 @@
     },
     "last-gp": {
         "row_height": 8,
+        "options": {
+            "full_string": false
+        },
         "graphic": {
             "size": [64, 24]
         },
