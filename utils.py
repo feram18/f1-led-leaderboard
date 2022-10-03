@@ -107,7 +107,7 @@ def align_text(text_size: Tuple[int, int],
         x = 0
 
     if y == Position.CENTER:
-        y = abs(col_height//2 + text_size[1]//2)
+        y = abs(col_height//2 - text_size[1]//2)
     elif y == Position.BOTTOM:
         y = col_height - text_size[1]
     elif y == Position.TOP:
