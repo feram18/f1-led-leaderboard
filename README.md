@@ -106,8 +106,7 @@ chmod +x install.sh
 
 **Updating**
 
-From the `f1-led-leaderboard` directory, run the update script. The script will also take care of updating all 
-dependencies.
+From the `f1-led-leaderboard` directory, run the update script. The script will also take care of updating dependencies.
 
 ```sh
 ./update.sh
@@ -152,13 +151,14 @@ More details on these flags/arguments can be found in the library's documentatio
 From the `f1-led-leaderboard` directory run the command
 
 ```sh
-sudo python3 main.py --led-gpio-mapping="adafruit-hat" --led-slowdown-gpio=2 --led-brightness=60
+sudo python3 main.py --led-gpio-mapping="adafruit-hat" --led-slowdown-gpio=2
 ```
-You can modify and include [flags](#Flags) as necessary. Running as root is necessary in order for the matrix to render.
+Include [flags](#Flags) as necessary. Running as root is necessary in order for the matrix to render. Privileges are 
+dropped after initialization.
 
 ### Debug
-If you are experiencing issues, you can turn on debug messages by running the software and appending the `--debug` flag 
-to your execution command, logs are written to the `f1-led-leaderboard.log` file.
+If you are experiencing issues, enable debug messages by appending the `--debug` flag to your execution command, 
+logs are written to the `f1-led-leaderboard.log` file.
 
 ## Roadmap
 - [X] Race Schedule
@@ -177,7 +177,7 @@ This project relies on the following:
   submodule, so when cloning the repository it is necessary to use the `--recursive` flag.
 
 ## Limitations
-Unfortunately the data provided by the [Ergast API] is not live, though it is updated a few hours after results are up.
+Unfortunately [Ergast API] does not live data, though it is updated a few hours after results are up.
 
 ## Disclaimer
 This application is dependent on the [Ergast API] relaying accurate and updated data.
