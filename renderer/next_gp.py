@@ -6,7 +6,6 @@ from renderer.renderer import Renderer
 from utils import Color, align_text, Position, align_image, load_image
 
 
-# TODO: Date + Time one pixel too high up?
 class NextGP(Renderer):
     """
     Render next grand prix's information
