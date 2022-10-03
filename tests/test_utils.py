@@ -53,23 +53,15 @@ class TestUtils:
 
     def test_align_text(self):
         x, y = utils.align_text(self.font.getsize('Lorem ipsum'), 64, 32, utils.Position.CENTER, utils.Position.CENTER)
-        assert (x, y) == (10, 19)
+        assert (x, y) == (11, 13)
 
     def test_align_text_2(self):
-        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_width=64, x=utils.Position.CENTER)[0]
-        assert x == 10
+        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_width=64, x=utils.Position.RIGHT)[0]
+        assert x == 22
 
     def test_align_text_3(self):
-        y = utils.align_text(self.font.getsize('Lorem ipsum'), col_height=32, y=utils.Position.CENTER)[1]
-        assert y == 19
-
-    def test_align_text_4(self):
-        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_width=64, x=utils.Position.RIGHT)[0]
-        assert x == 20
-
-    def test_align_text_5(self):
         x = utils.align_text(self.font.getsize('Lorem ipsum'), col_height=32, y=utils.Position.BOTTOM)[0]
-        assert x == 22
+        assert x == 21
 
     def test_align_image(self):
         img = utils.load_image('assets/img/error.png', (15, 15))
