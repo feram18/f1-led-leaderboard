@@ -89,7 +89,7 @@ Materials needed:
 
 ```sh
 sudo apt-get update
-sudo apt-get install git python-pip
+sudo apt-get install git python3-pip -y
 ```
 
 **Installation**
