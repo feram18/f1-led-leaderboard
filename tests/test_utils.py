@@ -10,7 +10,7 @@ import utils
 @pytest.mark.skipif(not sys.platform.startswith('linux'), reason='Requires Linux')
 class TestUtils:
     def setup_method(self):
-        self.font = utils.load_font('assets/fonts/PIL/4x6.pil')
+        self.font = utils.load_font('assets/fonts/tom-thumb.pil')
 
     def test_read_json(self, caplog):
         caplog.clear()
@@ -19,16 +19,13 @@ class TestUtils:
         assert "Couldn't find file at invalid.json" in caplog.text
 
     def test_load_font(self):
-        font = utils.load_font('assets/fonts/PIL/4x6.pil')
-        assert isinstance(font, ImageFont.ImageFont)
+        assert isinstance(self.font, ImageFont.ImageFont)
 
     def test_load_font_2(self):
-        font = utils.load_font('assets/fonts/PIL/4x6.pil')
-        assert font.getsize('A')[0], 4
+        assert self.font.getsize('A')[0], 4
 
     def test_load_font_3(self):
-        font = utils.load_font('assets/fonts/PIL/4x6.pil')
-        assert font.getsize('A')[1], 6
+        assert self.font.getsize('A')[1], 6
 
     def test_load_font_4(self, caplog):
         caplog.clear()
@@ -85,10 +82,10 @@ class TestUtils:
 
     def test_align_image_2(self):
         img = utils.load_image('assets/img/error.png', (15, 15))
-        x = utils.align_image(img, col_width=64, x=utils.Position.CENTER)
+        x = utils.align_image(img, col_width=64, x=utils.Position.CENTER)[0]
         assert x == 25
 
     def test_align_image_3(self):
         img = utils.load_image('assets/img/error.png', (15, 15))
-        y = utils.align_image(img, col_height=32, y=utils.Position.CENTER)
+        y = utils.align_image(img, col_height=32, y=utils.Position.CENTER)[1]
         assert y == 10
