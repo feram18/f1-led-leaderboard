@@ -27,7 +27,7 @@ class DriverStandings(Renderer):
         self.text_color = Color.WHITE
         self.offset = self.font_height + 2
         self.coords = self.layout.coords['standings']['drivers']
-        self.text_y = self.coords['position']['y']
+        self.text_y = self.coords['place']['position']['y']
         self.flag_y = self.coords['flag']['position']['y']
         self.driver_x = self.coords['driver']['x']
 
@@ -37,7 +37,7 @@ class DriverStandings(Renderer):
         for driver in self.standings:
             self.render_row(driver)
         self.scroll_up(self.canvas)
-        self.text_y, self.flag_y = self.coords['position']['y'], self.coords['flag']['position']['y']  # Reset
+        self.text_y, self.flag_y = self.coords['place']['position']['y'], self.coords['flag']['position']['y']  # Reset
 
     def render_header(self):
         x, y = align_text(self.font.getsize('Drivers'),
@@ -56,7 +56,7 @@ class DriverStandings(Renderer):
         self.render_background(bg_color)
         if self.coords['options']['flag']:
             self.render_flag(driver.item.flag)
-        self.render_position(str(driver.position))
+        self.render_place(str(driver.position))
         if self.coords['options']['lastname']:
             self.render_driver(driver.item.lastname)
         else:
@@ -75,14 +75,13 @@ class DriverStandings(Renderer):
         flag = load_image(flag_path, tuple(self.coords['flag']['size']))
         self.canvas.paste(flag, (self.coords['flag']['position']['x'], self.flag_y))
 
-    def render_position(self, position: str):
+    def render_place(self, position: str):
         self.draw.rectangle(((0, self.text_y - 1),
                              (self.driver_x - 3, self.text_y + self.font_height - 1)),
                             fill=Color.WHITE)
 
-        # TODO: [HARD-CODED VALUE]
         x = align_text(self.font.getsize(position),
-                       col_width=12,
+                       col_width=self.coords['place']['width'],
                        x=Position.CENTER)[0]
         self.draw.text((x, self.text_y), position, fill=Color.BLACK, font=self.font)
 

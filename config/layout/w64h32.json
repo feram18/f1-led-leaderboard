@@ -28,9 +28,11 @@
                     "y": 2
                 }
             },
-            "position": {
-                "x": 1,
-                "y": 10
+            "place": {
+                "width": 12,
+                "position": {
+                    "y": 10
+                }
             },
             "flag": {
                 "size": [12, 6],
@@ -146,8 +148,10 @@
             "y": 2
         },
         "round": {
-            "x": 3,
-            "y": 10
+            "width": 12,
+            "position": {
+                "y": 10
+            }
         },
         "country": {
             "x": 13,
@@ -156,10 +160,10 @@
     },
     "next-gp": {
         "logo": {
-            "size": [64, 24]
+            "size": [60, 24]
         },
         "track": {
-            "size": [64, 20]
+            "size": [60, 20]
         }
     },
     "qualifying": {
@@ -203,13 +207,8 @@
     },
     "summary": {
         "constructor": {
-            "name": {
-                "x": 0,
-                "y": 0
-            },
             "logo": {
-                "x": 0,
-                "y": 0
+                "size": [64, 30]
             }
         },
         "drivers": {

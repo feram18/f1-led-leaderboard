@@ -25,7 +25,7 @@ class Schedule(Renderer):
         self.offset = self.font_height + 2
         self.coords = self.layout.coords['schedule']
         self.country_x = self.coords['country']['x']
-        self.text_y = self.coords['round']['y']
+        self.text_y = self.coords['round']['position']['y']
 
     def render(self):
         if self.schedule:
@@ -34,7 +34,7 @@ class Schedule(Renderer):
             for gp in self.schedule:
                 self.render_row(gp)
             self.scroll_up(self.canvas)
-            self.text_y = self.coords['round']['y']  # Reset
+            self.text_y = self.coords['round']['position']['y']  # Reset
 
     def render_header(self):
         x, y = align_text(self.font.getsize('Schedule'),
@@ -59,7 +59,7 @@ class Schedule(Renderer):
                             fill=Color.RED)
 
         x = align_text(self.font.getsize(round_no),
-                       col_width=12,
+                       col_width=self.coords['round']['width'],
                        x=Position.CENTER)[0]
         self.draw.text((x, self.text_y), round_no, fill=Color.WHITE, font=self.font)
 
