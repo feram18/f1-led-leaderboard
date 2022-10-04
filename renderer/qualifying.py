@@ -71,6 +71,7 @@ class Qualifying(Renderer):
         x, y = align_text(self.font.getsize(status),
                           self.matrix.width,
                           self.matrix.height)
+        y += (self.font_height // 2)
         self.draw.text((x, y), status, fill=Color.WHITE, font=self.font)
 
     def render_row(self, item: QualifyingResultItem):
