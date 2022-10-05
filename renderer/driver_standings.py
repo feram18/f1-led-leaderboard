@@ -51,33 +51,26 @@ class DriverStandings(Renderer):
         self.draw.text((x, y), 'Drivers', fill=Color.WHITE, font=self.font)
 
     def render_row(self, driver: StandingsItem):
+        self.driver_x = self.coords['driver']['x']
         bg_color, self.text_color = driver.item.constructor.colors
 
-        self.render_background(bg_color)
+        self.render_place(str(driver.position))
         if self.coords['options']['flag']:
             self.render_flag(driver.item.flag)
-        self.render_place(str(driver.position))
+            self.driver_x += self.coords['flag']['size'] + 1
+
+        text = driver.item.code
         if self.coords['options']['lastname']:
-            self.render_driver(driver.item.lastname)
-        else:
-            self.render_driver(driver.item.code)
+            text = driver.item.lastname
+        self.render_driver(bg_color, text)
         self.render_points(f'{driver.points:g}')
 
         self.flag_y += self.offset
         self.text_y += self.offset
 
-    def render_background(self, color: tuple):
-        self.draw.rectangle(((self.driver_x - 1, self.text_y - 1),
-                             (self.matrix.width, self.text_y + self.font_height - 1)),
-                            fill=color)
-
-    def render_flag(self, flag_path: str):
-        flag = load_image(flag_path, tuple(self.coords['flag']['size']))
-        self.canvas.paste(flag, (self.coords['flag']['position']['x'], self.flag_y))
-
     def render_place(self, position: str):
         self.draw.rectangle(((0, self.text_y - 1),
-                             (self.driver_x - 3, self.text_y + self.font_height - 1)),
+                             (self.driver_x - 4, self.text_y + self.font_height - 1)),
                             fill=Color.WHITE)
 
         x = align_text(self.font.getsize(position),
@@ -85,7 +78,15 @@ class DriverStandings(Renderer):
                        x=Position.CENTER)[0]
         self.draw.text((x, self.text_y), position, fill=Color.BLACK, font=self.font)
 
-    def render_driver(self, name: str):
+    def render_flag(self, path: str):
+        flag = load_image(path, tuple(self.coords['flag']['size']))
+        self.canvas.paste(flag, (self.coords['flag']['position']['x'], self.flag_y))
+
+    def render_driver(self, color: tuple, name: str):
+        self.draw.rectangle(((self.driver_x - 2, self.text_y - 1),
+                             (self.matrix.width, self.text_y + self.font_height - 1)),
+                            fill=color)
+
         self.draw.text((self.driver_x, self.text_y), name, fill=self.text_color, font=self.font)
 
     def render_points(self, points: str):
