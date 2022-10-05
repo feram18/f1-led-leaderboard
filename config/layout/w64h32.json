@@ -20,7 +20,7 @@
         "drivers": {
             "row_height": 8,
             "options": {
-                "flag": true,
+                "flag": false,
                 "lastname": false
             },
             "header": {
