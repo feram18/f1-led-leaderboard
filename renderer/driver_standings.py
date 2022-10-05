@@ -70,11 +70,11 @@ class DriverStandings(Renderer):
 
     def render_place(self, position: str):
         self.draw.rectangle(((0, self.text_y - 1),
-                             (self.driver_x - 4, self.text_y + self.font_height - 1)),
+                             (self.coords['place']['width'] - 1, self.text_y + self.font_height - 1)),
                             fill=Color.WHITE)
 
         x = align_text(self.font.getsize(position),
-                       col_width=self.coords['place']['width'],
+                       col_width=self.coords['place']['width'] + 1,
                        x=Position.CENTER)[0]
         self.draw.text((x, self.text_y), position, fill=Color.BLACK, font=self.font)
 
@@ -83,7 +83,7 @@ class DriverStandings(Renderer):
         self.canvas.paste(flag, (self.coords['flag']['position']['x'], self.flag_y))
 
     def render_driver(self, color: tuple, name: str):
-        self.draw.rectangle(((self.driver_x - 2, self.text_y - 1),
+        self.draw.rectangle(((self.driver_x - 1, self.text_y - 1),
                              (self.matrix.width, self.text_y + self.font_height - 1)),
                             fill=color)
 

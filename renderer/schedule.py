@@ -55,11 +55,11 @@ class Schedule(Renderer):
 
     def render_round_no(self, round_no: str):
         self.draw.rectangle(((0, self.text_y - 1),
-                             (self.country_x - 3, self.text_y + self.font_height - 1)),
+                             (self.coords['round']['width'] - 1, self.text_y + self.font_height - 1)),
                             fill=Color.RED)
 
         x = align_text(self.font.getsize(round_no),
-                       col_width=self.coords['round']['width'],
+                       col_width=self.coords['round']['width'] + 1,
                        x=Position.CENTER)[0]
         self.draw.text((x, self.text_y), round_no, fill=Color.WHITE, font=self.font)
 

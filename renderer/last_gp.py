@@ -139,11 +139,11 @@ class LastGP(Renderer):
             text_color = Color.BLACK
 
         self.draw.rectangle(((0, self.text_y - 1),
-                             (self.code_x - 3, self.text_y + self.font_height - 1)),
+                             (self.coords['result']['width'] - 1, self.text_y + self.font_height - 1)),
                             fill=bg_color)
 
         x = align_text(self.font.getsize(position),
-                       col_width=self.coords['result']['width'],
+                       col_width=self.coords['result']['width'] + 1,
                        x=Position.CENTER)[0]
         self.draw.text((x, self.text_y), position, fill=text_color, font=self.font)
 
