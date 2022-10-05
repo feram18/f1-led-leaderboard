@@ -57,7 +57,7 @@ class DriverStandings(Renderer):
         self.render_place(str(driver.position))
         if self.coords['options']['flag']:
             self.render_flag(driver.item.flag)
-            self.driver_x += self.coords['flag']['size'] + 1
+            self.driver_x += tuple(self.coords['flag']['size'])[0] + 1
 
         text = driver.item.code
         if self.coords['options']['lastname']:
