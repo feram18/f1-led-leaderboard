@@ -1,4 +1,4 @@
-# F1 LED Leaderboard Display
+# F1 LED Leaderboard
 ***
 
 ![Travis (.org)](https://img.shields.io/travis/feram18/f1-led-leaderboard?style=for-the-badge)
@@ -116,13 +116,15 @@ From the `f1-led-leaderboard` directory, run the update script. The script will 
 Make sure the timezone on your Raspberry Pi is correct. It will often have it as London by default, but can be changed 
 through the Raspberry Pi configuration tool.
 
+`Localisation Options > Timezone > [Your Time Zone]`
+
 ```sh
 sudo raspi-config
 ```
 
 ### Flags
 The LED matrix is configured with the flags provided by the [rpi-rgb-led-matrix] library. 
-More details on these flags/arguments can be found in the library's documentation.
+More details on these flags can be found in the library's documentation.
 
 ```
 --led-rows                Display panel rows. (Default: 32)
@@ -174,10 +176,10 @@ logs are written to the `f1-led-leaderboard.log` file.
 This project relies on the following:
 - [Ergast API] to retrieve Formula 1 data.
 - [rpi-rgb-led-matrix] library to make everything work with the LED matrix. It is included into this repository as a 
-  submodule, so when cloning the repository it is necessary to use the `--recursive` flag.
+  submodule.
 
 ## Limitations
-Unfortunately [Ergast API] does not live data, though it is updated a few hours after results are up.
+Unfortunately [Ergast API] does not provide live data, though it is updated within a few hours after results are up.
 
 ## Disclaimer
 This application is dependent on the [Ergast API] relaying accurate and updated data.
