@@ -9,6 +9,8 @@ CIRCUIT_LOGO_PATH = 'assets/img/circuits/logos/{}.png'
 TRACK_IMAGE_PATH = 'assets/img/circuits/tracks/{}.png'
 F1_LOGO = 'assets/img/formula-1_logo.png'
 ERROR_IMAGE = 'assets/img/error.png'
+LIB_FONTS_DIR = 'rpi-rgb-led-matrix/fonts'
+FONTS_DIR = 'assets/fonts'
 
 # ERGAST F1 API
 BASE_URL = 'https://ergast.com/api/f1/current'
