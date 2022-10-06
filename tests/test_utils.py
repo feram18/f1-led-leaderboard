@@ -10,7 +10,7 @@ import utils
 @pytest.mark.skipif(not sys.platform.startswith('linux'), reason='Requires Linux')
 class TestUtils:
     def setup_method(self):
-        self.font = utils.load_font('tom-thumb')
+        self.font = utils.load_font('assets/fonts/tom-thumb.bdf')
 
     def test_read_json(self, caplog):
         caplog.clear()

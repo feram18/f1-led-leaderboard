@@ -1,10 +1,6 @@
 # Log Files
 *.log*
 
-# Generated Fonts
-assets/fonts/*.pbm
-assets/fonts/*.pil
-
 # Submodules
 rpi-rgb-led-matrix/*
 
