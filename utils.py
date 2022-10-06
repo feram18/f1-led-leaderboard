@@ -5,16 +5,17 @@ import logging
 import os
 from datetime import datetime
 from enum import Enum
-from typing import Tuple, Optional
+from typing import Tuple
 
-from PIL import Image, ImageFont
+from PIL import Image, ImageFont, BdfFontFile
 from rgbmatrix import RGBMatrixOptions
+
+from constants import FONTS_DIR, LIB_FONTS_DIR
 
 
 class Color:
     """Colors utility class"""
 
-    # Standard colors
     RED = 171, 0, 3, 255
     ORANGE = 128, 128, 128, 255
     YELLOW = 239, 178, 30, 255
@@ -29,7 +30,8 @@ class Color:
 
 
 class Position(Enum):
-    """Enum class for positioning on matrix' canvas"""
+    """Enum class for positioning on matrix canvas"""
+
     TOP = "top"
     RIGHT = "right"
     CENTER = "center"
@@ -40,8 +42,8 @@ class Position(Enum):
 def read_json(filename: str) -> dict:
     """
     Read from JSON file and return it as a dictionary
-    :param filename: (str) JSON file
-    :return: json: (dict) JSON file as a dict
+    :param filename: JSON file
+    :return: json: JSON file as a dict
     """
     if os.path.isfile(filename):
         with open(filename, 'r') as json_file:
@@ -50,15 +52,41 @@ def read_json(filename: str) -> dict:
     logging.error(f"Couldn't find file at {filename}")
 
 
-def load_font(filename: str) -> ImageFont:
+def load_font(name: str) -> ImageFont:
     """
-    Return ImageFont object from given file.
-    :param filename: (str) Font file
-    :return: font: (PIL.ImageFont) ImageFont object
+    Return ImageFont object from given font name
+    :param name: Font name
+    :return: font: ImageFont object
     """
-    if os.path.isfile(filename):
-        return ImageFont.load(filename)
-    logging.warning(f"Couldn't find font {filename}.")
+    path = f'{FONTS_DIR}/{name}.pil'
+    if os.path.isfile(path):
+        return ImageFont.load(path)
+
+    path = f'{FONTS_DIR}/{name}.bdf'
+    if os.path.isfile(path):
+        return load_font(convert_font(path))
+
+    path = f'{LIB_FONTS_DIR}/{name}.bdf'
+    if os.path.isfile(path):
+        return load_font(convert_font(path))
+
+    logging.error(f"Couldn't find font {name}.")
+
+
+def convert_font(filename: str) -> str:
+    """
+    Convert from BDF to PIL font
+    :param filename: Font filename
+    :return name: Font name
+    """
+    name = filename\
+        .replace(f'{FONTS_DIR}/', '') \
+        .replace(f'{LIB_FONTS_DIR}/', '') \
+        .replace('.bdf', '')
+    with open(filename, 'rb') as fp:
+        p = BdfFontFile.BdfFontFile(fp)
+        p.save(f'{FONTS_DIR}/{name}')
+        return name
 
 
 def load_image(filename: str,
