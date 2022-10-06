@@ -33,7 +33,7 @@ class Renderer(ABC):
         self.layout: Layout = layout
         self.font: ImageFont = self.layout.font
         self.font_width, self.font_height = self.font.getsize(' ')
-        self.scroll_speed: float = SLOW_SCROLL if self.matrix.height <= 64 else FAST_SCROLL
+        self.scroll_speed: float = SLOW_SCROLL if self.matrix.height <= 32 else FAST_SCROLL
 
     @abstractmethod
     def render(self):

@@ -1,0 +1,253 @@
+{
+    "font": "assets/fonts/7x13.pil",
+    "standings": {
+        "constructors": {
+            "row_height": 15,
+            "header": {
+                "offset": {
+                    "y": 2
+                }
+            },
+            "name": {
+                "x": 1,
+                "y": 17
+            },
+            "points": {
+                "x": 42,
+                "y": 17
+            }
+        },
+        "drivers": {
+            "row_height": 15,
+            "options": {
+                "flag": true,
+                "lastname": false
+            },
+            "header": {
+                "offset": {
+                    "y": 2
+                }
+            },
+            "place": {
+                "width": 18,
+                "position": {
+                    "y": 17
+                }
+            },
+            "flag": {
+                "size": [28, 14],
+                "position": {
+                    "x": 19,
+                    "y": 16
+                }
+            },
+            "driver": {
+                "x": 20,
+                "y": 17
+            },
+            "points": {
+                "y": 17
+            }
+        }
+    },
+    "last-gp": {
+        "row_height": 15,
+        "options": {
+            "full_string": true
+        },
+        "graphic": {
+            "size": [128, 48]
+        },
+        "podium": {
+            "1st": {
+                "code": {
+                    "x": 53,
+                    "y": 20
+                },
+                "flag": {
+                    "size": [24, 12],
+                    "position": {
+                        "x": 50,
+                        "y": 1
+                    }
+                },
+                "label": {
+                    "x": 60,
+                    "y": 36
+                },
+                "limits": {
+                    "top": 34,
+                    "right": 77,
+                    "bottom": 64,
+                    "left": 48
+                }
+            },
+            "2nd": {
+                "code": {
+                    "x": 23,
+                    "y": 30
+                },
+                "flag": {
+                    "size": [24, 12],
+                    "position": {
+                        "x": 20,
+                        "y": 1
+                    }
+                },
+                "label": {
+                    "x": 30,
+                    "y": 46
+                },
+                "limits": {
+                    "top": 44,
+                    "right": 47,
+                    "bottom": 64,
+                    "left": 18
+                }
+            },
+            "3rd": {
+                "code": {
+                    "x": 83,
+                    "y": 34
+                },
+                "flag": {
+                    "size": [24, 12],
+                    "position": {
+                        "x": 80,
+                        "y": 1
+                    }
+                },
+                "label": {
+                    "x": 90,
+                    "y": 50
+                },
+                "limits": {
+                    "top": 48,
+                    "right": 107,
+                    "bottom": 64,
+                    "left": 78
+                }
+            }
+        },
+        "result": {
+            "width": 18,
+            "position": {
+                "y": 1
+            }
+        },
+        "code": {
+            "x": 20,
+            "y": 1
+        }
+    },
+    "schedule": {
+        "row_height": 15,
+        "header": {
+            "y": 2
+        },
+        "round": {
+            "width": 18,
+            "position": {
+                "y": 17
+            }
+        },
+        "country": {
+            "x": 20,
+            "y": 17
+        }
+    },
+    "next-gp": {
+        "logo": {
+            "size": [124, 48]
+        },
+        "track": {
+            "size": [124, 40]
+        }
+    },
+    "qualifying": {
+        "row": {
+            "width": 45,
+            "height": 16
+        },
+        "header": {
+            "offset": {
+                "y": 2
+            }
+        },
+        "grid": {
+            "odd": {
+                "result": {
+                    "width": 18,
+                    "position": {
+                        "x": 0,
+                        "y": 1
+                    }
+                },
+                "code": {
+                    "x": 18,
+                    "y": 1
+                }
+            },
+            "even": {
+                "result": {
+                    "width": 18,
+                    "position": {
+                        "x": 65,
+                        "y": 10
+                    }
+                },
+                "code": {
+                    "x": 83,
+                    "y": 10
+                }
+            }
+        }
+    },
+    "summary": {
+        "constructor": {
+            "logo": {
+                "size": [128, 60]
+            }
+        },
+        "drivers": {
+            "a": {
+                "code": {
+                    "x": 0,
+                    "y": 0
+                },
+                "number": {
+                    "x": 0,
+                    "y": 0
+                },
+                "flag": {
+                    "x": 0,
+                    "y": 0
+                }
+            },
+            "b": {
+                "code": {
+                    "x": 0,
+                    "y": 0
+                },
+                "number": {
+                    "x": 0,
+                    "y": 0
+                },
+                "flag": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+    },
+    "loading": {
+        "image": {
+            "size": [120, 56]
+        }
+    },
+    "error": {
+        "image": {
+            "size": [20, 20]
+        }
+    }
+}
