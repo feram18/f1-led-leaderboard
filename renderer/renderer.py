@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw, ImageFont
 from rgbmatrix import RGBMatrix
 
 from config.layout import Layout
-from constants import DELAY, SCROLL_DELAY
+from constants import DELAY, FAST_SCROLL, SLOW_SCROLL
 from utils import Color
 
 
@@ -23,6 +23,7 @@ class Renderer(ABC):
         font (PIL.ImageFont):               Default font.py
         font_width (int):                   Font's character width
         font_height (int):                  Font's character height
+        scroll_speed (float):                Scroll speed
     """
 
     def __init__(self, matrix, canvas, draw, layout):
@@ -32,6 +33,7 @@ class Renderer(ABC):
         self.layout: Layout = layout
         self.font: ImageFont = self.layout.font
         self.font_width, self.font_height = self.font.getsize(' ')
+        self.scroll_speed: float = SLOW_SCROLL if self.matrix.height <= 64 else FAST_SCROLL
 
     @abstractmethod
     def render(self):
@@ -53,5 +55,5 @@ class Renderer(ABC):
         while pos != bottom:
             self.matrix.SetImage(self.canvas, 0, pos)
             pos -= 1
-            time.sleep(SCROLL_DELAY)
+            time.sleep(self.scroll_speed)
         time.sleep(DELAY)
