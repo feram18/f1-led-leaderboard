@@ -155,12 +155,6 @@
         "country": {
             "x": 13,
             "y": 10
-        },
-        "flag": {
-            "size": [14, 7],
-            "position": {
-                "y": 9
-            }
         }
     },
     "next-gp": {
