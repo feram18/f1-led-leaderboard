@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 
 from constants import COUNTRY_FLAG_PATH
 from data.constructor import Constructor
+from utils import NATIONALITIES
 
 
 @dataclass
@@ -19,16 +20,16 @@ class Driver:
     flag: str = field(init=False)
 
     def __post_init__(self):
-        self.flag = self.get_flag(self.nationality)
+        self.flag = self.get_flag(NATIONALITIES.get(self.nationality))
 
     @staticmethod
-    def get_flag(nationality: str) -> str:
+    def get_flag(country: str) -> str:
         """
         Get path to flag's image file.
-        :param nationality: Driver's nationality
+        :param country: Driver's country of origin
         :return: img_path: Path to flag image
         """
-        img_path = COUNTRY_FLAG_PATH.format(nationality)
+        img_path = COUNTRY_FLAG_PATH.format(country)
         if os.path.isfile(img_path):
             return img_path
-        logging.error(f'No flag image found for {nationality}')
+        logging.error(f'No flag image found for {country}')

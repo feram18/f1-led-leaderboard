@@ -32,11 +32,36 @@ class Color:
 class Position(Enum):
     """Enum class for positioning on matrix canvas"""
 
-    TOP = "top"
-    RIGHT = "right"
-    CENTER = "center"
-    BOTTOM = "bottom"
-    LEFT = "left"
+    TOP = 'top'
+    RIGHT = 'right'
+    CENTER = 'center'
+    BOTTOM = 'bottom'
+    LEFT = 'left'
+
+
+# Dictionary to match nationalities to country
+NATIONALITIES = {
+    'Australian': 'Australia',
+    'Austrian': 'Austria',
+    'Belgian': 'Belgium',
+    'Brazilian': 'Brazil',
+    'British': 'UK',
+    'Canadian': 'Canada',
+    'Chinese': 'China',
+    'Danish': 'Denmark',
+    'Dutch': 'Netherlands',
+    'Finnish': 'Finland',
+    'French': 'France',
+    'German': 'Germany',
+    'Italian': 'Italy',
+    'Japanese': 'Japan',
+    'Mexican': 'Mexico',
+    'Monegasque': 'Monaco',
+    'Polish': 'Poland',
+    'Russian': 'Russia',
+    'Spanish': 'Spain',
+    'Thai': 'Thailand'
+}
 
 
 def read_json(filename: str) -> dict:

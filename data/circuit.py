@@ -16,22 +16,22 @@ class Circuit:
     track: str = field(init=False)  # Path to track image
 
     def __post_init__(self):
-        self.logo = self.get_logo(self.id)
+        self.logo = self.get_logo(self.id, self.country)
         self.track = self.get_track(self.id)
 
     @staticmethod
-    def get_logo(circuit_id: str) -> str:
+    def get_logo(circuit_id: str, country: str) -> str:
         """
         Get path to circuit's logo image.
-        :param circuit_id: Circuit's Id
+        :param circuit_id: Circuit's id
+        :param country: Country
         :return: img_path: Path to logo image
         """
         img_path = CIRCUIT_LOGO_PATH.format(circuit_id)
         if os.path.isfile(img_path):
             return img_path
-        else:
-            # TODO: Set to country flag
-            logging.error(f'No logo image found for {circuit_id}')
+        logging.warning(f'No logo image found for {circuit_id}. Setting country flag.')
+        return COUNTRY_FLAG_PATH.format(country)
 
     @staticmethod
     def get_track(circuit_id: str) -> str:
