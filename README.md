@@ -6,11 +6,8 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/feram18/f1-led-leaderboard?style=for-the-badge)
 ![GitHub Release Date](https://img.shields.io/github/release-date/feram18/f1-led-leaderboard?style=for-the-badge)
 
-[//]: # (![Libraries.io dependency status for GitHub repo]&#40;https://img.shields.io/librariesio/github/feram18/f1-led-leaderboard?style=for-the-badge&#41;)
-[//]: # (![GitHub commits since latest release &#40;by date&#41; for a branch]&#40;https://img.shields.io/github/commits-since/feram18/f1-led-leaderboard/latest/dev?style=for-the-badge&#41;)
-
-An LED Formula 1 leaderboard. Requires a Raspberry Pi, and a 64×32 LED board connected to the Raspberry Pi via the 
-GPIO pins.
+An application to display Formula 1 constructor & driver standings, season schedule, qualifying & race results on a 
+Raspberry Pi driven RGB LED matrix board.
 
 ## Table of Contents
 * [Features](#features)
@@ -78,7 +75,7 @@ GPIO pins.
 Materials needed:
 - [Raspberry Pi] (Only tested on 3B+ and 4B, but should work on other models)
 - Adafruit RGB Matrix [HAT] or [Bonnet]
-- [64×32] RGB LED matrix
+- RGB LED matrix (62×32 or 128×64)
 
 ### Software
 **Pre-requisites**
@@ -155,18 +152,18 @@ From the `f1-led-leaderboard` directory run the command
 ```sh
 sudo python3 main.py --led-gpio-mapping="adafruit-hat" --led-slowdown-gpio=2
 ```
-Include [flags](#Flags) as necessary. Running as root is necessary in order for the matrix to render. Privileges are 
-dropped after initialization.
+Modify and include [flags](#Flags) as needed for your particular setup. Running as root is necessary in order for the 
+matrix to render. Privileges are dropped after initialization.
 
 ### Debug
-If you are experiencing issues, enable debug messages by appending the `--debug` flag to your execution command, 
-logs are written to the `f1-led-leaderboard.log` file.
+If you are experiencing issues, enable debug messages by appending the `--debug` flag to your execution command, logs 
+are written to the `f1-led-leaderboard.log` file.
 
 ## Roadmap
 - [X] Race Schedule
 - [X] Grand Prix Results
 - [X] Grand Prix Qualifying Results
-- [ ] 128x64 Layout
+- [X] 128×64 Layout
 - [ ] World Drivers' Championship Winner
 - [ ] World Constructors' Championship Winner
 - [ ] Customization options
