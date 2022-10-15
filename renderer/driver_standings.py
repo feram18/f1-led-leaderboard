@@ -55,14 +55,14 @@ class DriverStandings(Renderer):
         bg_color, self.text_color = driver.item.constructor.colors
 
         self.render_place(str(driver.position))
+        # Note: Flag & Lastnames are exclusive. Cannot be combined.
+        name = driver.item.code
         if self.coords['options']['flag']:
             self.render_flag(driver.item.flag)
             self.driver_x += tuple(self.coords['flag']['size'])[0] + 1
-
-        text = driver.item.code
-        if self.coords['options']['lastname']:
-            text = driver.item.lastname
-        self.render_driver(bg_color, text)
+        elif self.coords['options']['lastname']:
+            name = driver.item.lastname
+        self.render_driver(bg_color, name)
         self.render_points(f'{driver.points:g}')
 
         self.flag_y += self.offset
