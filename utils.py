@@ -28,6 +28,7 @@ class Color:
     GRAY = 112, 128, 144, 255
     BLACK = 0, 0, 0, 255
     WHITE = 255, 255, 255, 255
+    GOLD = 197, 150, 30, 255
 
 
 class Position(Enum):
@@ -216,6 +217,34 @@ def race_weekend(date: datetime) -> bool:
         gp_day = date.date().day
         return gp_day - 2 <= today.day <= gp_day
     return False
+
+
+def is_wdc_champion(races: list, standings) -> bool:
+    """
+    Determine if there's a champion for the World Driver's Championship
+    :param races: List of remaining races
+    :param standings: Driver standings
+    :return: is_wdc_champion bool value
+    """
+    max_remaining_pts = len(races) * 26  # Pos. 1 + Fastest Lap
+    for race in races:
+        if race.sprint:
+            max_remaining_pts += 3  # Pos. 1
+    return standings.items[1].points + max_remaining_pts < standings.items[0].points
+
+
+def is_wcc_champion(races: list, standings) -> bool:
+    """
+    Determine if there's a champion for the World Constructor's Championship
+    :param races: List of remaining races
+    :param standings: Constructor standings
+    :return: is_wdc_champion bool value
+    """
+    max_remaining_pts = len(races) * (25 + 19 + 1)  # Pos. 1 + Pos. 2 + Fastest Lap
+    for race in races:
+        if race.sprint:
+            max_remaining_pts += 5  # Pos. 1 + Pos. 2
+    return standings.items[1].points + max_remaining_pts < standings.items[0].points
 
 
 def get_session_status(start_time: datetime) -> SessionStatus:

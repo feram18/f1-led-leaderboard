@@ -16,7 +16,7 @@ from data.qualifying import Qualifying, QualifyingResultItem, Sprint
 from data.session_status import SessionStatus
 from data.standings import Standings, StandingsItem
 from data.update_status import UpdateStatus
-from utils import race_weekend, get_session_status
+from utils import race_weekend, get_session_status, is_wcc_champion, is_wdc_champion
 
 
 @dataclass
@@ -47,6 +47,7 @@ class Data:
         self.next_gp = self.fetch_next_gp()
         self.fetch_qualifying()
         self.fetch_sprint()
+        self.champions()
 
         self.last_updated = time.time()
 
@@ -215,6 +216,13 @@ class Data:
                       Sprint(gp['Sprint']['date'],
                              gp['Sprint']['time']) if gp.get('Sprint', None) else None)
             for gp in schedule[self.last_gp.gp.round:]]
+
+    def champions(self):
+        """
+        Determine if there are champions for WDC & WCC
+        """
+        self.driver_standings.items[0].champion = is_wdc_champion(self.schedule, self.driver_standings)
+        self.constructor_standings.items[0].champion = is_wcc_champion(self.schedule, self.constructor_standings)
 
     def should_update(self) -> bool:
         """

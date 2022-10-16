@@ -53,8 +53,10 @@ class DriverStandings(Renderer):
     def render_row(self, driver: StandingsItem):
         self.driver_x = self.coords['driver']['x']
         bg_color, self.text_color = driver.item.constructor.colors
+        if driver.champion:
+            bg_color, self.text_color = Color.GOLD, Color.WHITE
 
-        self.render_place(str(driver.position))
+        self.render_place(str(driver.position), driver.champion)
         # Note: Flag & Lastnames are exclusive. Cannot be combined.
         name = driver.item.code
         if self.coords['options']['flag']:
@@ -68,15 +70,18 @@ class DriverStandings(Renderer):
         self.flag_y += self.offset
         self.text_y += self.offset
 
-    def render_place(self, position: str):
+    def render_place(self, position: str, champion: bool):
+        bg, text = Color.WHITE, Color.BLACK
+        if champion:
+            bg, text = Color.GOLD, Color.WHITE
         self.draw.rectangle(((0, self.text_y - 1),
                              (self.coords['place']['width'] - 1, self.text_y + self.font_height - 1)),
-                            fill=Color.WHITE)
+                            fill=bg)
 
         x = align_text(self.font.getsize(position),
                        col_width=self.coords['place']['width'] + 1,
                        x=Position.CENTER)[0]
-        self.draw.text((x, self.text_y), position, fill=Color.BLACK, font=self.font)
+        self.draw.text((x, self.text_y), position, fill=text, font=self.font)
 
     def render_flag(self, path: str):
         flag = load_image(path, tuple(self.coords['flag']['size']))

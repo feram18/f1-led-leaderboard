@@ -48,6 +48,8 @@ class ConstructorStandings(Renderer):
 
     def render_row(self, constructor: StandingsItem):
         bg_color, self.text_color = constructor.item.colors
+        if constructor.champion:
+            bg_color, self.text_color = Color.GOLD, Color.WHITE
 
         self.render_background(bg_color)
         self.render_name(constructor.item.name)

@@ -10,6 +10,7 @@ class StandingsItem:
     item: Driver or Constructor
     position: int = 1
     points: float = 0
+    champion: bool = False
 
 
 @dataclass
