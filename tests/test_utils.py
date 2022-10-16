@@ -1,10 +1,12 @@
 import logging
 import sys
+from datetime import datetime, timedelta
 
 import pytest
 from PIL import Image, ImageFont
 
 import utils
+from data.session_status import SessionStatus
 
 
 @pytest.mark.skipif(not sys.platform.startswith('linux'), reason='Requires Linux')
@@ -77,3 +79,25 @@ class TestUtils:
         img = utils.load_image('assets/img/error.png', (15, 15))
         y = utils.align_image(img, col_height=32, y=utils.Position.CENTER)[1]
         assert y == 10
+
+    @pytest.mark.skip(reason='Will fail if not on EST timezone')
+    def test_convert_time_est(self):
+        utc_date, utc_time = '2030-10-04', '12:00:00Z'
+        exp_date, exp_time = '2030-10-04', '08:00'  # expected
+        est_date, est_time = utils.convert_time(utc_date, utc_time)  # actual, in EST
+        assert (est_date, est_time) == (exp_date, exp_time)
+
+    def test_get_session_status(self):
+        time = datetime.now().replace(year=2031, month=10, day=26, hour=8, minute=0).astimezone(tz=None)
+        result = utils.get_session_status(time)
+        assert result == SessionStatus.UPCOMING
+
+    def test_get_session_status_2(self):
+        time = datetime.now().astimezone(tz=None) - timedelta(hours=1)
+        result = utils.get_session_status(time)
+        assert result == SessionStatus.IN_PROGRESS
+
+    def test_get_session_status_3(self):
+        time = datetime.now().astimezone(tz=None) - timedelta(hours=3)
+        result = utils.get_session_status(time)
+        assert result == SessionStatus.FINISHED
