@@ -47,12 +47,12 @@ class Qualifying(Renderer):
 
                 if self.sprint:
                     if not self.sprint.grid:
-                        self.render_upcoming('Sprint')
+                        self.render_upcoming('Sprint', self.sprint.status)
                     else:
                         self.render_grid(self.sprint.grid)
             else:
                 self.new_canvas(self.matrix.width, self.matrix.height)
-                self.render_upcoming('Qualifying')
+                self.render_upcoming('Qualifying', self.qualifying.status)
 
     def render_header(self, header: str):
         x, y = align_text(self.font.getsize(header),
@@ -65,8 +65,7 @@ class Qualifying(Renderer):
         self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height - 1)), fill=Color.RED)
         self.draw.text((x, y), header, fill=Color.WHITE, font=self.font)
 
-    def render_status(self):
-        status = SessionStatus.UPCOMING.value
+    def render_status(self, status: str):
         x, y = align_text(self.font.getsize(status),
                           self.matrix.width,
                           self.matrix.height)
@@ -100,9 +99,9 @@ class Qualifying(Renderer):
                             fill=bg)
         self.draw.text((self.code_x, self.text_y), code, fill=text, font=self.font)
 
-    def render_upcoming(self, header: str):
+    def render_upcoming(self, header: str, status: SessionStatus):
         self.render_header(header)
-        self.render_status()
+        self.render_status(status.value)
         self.matrix.SetImage(self.canvas)
         time.sleep(SLIDE_DELAY)
 
