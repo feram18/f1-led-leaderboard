@@ -1,20 +1,31 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from datetime import datetime
 from typing import List
 
 from data.driver import Driver
-from data.grand_prix import GrandPrix
+from utils import convert_time
 
 
 @dataclass
 class QualifyingResultItem:
     position: int
     driver: Driver
-    Q1: str
-    Q2: str
-    Q3: str
+    Q1: str = None
+    Q2: str = None
+    Q3: str = None
 
 
 @dataclass
 class Qualifying:
-    gp: GrandPrix
-    grid: List[QualifyingResultItem]
+    date: str
+    time: str
+    dt: datetime = field(init=False)
+    grid: List[QualifyingResultItem] = None
+
+    def __post_init__(self):
+        self.dt = convert_time(self.date, self.time)
+
+
+@dataclass
+class Sprint(Qualifying):
+    ...

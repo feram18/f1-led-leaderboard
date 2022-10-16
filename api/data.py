@@ -12,21 +12,23 @@ from data.driver import Driver
 from data.finishing_status import FinishingStatus as Status
 from data.gp_result import GPResult, DriverResult
 from data.grand_prix import GrandPrix
-from data.qualifying import Qualifying, QualifyingResultItem
+from data.qualifying import Qualifying, QualifyingResultItem, Sprint
+from data.session_status import SessionStatus
 from data.standings import Standings, StandingsItem
 from data.update_status import UpdateStatus
-from utils import race_weekend
+from utils import race_weekend, get_session_status
 
 
 @dataclass
 class Data:
-    """Data class consisting of all the data to be displayed on matrix"""
+    """
+    Data class consisting of all the data to be displayed on matrix
+    """
     constructors: dict = field(default_factory=dict)
     drivers: dict = field(default_factory=dict)
     constructor_standings: Standings = None
     driver_standings: Standings = None
     last_gp: GPResult = None
-    qualifying: Qualifying = None
     next_gp: GrandPrix = None
     schedule: List[GrandPrix] = None
     status: UpdateStatus = UpdateStatus.SUCCESS
@@ -43,7 +45,8 @@ class Data:
         self.last_gp = self.fetch_last_gp()
         self.schedule = self.fetch_schedule()
         self.next_gp = self.fetch_next_gp()
-        self.qualifying = self.fetch_qualifying()
+        self.fetch_qualifying()
+        self.fetch_sprint()
 
         self.last_updated = time.time()
 
@@ -53,7 +56,8 @@ class Data:
         self.last_gp = self.fetch_last_gp()
         self.schedule = self.fetch_schedule()
         self.next_gp = self.fetch_next_gp()
-        self.qualifying = self.fetch_qualifying()
+        self.fetch_qualifying()
+        self.fetch_sprint()
 
         self.last_updated = time.time()
 
@@ -151,23 +155,41 @@ class Data:
         if self.schedule:
             return self.schedule[0]
 
-    def fetch_qualifying(self) -> Optional[Qualifying]:
+    def fetch_qualifying(self):
         """
         Fetch next grand prix's qualifying data
-        :return: qualifying: GP's qualifying data
         """
-        logging.debug('Fetching Qualifying Results')
+        status = get_session_status(self.next_gp.qualifying.dt)
+        if status is SessionStatus.FINISHED:
+            logging.debug('Fetching Qualifying Results')
 
-        response = requests.get(constants.QUALIFYING_RESULTS_URL).json()
+            response = requests.get(constants.QUALIFYING_RESULTS_URL).json()
 
-        if int(response['MRData']['total']) > 0:  # Qualifying results available
-            results = response['MRData']['RaceTable']['Races'][0]['QualifyingResults']
-            grid = [QualifyingResultItem(int(result['position']),
-                                         self.drivers.get(result['Driver']['driverId']),
-                                         result.get('Q1', None),
-                                         result.get('Q2', None),
-                                         result.get('Q3', None)) for result in results]
-            return Qualifying(self.next_gp, grid)
+            if int(response['MRData']['total']) > 0:  # Qualifying results available
+                results = response['MRData']['RaceTable']['Races'][0]['QualifyingResults']
+                grid = [QualifyingResultItem(int(result['position']),
+                                             self.drivers.get(result['Driver']['driverId']),
+                                             result.get('Q1', None),
+                                             result.get('Q2', None),
+                                             result.get('Q3', None)) for result in results]
+                self.next_gp.qualifying.grid = grid
+
+    def fetch_sprint(self):
+        """
+        Fetch next grand prix's sprint data
+        """
+        if self.next_gp.sprint:  # Sprint taking place
+            status = get_session_status(self.next_gp.sprint.dt)
+            if status is SessionStatus.FINISHED:
+                logging.debug('Fetching Sprint Results')
+
+                response = requests.get(constants.SPRINT_URL).json()
+
+                if int(response['MRData']['total']) > 0:  # Sprint results available
+                    results = response['MRData']['RaceTable']['Races'][0]['SprintResults']
+                    grid = [QualifyingResultItem(int(result['position']),
+                                                 self.drivers.get(result['Driver']['driverId'])) for result in results]
+                    self.next_gp.sprint.grid = grid
 
     def fetch_schedule(self) -> List[GrandPrix]:
         """
@@ -179,14 +201,20 @@ class Data:
         response = requests.get(constants.SCHEDULE_URL).json()
         schedule = response['MRData']['RaceTable']['Races']
 
-        return [GrandPrix(int(gp['round']),
-                          gp['raceName'],
-                          Circuit(gp['Circuit']['circuitId'],
-                                  gp['Circuit']['circuitName'],
-                                  gp['Circuit']['Location']['locality'],
-                                  gp['Circuit']['Location']['country']),
-                          gp['date'],
-                          gp['time']) for gp in schedule[self.last_gp.gp.round:]]
+        return [
+            GrandPrix(int(gp['round']),
+                      gp['raceName'],
+                      Circuit(gp['Circuit']['circuitId'],
+                              gp['Circuit']['circuitName'],
+                              gp['Circuit']['Location']['locality'],
+                              gp['Circuit']['Location']['country']),
+                      gp['date'],
+                      gp['time'],
+                      Qualifying(gp['Qualifying']['date'],
+                                 gp['Qualifying']['time']),
+                      Sprint(gp['Sprint']['date'],
+                             gp['Sprint']['time']) if gp.get('Sprint', None) else None)
+            for gp in schedule[self.last_gp.gp.round:]]
 
     def should_update(self) -> bool:
         """

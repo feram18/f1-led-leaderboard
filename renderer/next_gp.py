@@ -1,7 +1,7 @@
 import time
 
 from constants import SLIDE_DELAY
-from data.gp_status import GrandPrixStatus
+from data.session_status import SessionStatus
 from renderer.renderer import Renderer
 from utils import Color, align_text, Position, align_image, load_image
 
@@ -38,7 +38,7 @@ class NextGP(Renderer):
 
             # Track layout & Date/Time/Status
             self.render_track()
-            if self.gp.status == GrandPrixStatus.UPCOMING:
+            if self.gp.status == SessionStatus.UPCOMING:
                 self.render_date()
                 self.render_time()
             else:

@@ -3,7 +3,7 @@ import argparse
 import json
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from enum import Enum
 from typing import Tuple
 
@@ -11,6 +11,7 @@ from PIL import Image, ImageFont, BdfFontFile
 from rgbmatrix import RGBMatrixOptions
 
 from constants import FONTS_DIR, LIB_FONTS_DIR
+from data.session_status import SessionStatus
 
 
 class Color:
@@ -192,9 +193,21 @@ def align_image(image: Image,
     return x, y
 
 
+def convert_time(date: str, time: str) -> datetime:
+    """
+    Convert from UTC to local timezone
+    :param date: GP's date (UTC)
+    :param time: GP's time (UTC)
+    :return: dt: GP's date & time (user's local timezone)
+    """
+    dt = datetime.strptime(f'{date} {time}'.replace('Z', ''), '%Y-%m-%d %H:%M:%S')
+    dt = dt.replace(tzinfo=timezone.utc).astimezone(tz=None)  # Convert to local timezone
+    return dt
+
+
 def race_weekend(date: datetime) -> bool:
     """
-    Determine if today is race weekend (i.e. Practice, Qualifying or Race day).
+    Determine if today is race weekend (i.e. Practice, Qualifying, or Race day).
     :param date: GP's date
     :return: race_weekend: bool
     """
@@ -203,6 +216,22 @@ def race_weekend(date: datetime) -> bool:
         gp_day = date.date().day
         return gp_day - 2 <= today.day <= gp_day
     return False
+
+
+def get_session_status(start_time: datetime) -> SessionStatus:
+    """
+    Roughly determine the session's current status. Does not account for delays.
+    :param start_time: GP's start date & time
+    :return: status: GP's status
+    """
+    now = datetime.now().astimezone(tz=None)
+    end_time = start_time + timedelta(hours=2)
+    if now < start_time:
+        return SessionStatus.UPCOMING
+    elif start_time < now <= end_time:
+        return SessionStatus.IN_PROGRESS
+    elif now >= end_time:
+        return SessionStatus.FINISHED
 
 
 def args() -> argparse.Namespace:

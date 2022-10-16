@@ -21,6 +21,7 @@ DRIVER_STANDINGS_URL = f'{BASE_URL}/driverStandings.json'
 LAST_GP_RESULTS_URL = f'{BASE_URL}/last/results.json'
 NEXT_GP_URL = f'{BASE_URL}/next.json'
 QUALIFYING_RESULTS_URL = f'{BASE_URL}/next/qualifying.json'
+SPRINT_URL = f'{BASE_URL}/next/sprint.json'
 SCHEDULE_URL = f'{BASE_URL}.json'
 
 # Date/Time Formatting

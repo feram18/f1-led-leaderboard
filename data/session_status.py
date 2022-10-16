@@ -1,8 +1,8 @@
 from enum import Enum
 
 
-class GrandPrixStatus(Enum):
-    """Grand Prix Status Enum class"""
+class SessionStatus(Enum):
+    """Session Status Enum class"""
     UPCOMING = 'Upcoming'
     IN_PROGRESS = 'In Progress'
     DELAYED = 'Delayed'
