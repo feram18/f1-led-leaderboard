@@ -44,7 +44,7 @@ class Renderer(ABC):
 
     def new_canvas(self, width: int, height: int):
         self.clear()
-        self.canvas = Image.new('RGB', (width, height))
+        self.canvas = Image.new('RGB', (width, height if height >= self.matrix.height else self.matrix.height))
         self.draw = ImageDraw.Draw(self.canvas)
 
     def scroll_up(self, image: Image):
