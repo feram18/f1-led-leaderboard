@@ -55,22 +55,22 @@ class Qualifying(Renderer):
                 self.render_upcoming('Qualifying', self.qualifying.status)
 
     def render_header(self, header: str):
-        x, y = align_text(self.font.getsize(header),
+        x, y = align_text(self.layout.font_bold.getsize(header),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.TOP)
         y += self.coords['header']['offset']['y']
 
-        self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height - 1)), fill=Color.RED)
-        self.draw.text((x, y), header, fill=Color.WHITE, font=self.font)
+        self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height - 1)), Color.RED)
+        self.draw.text((x, y), header, Color.WHITE, self.layout.font_bold)
 
     def render_status(self, status: str):
-        x, y = align_text(self.font.getsize(status),
+        x, y = align_text(self.layout.font_bold.getsize(status),
                           self.matrix.width,
                           self.matrix.height)
         y += (self.font_height // 2)
-        self.draw.text((x, y), status, fill=Color.WHITE, font=self.font)
+        self.draw.text((x, y), status, Color.WHITE, self.layout.font_bold)
 
     def render_row(self, item: QualifyingResultItem):
         parity = 'even' if item.position % 2 == 0 else 'odd'
@@ -85,19 +85,19 @@ class Qualifying(Renderer):
     def render_position(self, position: str, pos_width: int):
         self.draw.rectangle(((self.position_x, self.text_y - 1),
                              (self.code_x - 2, self.text_y + self.font_height - 1)),
-                            fill=Color.WHITE)
+                            Color.WHITE)
 
-        self.position_x += align_text(self.font.getsize(position),
+        self.position_x += align_text(self.layout.font.getsize(position),
                                       col_width=pos_width,
                                       x=Position.CENTER)[0]
-        self.draw.text((self.position_x, self.text_y), position, fill=Color.BLACK, font=self.font)
+        self.draw.text((self.position_x, self.text_y), position, Color.BLACK, self.layout.font)
 
     def render_code(self, code: str, colors: List[tuple]):
         bg, text = colors
         self.draw.rectangle(((self.code_x - 1, self.text_y - 1),
                              (self.code_x + self.coords['row']['width'] - 1, self.text_y + self.font_height - 1)),
-                            fill=bg)
-        self.draw.text((self.code_x, self.text_y), code, fill=text, font=self.font)
+                            bg)
+        self.draw.text((self.code_x, self.text_y), code, text, self.layout.font)
 
     def render_upcoming(self, header: str, status: SessionStatus):
         self.render_header(header)

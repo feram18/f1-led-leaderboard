@@ -13,7 +13,10 @@ class Layout:
     height: int
     coords: dict = field(init=False)
     font: ImageFont = field(init=False)
+    font_bold: ImageFont = field(init=False)
 
     def __post_init__(self):
         self.coords = read_json(LAYOUT_FILE.format(self.width, self.height))
-        self.font = load_font(self.coords['font'])
+        self.font = load_font(self.coords['font']['regular'])
+        bold = self.coords.get('font').get('bold', None)
+        self.font_bold = load_font(bold) if bold else self.font

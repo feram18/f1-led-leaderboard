@@ -1,5 +1,7 @@
 {
-    "font": "assets/fonts/tom-thumb.pil",
+    "font": {
+        "regular": "assets/fonts/tom-thumb.pil"
+    },
     "standings": {
         "constructors": {
             "row_height": 8,

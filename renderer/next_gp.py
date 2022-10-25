@@ -48,13 +48,13 @@ class NextGP(Renderer):
 
     # TODO: Name text can be too long to fit on canvas
     def render_gp_name(self):
-        x, y = align_text(self.font.getsize(self.gp.name),
+        x, y = align_text(self.layout.font_bold.getsize(self.gp.name),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.TOP)
-        self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height)), fill=Color.RED)
-        self.draw.text((x, y + 1), self.gp.name, fill=Color.WHITE, font=self.font)
+        self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height)), Color.RED)
+        self.draw.text((x, y + 1), self.gp.name, Color.WHITE, self.layout.font_bold)
 
     def render_logo(self):
         logo = load_image(self.gp.circuit.logo, tuple(self.coords['logo']['size']))
@@ -68,21 +68,21 @@ class NextGP(Renderer):
             self.canvas.paste(logo, (x, y))
 
     def render_date(self):
-        x, y = align_text(self.font.getsize(self.gp.date),
+        x, y = align_text(self.layout.font.getsize(self.gp.date),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.BOTTOM)
         y -= self.font_height
-        self.draw.text((x, y + 1), self.gp.date, fill=Color.WHITE, font=self.font)
+        self.draw.text((x, y + 1), self.gp.date, Color.WHITE, self.layout.font)
 
     def render_time(self):
-        x, y = align_text(self.font.getsize(self.gp.time),
+        x, y = align_text(self.layout.font.getsize(self.gp.time),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.BOTTOM)
-        self.draw.text((x, y + 1), self.gp.time, fill=Color.WHITE, font=self.font)
+        self.draw.text((x, y + 1), self.gp.time, Color.WHITE, self.layout.font)
 
     def render_track(self):
         track = load_image(self.gp.circuit.track, tuple(self.coords['track']['size']))
@@ -96,17 +96,17 @@ class NextGP(Renderer):
 
     def render_location(self):
         location = f'{self.gp.circuit.locality} {self.gp.circuit.country}'
-        x, y = align_text(self.font.getsize(location),
+        x, y = align_text(self.layout.font.getsize(location),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.BOTTOM)
-        self.draw.text((x, y), location, fill=Color.WHITE, font=self.font)
+        self.draw.text((x, y), location, Color.WHITE, self.layout.font)
 
     def render_status(self):
-        x, y = align_text(self.font.getsize(self.gp.status.value),
+        x, y = align_text(self.layout.font.getsize(self.gp.status.value),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.BOTTOM)
-        self.draw.text((x, y), self.gp.status.value, fill=Color.WHITE, font=self.font)
+        self.draw.text((x, y), self.gp.status.value, Color.WHITE, self.layout.font)

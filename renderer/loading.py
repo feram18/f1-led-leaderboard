@@ -23,12 +23,12 @@ class Loading(Renderer):
         self.matrix.SetImage(self.canvas)
 
     def render_version(self):
-        x, y = align_text(self.font.getsize(__version__),
+        x, y = align_text(self.layout.font.getsize(__version__),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.BOTTOM)
-        self.draw.text((x, y), __version__, fill=Color.WHITE, font=self.font)
+        self.draw.text((x, y), __version__, Color.WHITE, self.layout.font)
 
     def render_logo(self):
         logo = load_image(F1_LOGO, tuple(self.coords['image']['size']))

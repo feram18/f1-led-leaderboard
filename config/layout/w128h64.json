@@ -1,5 +1,8 @@
 {
-    "font": "assets/fonts/7x13.pil",
+    "font": {
+        "regular": "assets/fonts/7x13.pil",
+        "bold": "assets/fonts/7x13b.pil"
+    },
     "standings": {
         "constructors": {
             "row_height": 15,
@@ -20,8 +23,8 @@
         "drivers": {
             "row_height": 15,
             "options": {
-                "flag": true,
-                "lastname": false
+                "flag": false,
+                "lastname": true
             },
             "header": {
                 "offset": {

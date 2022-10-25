@@ -31,10 +31,10 @@ class Error(Renderer):
         time.sleep(SLIDE_DELAY * 2)
 
     def render_error_msg(self):
-        x, y = align_text(self.font.getsize(self.msg),
+        x, y = align_text(self.layout.font_bold.getsize(self.msg),
                           self.matrix.width,
                           self.matrix.height)
-        self.draw.text((x, y), self.msg, fill=Color.RED, font=self.font)
+        self.draw.text((x, y), self.msg, Color.RED, self.layout.font_bold)
 
     def render_image(self):
         img = load_image(ERROR_IMAGE, tuple(self.coords['image']['size']))

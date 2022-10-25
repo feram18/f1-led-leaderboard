@@ -37,34 +37,33 @@ class Schedule(Renderer):
             self.text_y = self.coords['round']['position']['y']  # Reset
 
     def render_header(self):
-        x, y = align_text(self.font.getsize('Schedule'),
+        x, y = align_text(self.layout.font_bold.getsize('Schedule'),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.TOP)
         y += self.coords['header']['y']
 
-        self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height - 1)), fill=Color.GRAY)
-        self.draw.text((x, y), 'Schedule', fill=Color.WHITE, font=self.font)
+        self.draw.rectangle(((0, 0), (self.matrix.width, y + self.font_height - 1)), Color.GRAY)
+        self.draw.text((x, y), 'Schedule', Color.WHITE, self.layout.font_bold)
 
     def render_row(self, gp: GrandPrix):
         self.render_round_no(str(gp.round))
         self.render_country(gp.circuit.country)
-
         self.text_y += self.offset
 
     def render_round_no(self, round_no: str):
         self.draw.rectangle(((0, self.text_y - 1),
                              (self.coords['round']['width'] - 1, self.text_y + self.font_height - 1)),
-                            fill=Color.RED)
+                            Color.RED)
 
-        x = align_text(self.font.getsize(round_no),
+        x = align_text(self.layout.font.getsize(round_no),
                        col_width=self.coords['round']['width'] + 1,
                        x=Position.CENTER)[0]
-        self.draw.text((x, self.text_y), round_no, fill=Color.WHITE, font=self.font)
+        self.draw.text((x, self.text_y), round_no, Color.WHITE, self.layout.font)
 
     def render_country(self, country: str):
         self.draw.rectangle(((self.country_x - 1, self.text_y - 1),
                              (self.matrix.width, self.text_y + self.font_height - 1)),
-                            fill=Color.WHITE)
-        self.draw.text((self.country_x, self.text_y), country, fill=Color.RED, font=self.font)
+                            Color.WHITE)
+        self.draw.text((self.country_x, self.text_y), country, Color.RED, self.layout.font)

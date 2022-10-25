@@ -1,7 +1,7 @@
 import time
 from abc import ABC, abstractmethod
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 from rgbmatrix import RGBMatrix
 
 from config.layout import Layout
@@ -20,7 +20,6 @@ class Renderer(ABC):
         layout (config.Layout):              Layout instance
 
     Attributes:
-        font (PIL.ImageFont):               Default font.py
         font_width (int):                   Font's character width
         font_height (int):                  Font's character height
         scroll_speed (float):                Scroll speed
@@ -31,8 +30,7 @@ class Renderer(ABC):
         self.canvas: Image = canvas
         self.draw: ImageDraw = draw
         self.layout: Layout = layout
-        self.font: ImageFont = self.layout.font
-        self.font_width, self.font_height = self.font.getsize(' ')
+        self.font_width, self.font_height = self.layout.font.getsize(' ')
         self.scroll_speed: float = SLOW_SCROLL if self.matrix.height <= 32 else FAST_SCROLL
 
     @abstractmethod
