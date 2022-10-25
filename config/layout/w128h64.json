@@ -1,7 +1,7 @@
 {
     "font": {
         "regular": "assets/fonts/7x13.pil",
-        "bold": "assets/fonts/7x13b.pil"
+        "bold": "assets/fonts/7x13B.pil"
     },
     "standings": {
         "constructors": {
