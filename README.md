@@ -1,5 +1,4 @@
 # F1 LED Leaderboard
-***
 
 ![Travis (.org)](https://img.shields.io/travis/feram18/f1-led-leaderboard?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/feram18/f1-led-leaderboard?style=for-the-badge)
@@ -35,31 +34,31 @@ Raspberry Pi driven RGB LED matrix board.
   <img src="assets/img/demo/Drivers-1.png" alt="Driver Standings" width="50%" />
 </p>
 
-- **Qualifying & Sprint Results**
-
-<p align="center">
-  <img src="assets/img/demo/Qualifying-Status.png" alt="Qualifying Status" width="50%" />
-</p>
-
 - **Grand Prix Results**
 
 <p align="center">
-  <img src="assets/img/demo/LastGP-Logo.png" alt="Last GP Logo" width="33%" />
-  <img src="assets/img/demo/LastGP-Podium.png" alt="Last GP Podium" width="33%" />
-  <img src="assets/img/demo/LastGP-Results.png" alt="Last GP Results" width="33%" />
-</p>
-
-- **Next Grand Prix Information**
-
-<p align="center">
-  <img src="assets/img/demo/NextGP-Logo.png" alt="Next GP Logo" width="50%" />
-  <img src="assets/img/demo/NextGP-Track.png" alt="Next GP Track" width="50%" />
+  <img src="assets/img/demo/LastGP-Logo.png" alt="Last GP Logo" width="32%" />
+  <img src="assets/img/demo/LastGP-Podium.png" alt="Last GP Podium" width="32%" />
+  <img src="assets/img/demo/LastGP-Results.png" alt="Last GP Results" width="32%" />
 </p>
 
 - **Schedule**
 
 <p align="center">
   <img src="assets/img/demo/Schedule.png" alt="Schedule" width="50%" />
+</p>
+
+- **Next Grand Prix Information**
+
+<p align="center">
+  <img src="assets/img/demo/NextGP-Logo.png" alt="Next GP Logo" width="49%" />
+  <img src="assets/img/demo/NextGP-Track.png" alt="Next GP Track" width="49%" />
+</p>
+
+- **Qualifying & Sprint Results**
+
+<p align="center">
+  <img src="assets/img/demo/Qualifying-Status.png" alt="Qualifying Status" width="50%" />
 </p>
 
 ## Installation
