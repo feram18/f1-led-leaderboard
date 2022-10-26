@@ -25,50 +25,42 @@ Raspberry Pi driven RGB LED matrix board.
 ## Features
 - **Constructor Standings**
 
-[//]: # (<p align="center">)
+<p align="center">
+  <img src="assets/img/demo/Constructors-1.png" alt="Constructor Standings" width="50%" />
+</p>
 
-[//]: # (<img src="assets/img/demo/constructor_standings.gif" /><br>)
-
-[//]: # (</p>)
 - **Driver Standings**
 
-[//]: # (<p align="center">)
+<p align="center">
+  <img src="assets/img/demo/Drivers-1.png" alt="Driver Standings" width="50%" />
+</p>
 
-[//]: # (<img src="assets/img/demo/driver_standings.gif" /><br>)
+- **Qualifying & Sprint Results**
 
-[//]: # (</p>)
-
-- **Grand Prix Qualifying Results**
-
-[//]: # (<p align="center">)
-
-[//]: # (<img src="assets/img/demo/qualifying_results.gif" /><br>)
-
-[//]: # (</p>)
+<p align="center">
+  <img src="assets/img/demo/Qualifying-Status.png" alt="Qualifying Status" width="50%" />
+</p>
 
 - **Grand Prix Results**
 
-[//]: # (<p align="center">)
-
-[//]: # (<img src="assets/img/demo/last_gp.gif" /><br>)
-
-[//]: # (</p>)
+<p align="center">
+  <img src="assets/img/demo/LastGP-Logo.png" alt="Last GP Logo" width="33%" />
+  <img src="assets/img/demo/LastGP-Podium.png" alt="Last GP Podium" width="33%" />
+  <img src="assets/img/demo/LastGP-Results.png" alt="Last GP Results" width="33%" />
+</p>
 
 - **Next Grand Prix Information**
 
-[//]: # (<p align="center">)
-
-[//]: # (<img src="assets/img/demo/next_gp.gif" /><br>)
-
-[//]: # (</p>)
+<p align="center">
+  <img src="assets/img/demo/NextGP-Logo.png" alt="Next GP Logo" width="50%" />
+  <img src="assets/img/demo/NextGP-Track.png" alt="Next GP Track" width="50%" />
+</p>
 
 - **Schedule**
 
-[//]: # (<p align="center">)
-
-[//]: # (<img src="assets/img/demo/schedule.gif" /><br>)
-
-[//]: # (</p>)
+<p align="center">
+  <img src="assets/img/demo/Schedule.png" alt="Schedule" width="50%" />
+</p>
 
 ## Installation
 ### Hardware
