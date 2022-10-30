@@ -58,7 +58,8 @@ Raspberry Pi driven RGB LED matrix board.
 - **Qualifying & Sprint Results**
 
 <p align="center">
-  <img src="assets/img/demo/Qualifying-Status.png" alt="Qualifying Status" width="50%" />
+  <img src="assets/img/demo/Qualifying-Status.png" alt="Qualifying Status" width="49%" />
+  <img src="assets/img/demo/Qualifying-Grid.png" alt="Qualifying Grid" width="49%" />
 </p>
 
 ## Installation
