@@ -170,9 +170,10 @@
     "qualifying": {
         "row": {
             "width": 19,
-            "height": 9
+            "height": 8
         },
         "header": {
+            "height": 9,
             "offset": {
                 "y": 2
             }
@@ -183,12 +184,12 @@
                     "width": 12,
                     "position": {
                         "x": 0,
-                        "y": 1
+                        "y": 10
                     }
                 },
                 "code": {
                     "x": 12,
-                    "y": 1
+                    "y": 10
                 }
             },
             "even": {
@@ -196,12 +197,12 @@
                     "width": 12,
                     "position": {
                         "x": 33,
-                        "y": 4
+                        "y": 13
                     }
                 },
                 "code": {
                     "x": 45,
-                    "y": 4
+                    "y": 13
                 }
             }
         }
