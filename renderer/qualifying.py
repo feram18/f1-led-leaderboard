@@ -2,7 +2,6 @@ import time
 from typing import List
 
 from constants import SLIDE_DELAY
-from data.session_status import SessionStatus
 from data.qualifying import QualifyingResultItem
 from renderer.renderer import Renderer
 from utils import Color, align_text, Position
@@ -38,21 +37,22 @@ class Qualifying(Renderer):
 
     def render(self):
         if self.data.next_gp:
-            if self.qualifying.grid:
-                height = (self.coords['row']['height'] *
-                          (len(self.qualifying.grid) // 2)) + self.coords['row']['height'] // 2
-                self.new_canvas(self.matrix.width, height)
+            rh = self.coords['row']['height']
+            height = ((rh * (len(self.qualifying.grid) // 2)) + (rh // 2)) + self.coords['header']['height']
+            self.new_canvas(self.matrix.width, height)
 
+            self.render_header('Qualifying')
+            if self.qualifying.grid:
                 self.render_grid(self.qualifying.grid)
 
                 if self.sprint:
-                    if not self.sprint.grid:
-                        self.render_upcoming('Sprint', self.sprint.status)
-                    else:
+                    self.render_header('Sprint')
+                    if self.sprint.grid:
                         self.render_grid(self.sprint.grid)
+                    else:
+                        self.render_status(self.sprint.status.value)
             else:
-                self.new_canvas(self.matrix.width, self.matrix.height)
-                self.render_upcoming('Qualifying', self.qualifying.status)
+                self.render_status(self.qualifying.status.value)
 
     def render_header(self, header: str):
         x, y = align_text(self.layout.font_bold.getsize(header),
@@ -71,6 +71,8 @@ class Qualifying(Renderer):
                           self.matrix.height)
         y += (self.font_height // 2)
         self.draw.text((x, y), status, Color.WHITE, self.layout.font_bold)
+        self.matrix.SetImage(self.canvas)
+        time.sleep(SLIDE_DELAY)
 
     def render_row(self, item: QualifyingResultItem):
         parity = 'even' if item.position % 2 == 0 else 'odd'
@@ -98,12 +100,6 @@ class Qualifying(Renderer):
                              (self.code_x + self.coords['row']['width'] - 1, self.text_y + self.font_height - 1)),
                             bg)
         self.draw.text((self.code_x, self.text_y), code, text, self.layout.font)
-
-    def render_upcoming(self, header: str, status: SessionStatus):
-        self.render_header(header)
-        self.render_status(status.value)
-        self.matrix.SetImage(self.canvas)
-        time.sleep(SLIDE_DELAY)
 
     def render_grid(self, grid: list):
         for item in grid:
