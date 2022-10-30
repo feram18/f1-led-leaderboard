@@ -4,6 +4,9 @@
 # Submodules
 rpi-rgb-led-matrix/*
 
+# Dev Misc
+emulator_config.json
+
 ### C ###
 # Prerequisites
 *.d
