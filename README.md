@@ -25,13 +25,13 @@ Raspberry Pi driven RGB LED matrix board.
 - **Constructor Standings**
 
 <p align="center">
-  <img src="assets/img/demo/Constructors-1.png" alt="Constructor Standings" width="50%" />
+  <img src="assets/img/demo/Constructors.png" alt="Constructor Standings" width="50%" />
 </p>
 
 - **Driver Standings**
 
 <p align="center">
-  <img src="assets/img/demo/Drivers-1.png" alt="Driver Standings" width="50%" />
+  <img src="assets/img/demo/Drivers.png" alt="Driver Standings" width="50%" />
 </p>
 
 - **Grand Prix Results**
