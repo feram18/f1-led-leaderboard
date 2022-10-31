@@ -78,6 +78,7 @@ class DriverStandings(Renderer):
         bg, text = Color.WHITE, Color.BLACK
         if champion:
             bg, text = Color.GOLD, Color.WHITE
+            position = 'C'
         self.draw.rectangle(((0, self.text_y - 1),
                              (self.coords['place']['width'] - 1, self.text_y + self.font_height - 1)),
                             bg)
