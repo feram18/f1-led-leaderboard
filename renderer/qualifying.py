@@ -37,21 +37,22 @@ class Qualifying(Renderer):
 
     def render(self):
         if self.data.next_gp:
-            rh = self.coords['row']['height']
-            height = ((rh * (len(self.qualifying.grid) // 2)) + (rh // 2)) + self.coords['header']['height']
-            self.new_canvas(self.matrix.width, height)
-
-            self.render_header('Qualifying')
             if self.qualifying.grid:
+                rh = self.coords['row']['height']
+                height = ((rh * (len(self.qualifying.grid) // 2)) + (rh // 2)) + self.coords['header']['height']
+                self.new_canvas(self.matrix.width, height)
+                self.render_header('Qualifying')
                 self.render_grid(self.qualifying.grid)
 
                 if self.sprint:
+                    self.new_canvas(self.matrix.width, height)
                     self.render_header('Sprint')
                     if self.sprint.grid:
                         self.render_grid(self.sprint.grid)
                     else:
                         self.render_status(self.sprint.status.value)
             else:
+                self.render_header('Qualifying')
                 self.render_status(self.qualifying.status.value)
 
     def render_header(self, header: str):
