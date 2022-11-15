@@ -243,7 +243,7 @@ def is_wcc_champion(races: list, standings) -> bool:
     max_remaining_pts = len(races) * (25 + 19 + 1)  # Pos. 1 + Pos. 2 + Fastest Lap
     for race in races:
         if race.sprint:
-            max_remaining_pts += 5  # Pos. 1 + Pos. 2
+            max_remaining_pts += (8 + 7)  # Pos. 1 + Pos. 2
     return standings.items[1].points + max_remaining_pts < standings.items[0].points
 
 
