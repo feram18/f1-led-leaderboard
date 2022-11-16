@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from PIL import Image, ImageDraw
 from rgbmatrix import RGBMatrix
 
-from config.layout import Layout
+from matrix.layout import Layout
 from constants import DELAY, FAST_SCROLL, SLOW_SCROLL
 from utils import Color
 
@@ -17,7 +17,7 @@ class Renderer(ABC):
         matrix (rgbmatrix.RGBMatrix):       RGBMatrix instance
         canvas (PIL.Image):                 Image canvas associated with matrix
         draw (PIL.ImageDraw):               ImageDraw instance
-        layout (config.Layout):              Layout instance
+        layout (matrix.Layout):             Layout instance
 
     Attributes:
         font_width (int):                   Font's character width

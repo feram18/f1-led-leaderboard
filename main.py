@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw
 from rgbmatrix import RGBMatrix
 
 from api.data import Data
-from config.layout import Layout
+from matrix.layout import Layout
 from renderer.loading import Loading
 from renderer.main import MainRenderer
 from utils import led_matrix_options, args
