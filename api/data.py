@@ -160,20 +160,21 @@ class Data:
         """
         Fetch next grand prix's qualifying data
         """
-        status = get_session_status(self.next_gp.qualifying.dt)
-        if status is SessionStatus.FINISHED:
-            logging.debug('Fetching Qualifying Results')
+        if self.next_gp:
+            status = get_session_status(self.next_gp.qualifying.dt)
+            if status is SessionStatus.FINISHED:
+                logging.debug('Fetching Qualifying Results')
 
-            response = requests.get(constants.QUALIFYING_RESULTS_URL).json()
+                response = requests.get(constants.QUALIFYING_RESULTS_URL).json()
 
-            if int(response['MRData']['total']) > 0:  # Qualifying results available
-                results = response['MRData']['RaceTable']['Races'][0]['QualifyingResults']
-                grid = [QualifyingResultItem(int(result['position']),
-                                             self.drivers.get(result['Driver']['driverId']),
-                                             result.get('Q1', None),
-                                             result.get('Q2', None),
-                                             result.get('Q3', None)) for result in results]
-                self.next_gp.qualifying.grid = grid
+                if int(response['MRData']['total']) > 0:  # Qualifying results available
+                    results = response['MRData']['RaceTable']['Races'][0]['QualifyingResults']
+                    grid = [QualifyingResultItem(int(result['position']),
+                                                 self.drivers.get(result['Driver']['driverId']),
+                                                 result.get('Q1', None),
+                                                 result.get('Q2', None),
+                                                 result.get('Q3', None)) for result in results]
+                    self.next_gp.qualifying.grid = grid
 
     def fetch_sprint(self):
         """
