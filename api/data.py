@@ -231,7 +231,7 @@ class Data:
         i.e. If it is a race weekend and 15 minutes have passed since data was last fetched, an update is needed.
         :return: should_update: (bool)
         """
-        if race_weekend(self.next_gp.dt):
+        if self.next_gp is not None and race_weekend(self.next_gp.dt):
             current_time = time.time()
             time_delta = current_time - self.last_updated
             return time_delta >= constants.UPDATE_RATE
