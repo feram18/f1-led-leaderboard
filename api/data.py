@@ -160,7 +160,7 @@ class Data:
         """
         Fetch next grand prix's qualifying data
         """
-        if self.next_gp:
+        if self.next_gp is not None:
             status = get_session_status(self.next_gp.qualifying.dt)
             if status is SessionStatus.FINISHED:
                 logging.debug('Fetching Qualifying Results')
@@ -180,7 +180,7 @@ class Data:
         """
         Fetch next grand prix's sprint data
         """
-        if self.next_gp.sprint:  # Sprint taking place
+        if self.next_gp is not None and self.next_gp.sprint is not None:  # Sprint taking place
             status = get_session_status(self.next_gp.sprint.dt)
             if status is SessionStatus.FINISHED:
                 logging.debug('Fetching Sprint Results')

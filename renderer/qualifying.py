@@ -27,8 +27,8 @@ class Qualifying(Renderer):
     def __init__(self, matrix, canvas, draw, layout, data):
         super().__init__(matrix, canvas, draw, layout)
         self.data = data
-        self.qualifying = self.data.next_gp.qualifying
-        self.sprint = self.data.next_gp.sprint
+        self.qualifying = self.data.next_gp.qualifying if self.data.next_gp else None
+        self.sprint = self.data.next_gp.sprint if self.data.next_gp else None
         self.coords = self.layout.coords['qualifying']
         self.offset = self.coords['row']['height'] // 2
         self.position_x = self.coords['grid']['odd']['result']['position']['x']
