@@ -3,7 +3,10 @@ import sys
 from logging.handlers import RotatingFileHandler
 
 from PIL import Image, ImageDraw
-from rgbmatrix import RGBMatrix
+try:
+    from rgbmatrix import RGBMatrix
+except ModuleNotFoundError: # used for testing
+    from RGBMatrixEmulator import RGBMatrix
 
 from api.data import Data
 from matrix.layout import Layout

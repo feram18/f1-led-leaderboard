@@ -2,7 +2,10 @@ import time
 from abc import ABC, abstractmethod
 
 from PIL import Image, ImageDraw
-from rgbmatrix import RGBMatrix
+try:
+    from rgbmatrix import RGBMatrix
+except ModuleNotFoundError: # used for testing
+    from RGBMatrixEmulator import RGBMatrix
 
 from matrix.layout import Layout
 from constants import DELAY, FAST_SCROLL, SLOW_SCROLL
