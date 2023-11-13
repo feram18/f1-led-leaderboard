@@ -5,14 +5,14 @@ from data.circuit import Circuit
 
 class TestCircuit:
     def test_get_logo(self):
-        image_path = Circuit.get_logo('americas')
+        image_path = Circuit.get_logo('americas', 'United States')
         assert isinstance(image_path, str)
 
     def test_get_logo_2(self, caplog):
         caplog.clear()
         with caplog.at_level(logging.ERROR):
-            Circuit.get_logo('invalid')
-        assert 'No logo image found for invalid' in caplog.text
+            Circuit.get_logo('invalid', 'United States')
+        assert 'No logo image found for invalid. Setting country flag.' in caplog.text
 
     def test_get_track(self):
         image_path = Circuit.get_track('americas')

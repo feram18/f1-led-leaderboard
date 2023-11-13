@@ -12,7 +12,7 @@ from data.session_status import SessionStatus
 @pytest.mark.skipif(not sys.platform.startswith('linux'), reason='Requires Linux')
 class TestUtils:
     def setup_method(self):
-        self.font = utils.load_font('assets/fonts/tom-thumb.bdf')
+        self.font = utils.load_font('assets/fonts/7x13.pil')
 
     def test_read_json(self, caplog):
         caplog.clear()
@@ -23,13 +23,7 @@ class TestUtils:
     def test_load_font(self):
         assert isinstance(self.font, ImageFont.ImageFont)
 
-    def test_load_font_2(self):
-        assert self.font.getsize('A')[0], 4
-
-    def test_load_font_3(self):
-        assert self.font.getsize('A')[1], 6
-
-    def test_load_font_4(self, caplog):
+    def test_load_font_2(self, caplog):
         caplog.clear()
         with caplog.at_level(logging.WARNING):
             utils.load_font('invalid.bdf')
@@ -76,7 +70,7 @@ class TestUtils:
         assert (est_date, est_time) == (exp_date, exp_time)
 
     def test_get_session_status(self):
-        time = datetime.now().replace(year=2031, month=10, day=26, hour=8, minute=0).astimezone(tz=None)
+        time = datetime.now().astimezone(tz=None) - timedelta(days=1)
         result = utils.get_session_status(time)
         assert result == SessionStatus.UPCOMING
 
