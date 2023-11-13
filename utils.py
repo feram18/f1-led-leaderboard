@@ -46,6 +46,7 @@ class Position(Enum):
 
 # Dictionary to match nationalities to country
 NATIONALITIES = {
+    'American': 'United States',
     'Australian': 'Australia',
     'Austrian': 'Austria',
     'Belgian': 'Belgium',
@@ -62,6 +63,7 @@ NATIONALITIES = {
     'Japanese': 'Japan',
     'Mexican': 'Mexico',
     'Monegasque': 'Monaco',
+    'New Zealander': 'New Zealand',
     'Polish': 'Poland',
     'Russian': 'Russia',
     'Spanish': 'Spain',
