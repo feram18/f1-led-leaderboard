@@ -229,7 +229,7 @@ def is_wdc_champion(races: list, standings) -> bool:
     max_remaining_pts = len(races) * 26  # Pos. 1 + Fastest Lap
     for race in races:
         if race.sprint:
-            max_remaining_pts += 3  # Pos. 1
+            max_remaining_pts += 8  # Pos. 1
     return standings.items[1].points + max_remaining_pts < standings.items[0].points
 
 
