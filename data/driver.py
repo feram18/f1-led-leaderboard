@@ -26,8 +26,8 @@ class Driver:
     def get_flag(country: str) -> str:
         """
         Get path to flag's image file.
-        :param country: Driver's country of origin
-        :return: img_path: Path to flag image
+        @param country: Driver's country of origin
+        @return: Path to flag image
         """
         img_path = COUNTRY_FLAG_PATH.format(country)
         if os.path.isfile(img_path):

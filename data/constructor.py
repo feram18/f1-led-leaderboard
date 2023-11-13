@@ -38,8 +38,8 @@ class Constructor:
     def get_logo(constructor_id: str) -> str:
         """
         Get path to constructor's logo image
-        :param constructor_id: Constructor's id
-        :return: img_path: path to logo image
+        @param constructor_id: Constructor's id
+        @return: path to logo image
         """
         img_path = CONSTRUCTOR_LOGO_PATH.format(constructor_id)
         if os.path.isfile(img_path):

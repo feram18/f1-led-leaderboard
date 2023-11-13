@@ -69,8 +69,8 @@ NATIONALITIES = {
 def read_json(filename: str) -> dict:
     """
     Read from JSON file and return it as a dictionary
-    :param filename: JSON file
-    :return: json: JSON file as a dict
+    @param filename: JSON file
+    @return: JSON as a dict
     """
     if os.path.isfile(filename):
         with open(filename, 'r') as json_file:
@@ -82,8 +82,8 @@ def read_json(filename: str) -> dict:
 def load_font(path: str) -> ImageFont:
     """
     Return ImageFont object from given font name
-    :param path: Font path
-    :return: font: ImageFont object
+    @param path: Font path
+    @return: font: ImageFont object
     """
     if os.path.isfile(path):
         return ImageFont.load(path)
@@ -93,8 +93,8 @@ def load_font(path: str) -> ImageFont:
 def convert_font(filename: str) -> str:
     """
     Convert from BDF to PIL font
-    :param filename: Font filename
-    :return name: Font name
+    @param filename: Font filename
+    @return Font name
     """
     name = filename\
         .replace(f'{FONTS_DIR}/', '') \
@@ -111,10 +111,10 @@ def load_image(filename: str,
                background: tuple = Color.BLACK) -> Image:
     """
     Open Image file from given path
-    :param filename: Path to the image file
-    :param size: Maximum width and height of the image
-    :param background: Background color for PNG images
-    :return: image: Image file
+    @param filename: Path to the image file
+    @param size: Maximum width and height of the image
+    @param background: Background color for PNG images
+    @return: Image file
     """
     if filename and os.path.isfile(filename):
         with Image.open(filename) as original:
@@ -139,12 +139,12 @@ def align_text(text_size: Tuple[int, int],
                y: Position = Position.CENTER) -> Tuple[int, int]:
     """
     Calculate x, y coords to align text on canvas
-    :param text_size: (width, height) in pixels
-    :param x: Text's horizontal position
-    :param y: Text's vertical position
-    :param col_width: Column's width
-    :param col_height: Column's height
-    :return: x, y: Coordinates
+    @param text_size: (width, height) in pixels
+    @param x: Text's horizontal position
+    @param y: Text's vertical position
+    @param col_width: Column's width
+    @param col_height: Column's height
+    @return: (x, y) coordinates
     """
     if x == Position.RIGHT:
         x = col_width - text_size[0]
@@ -170,12 +170,12 @@ def align_image(image: Image,
                 y: Position = Position.CENTER) -> Tuple[int, int]:
     """
     Calculate the x, y offsets to align image on canvas
-    :param image: Image to align
-    :param col_width: Column's width
-    :param col_height: Column's height
-    :param x: Image horizontal position
-    :param y: Image vertical position
-    :return: x, y: Coordinates
+    @param image: Image to align
+    @param col_width: Column's width
+    @param col_height: Column's height
+    @param x: Image horizontal position
+    @param y: Image vertical position
+    @return: (x, y) coordinates
     """
     if x == Position.RIGHT:
         x = col_width - image.width
@@ -197,9 +197,9 @@ def align_image(image: Image,
 def convert_time(date: str, time: str) -> datetime:
     """
     Convert from UTC to local timezone
-    :param date: GP's date (UTC)
-    :param time: GP's time (UTC)
-    :return: dt: GP's date & time (user's local timezone)
+    @param date: GP's date (UTC)
+    @param time: GP's time (UTC)
+    @return: GP's date & time (user's local timezone)
     """
     dt = datetime.strptime(f'{date} {time}'.replace('Z', ''), '%Y-%m-%d %H:%M:%S')
     dt = dt.replace(tzinfo=timezone.utc).astimezone(tz=None)  # Convert to local timezone
@@ -209,8 +209,8 @@ def convert_time(date: str, time: str) -> datetime:
 def race_weekend(date: datetime) -> bool:
     """
     Determine if today is race weekend (i.e. Practice, Qualifying, or Race day).
-    :param date: GP's date
-    :return: race_weekend: bool
+    @param date: GP's date
+    @return: race_weekend: bool
     """
     today = datetime.today()
     if today.weekday() > 3:  # is weekend
@@ -222,9 +222,9 @@ def race_weekend(date: datetime) -> bool:
 def is_wdc_champion(races: list, standings) -> bool:
     """
     Determine if there's a champion for the World Driver's Championship
-    :param races: List of remaining races
-    :param standings: Driver standings
-    :return: is_wdc_champion bool value
+    @param races: List of remaining races
+    @param standings: Driver standings
+    @return: bool value
     """
     max_remaining_pts = len(races) * 26  # Pos. 1 + Fastest Lap
     for race in races:
@@ -236,9 +236,9 @@ def is_wdc_champion(races: list, standings) -> bool:
 def is_wcc_champion(races: list, standings) -> bool:
     """
     Determine if there's a champion for the World Constructor's Championship
-    :param races: List of remaining races
-    :param standings: Constructor standings
-    :return: is_wdc_champion bool value
+    @param races: List of remaining races
+    @param standings: Constructor standings
+    @return: is_wdc_champion bool value
     """
     max_remaining_pts = len(races) * (25 + 19 + 1)  # Pos. 1 + Pos. 2 + Fastest Lap
     for race in races:
@@ -250,8 +250,8 @@ def is_wcc_champion(races: list, standings) -> bool:
 def get_session_status(start_time: datetime) -> SessionStatus:
     """
     Roughly determine the session's current status. Does not account for delays.
-    :param start_time: GP's start date & time
-    :return: status: GP's status
+    @param start_time: GP's start date & time
+    @return: status: GP's status
     """
     now = datetime.now().astimezone(tz=None)
     end_time = start_time + timedelta(hours=2)
@@ -266,7 +266,7 @@ def get_session_status(start_time: datetime) -> SessionStatus:
 def args() -> argparse.Namespace:
     """
     CLI argument parser to configure matrix.
-    :return: parser: (argsparse.Namespace) Argument parser
+    @return: parser: (argsparse.Namespace) Argument parser
     """
     parser = argparse.ArgumentParser(prog='F1-LED-Leaderboard')
 
@@ -387,8 +387,8 @@ def args() -> argparse.Namespace:
 def led_matrix_options(args_: argparse.Namespace) -> RGBMatrixOptions:
     """
     Set RGBMatrixOptions from parsed arguments.
-    :param args_: (argsparse.Namespace) Parsed arguments from CLI
-    :return: options: (rgbmatrix.RGBMatrixOptions) RGBMatrixOptions instance
+    @param args_: (argsparse.Namespace) Parsed arguments from CLI
+    @return: options: (rgbmatrix.RGBMatrixOptions) RGBMatrixOptions instance
     :exception AttributeError: If attribute is not found
     """
     options = RGBMatrixOptions()

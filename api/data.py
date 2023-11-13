@@ -35,9 +35,6 @@ class Data:
     last_updated: float = None
 
     def __post_init__(self):
-        self.initialize()
-
-    def initialize(self):
         self.fetch_constructors()
         self.fetch_drivers()
         self.constructor_standings = self.fetch_constructor_standings()
@@ -52,6 +49,9 @@ class Data:
         self.last_updated = time.time()
 
     def update(self):
+        """
+        Updates data
+        """
         self.constructor_standings = self.fetch_constructor_standings()
         self.driver_standings = self.fetch_driver_standings()
         self.last_gp = self.fetch_last_gp()
@@ -63,6 +63,9 @@ class Data:
         self.last_updated = time.time()
 
     def fetch_constructors(self):
+        """
+        Fetch list of constructors
+        """
         logging.debug('Fetching Constructors List')
 
         response = requests.get(constants.CONSTRUCTORS_URL).json()
@@ -74,6 +77,9 @@ class Data:
                                                                           constructor['nationality'])
 
     def fetch_drivers(self):
+        """
+        Fetch list of drivers
+        """
         logging.debug('Fetching Drivers List')
 
         response = requests.get(constants.DRIVER_STANDINGS_URL).json()
@@ -92,7 +98,7 @@ class Data:
     def fetch_constructor_standings(self) -> Standings:
         """
         Fetch current constructor standings
-        :return: standings: Constructor standings
+        @return: Constructor standings
         """
         logging.debug('Fetching Constructor Standings')
 
@@ -106,7 +112,7 @@ class Data:
     def fetch_driver_standings(self) -> Standings:
         """
         Fetch current driver standings
-        :return: standings: Driver standings
+        @return: Driver standings
         """
         logging.debug('Fetching Driver Standings')
 
@@ -120,7 +126,7 @@ class Data:
     def fetch_last_gp(self) -> GPResult:
         """
         Fetch last grand prix's race results
-        :return: last_gp: Last GP's race results
+        @return: Last GP's race results
         """
         logging.debug("Fetching Last Grand Prix's data")
 
@@ -149,7 +155,7 @@ class Data:
     def fetch_next_gp(self) -> Optional[GrandPrix]:
         """
         Fetch next grand prix's data
-        :return: next_gp: Next GP's data
+        @return: Next GP's data
         """
         logging.debug("Fetching Next Grand Prix's data")
 
@@ -196,7 +202,7 @@ class Data:
     def fetch_schedule(self) -> List[GrandPrix]:
         """
         Fetch list of remaining grand prix in the current season
-        :return: schedule: List of remaining GPs
+        @return: List of remaining GPs
         """
         logging.debug('Fetching Grand Prix Schedule')
 
@@ -229,7 +235,7 @@ class Data:
         """
         Determines if data should be updated.
         i.e. If it is a race weekend and 15 minutes have passed since data was last fetched, an update is needed.
-        :return: should_update: (bool)
+        @return: should_update bool value
         """
         if self.next_gp is not None and race_weekend(self.next_gp.dt):
             current_time = time.time()
