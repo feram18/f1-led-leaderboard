@@ -4,7 +4,7 @@ from enum import Enum
 class FinishingStatus(Enum):
     """Finishing Status Enum class"""
     FINISHED = 'Finished'
-    DISQUALIFIED = 'Disqualified'
+    DISQUALIFIED = 'DSQ'
     DID_NOT_FINISH = 'DNF'
     PLUS_ONE_LAP = '+1 Lap'
     PLUS_TWO_LAPS = '+2 Laps'
