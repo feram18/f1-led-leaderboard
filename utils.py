@@ -135,6 +135,18 @@ def load_image(filename: str,
     logging.error(f"Couldn't find image {filename}")
 
 
+def get_text_size(draw, text, font) -> Tuple[int, int]:
+    """
+    Get the width and height of a string of text given a font
+    @param draw: ImageDraw instance in use
+    @param text: Text to get the size of
+    @param font: Font to use to draw text
+    @return: text size (width, height)
+    """
+    text_bbox = draw.textbbox((0, 0), text, font)
+    return text_bbox[2] - text_bbox[0], text_bbox[3] - text_bbox[1]
+
+
 def align_text(text_size: Tuple[int, int],
                col_width: int = 0,
                col_height: int = 0,
