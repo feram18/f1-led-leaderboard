@@ -9,7 +9,7 @@ except ModuleNotFoundError: # used for testing
 
 from matrix.layout import Layout
 from constants import DELAY, FAST_SCROLL, SLOW_SCROLL
-from utils import Color
+from utils import Color, get_text_size
 
 
 class Renderer(ABC):
@@ -33,7 +33,8 @@ class Renderer(ABC):
         self.canvas: Image = canvas
         self.draw: ImageDraw = draw
         self.layout: Layout = layout
-        self.font_width, self.font_height = self.layout.font.getsize(' ')
+        self.draw.font = self.layout.font
+        self.font_width, self.font_height = get_text_size(self.draw, ' ', self.draw.getfont())
         self.scroll_speed: float = SLOW_SCROLL if self.matrix.height <= 32 else FAST_SCROLL
 
     @abstractmethod
@@ -47,6 +48,7 @@ class Renderer(ABC):
         self.clear()
         self.canvas = Image.new('RGB', (width, height if height >= self.matrix.height else self.matrix.height))
         self.draw = ImageDraw.Draw(self.canvas)
+        self.draw.font = self.layout.font
 
     def scroll_up(self, image: Image):
         self.matrix.SetImage(self.canvas)

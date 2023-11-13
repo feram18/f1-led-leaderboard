@@ -1,6 +1,6 @@
 from data.grand_prix import GrandPrix
 from renderer.renderer import Renderer
-from utils import Color, align_text, Position
+from utils import Color, align_text, Position, get_text_size
 
 
 class Schedule(Renderer):
@@ -37,7 +37,7 @@ class Schedule(Renderer):
             self.text_y = self.coords['round']['position']['y']  # Reset
 
     def render_header(self):
-        x, y = align_text(self.layout.font_bold.getsize('Schedule'),
+        x, y = align_text(get_text_size(self.draw, 'Schedule', self.layout.font_bold),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
@@ -57,13 +57,13 @@ class Schedule(Renderer):
                              (self.coords['round']['width'] - 1, self.text_y + self.font_height - 1)),
                             Color.RED)
 
-        x = align_text(self.layout.font.getsize(round_no),
+        x = align_text(get_text_size(self.draw, round_no, self.draw.getfont()),
                        col_width=self.coords['round']['width'] + 1,
                        x=Position.CENTER)[0]
-        self.draw.text((x, self.text_y), round_no, Color.WHITE, self.layout.font)
+        self.draw.text((x, self.text_y), round_no, Color.WHITE)
 
     def render_country(self, country: str):
         self.draw.rectangle(((self.country_x - 1, self.text_y - 1),
                              (self.matrix.width, self.text_y + self.font_height - 1)),
                             Color.WHITE)
-        self.draw.text((self.country_x, self.text_y), country, Color.RED, self.layout.font)
+        self.draw.text((self.country_x, self.text_y), country, Color.RED)

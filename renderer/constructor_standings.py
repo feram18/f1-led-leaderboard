@@ -2,7 +2,7 @@ from PIL import ImageFont
 
 from data.standings import StandingsItem
 from renderer.renderer import Renderer
-from utils import Color, align_text, Position
+from utils import Color, align_text, Position, get_text_size
 
 
 class ConstructorStandings(Renderer):
@@ -38,7 +38,7 @@ class ConstructorStandings(Renderer):
         self.text_y = self.coords['name']['y']  # Reset
 
     def render_header(self):
-        x, y = align_text(self.layout.font_bold.getsize('Constructors'),
+        x, y = align_text(get_text_size(self.draw, 'Constructors', self.layout.font_bold),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
@@ -50,7 +50,7 @@ class ConstructorStandings(Renderer):
 
     def render_row(self, constructor: StandingsItem):
         bg_color, self.text_color = constructor.item.colors
-        font = self.layout.font
+        font = self.draw.getfont()
         if constructor.champion:
             bg_color, self.text_color = Color.GOLD, Color.WHITE
             font = self.layout.font_bold
@@ -71,7 +71,7 @@ class ConstructorStandings(Renderer):
         self.draw.text((x, self.text_y), name, self.text_color, font)
 
     def render_points(self, points: str, font: ImageFont):
-        x = align_text(font.getsize(points),
+        x = align_text(get_text_size(self.draw, points, font),
                        col_width=self.matrix.width,
                        x=Position.RIGHT)[0]
         self.draw.text((x, self.text_y), points, self.text_color, font)

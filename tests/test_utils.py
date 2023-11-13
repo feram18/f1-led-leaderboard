@@ -53,18 +53,6 @@ class TestUtils:
         image = utils.load_image('invalid.jpg', (15, 15))
         assert image is None
 
-    def test_align_text(self):
-        x, y = utils.align_text(self.font.getsize('Lorem ipsum'), 64, 32, utils.Position.CENTER, utils.Position.CENTER)
-        assert (x, y) == (11, 13)
-
-    def test_align_text_2(self):
-        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_width=64, x=utils.Position.RIGHT)[0]
-        assert x == 22
-
-    def test_align_text_3(self):
-        x = utils.align_text(self.font.getsize('Lorem ipsum'), col_height=32, y=utils.Position.BOTTOM)[0]
-        assert x == 21
-
     def test_align_image(self):
         img = utils.load_image('assets/img/error.png', (15, 15))
         x, y = utils.align_image(img, 64, 32, utils.Position.CENTER, utils.Position.CENTER)

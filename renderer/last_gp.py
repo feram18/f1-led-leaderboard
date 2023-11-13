@@ -5,7 +5,7 @@ from data.driver import Driver
 from data.finishing_status import FinishingStatus
 from data.gp_result import DriverResult
 from renderer.renderer import Renderer
-from utils import align_text, Position, Color, load_image, align_image
+from utils import align_text, Position, Color, load_image, align_image, get_text_size
 
 
 class LastGP(Renderer):
@@ -60,7 +60,7 @@ class LastGP(Renderer):
 
     # TODO: Name text can be too long to fit on canvas
     def render_gp_name(self):
-        x, y = align_text(self.layout.font_bold.getsize(self.gp_result.gp.name),
+        x, y = align_text(get_text_size(self.draw, self.gp_result.gp.name, self.layout.font_bold),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
@@ -132,7 +132,7 @@ class LastGP(Renderer):
 
     def render_position(self, position: str, fastest_lap: bool):
         bg_color, text_color = Color.WHITE, Color.BLACK
-        font = self.layout.font
+        font = self.draw.getfont()
         if fastest_lap:
             bg_color, text_color = Color.PURPLE, Color.WHITE
             font = self.layout.font_bold
@@ -141,16 +141,16 @@ class LastGP(Renderer):
                              (self.coords['result']['width'] - 1, self.text_y + self.font_height - 1)),
                             bg_color)
 
-        x = align_text(font.getsize(position),
+        x = align_text(get_text_size(self.draw, position, font),
                        col_width=self.coords['result']['width'] + 1,
                        x=Position.CENTER)[0]
         self.draw.text((x, self.text_y), position, text_color, font)
 
     def render_code(self, text_color: tuple, code: str):
-        self.draw.text((self.code_x, self.text_y), code, text_color, self.layout.font)
+        self.draw.text((self.code_x, self.text_y), code, text_color)
 
     def render_result(self, text_color: tuple, text: str):
-        x = align_text(self.layout.font.getsize(text),
+        x = align_text(get_text_size(self.draw, text, self.draw.getfont()),
                        col_width=self.matrix.width,
                        x=Position.RIGHT)[0]
-        self.draw.text((x, self.text_y), text, text_color, self.layout.font)
+        self.draw.text((x, self.text_y), text, text_color)

@@ -4,7 +4,7 @@ from typing import List
 from constants import SLIDE_DELAY
 from data.qualifying import QualifyingResultItem
 from renderer.renderer import Renderer
-from utils import Color, align_text, Position
+from utils import Color, align_text, Position, get_text_size
 
 
 class Qualifying(Renderer):
@@ -56,7 +56,7 @@ class Qualifying(Renderer):
                 self.render_status(self.qualifying.status.value)
 
     def render_header(self, header: str):
-        x, y = align_text(self.layout.font_bold.getsize(header),
+        x, y = align_text(get_text_size(self.draw, header, self.layout.font_bold),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
@@ -67,7 +67,7 @@ class Qualifying(Renderer):
         self.draw.text((x, y), header, Color.WHITE, self.layout.font_bold)
 
     def render_status(self, status: str):
-        x, y = align_text(self.layout.font_bold.getsize(status),
+        x, y = align_text(get_text_size(self.draw, status, self.layout.font_bold),
                           self.matrix.width,
                           self.matrix.height)
         y += (self.font_height // 2)
@@ -90,17 +90,17 @@ class Qualifying(Renderer):
                              (self.code_x - 2, self.text_y + self.font_height - 1)),
                             Color.WHITE)
 
-        self.position_x += align_text(self.layout.font.getsize(position),
+        self.position_x += align_text(get_text_size(self.draw, position, self.draw.getfont()),
                                       col_width=pos_width,
                                       x=Position.CENTER)[0]
-        self.draw.text((self.position_x, self.text_y), position, Color.BLACK, self.layout.font)
+        self.draw.text((self.position_x, self.text_y), position, Color.BLACK)
 
     def render_code(self, code: str, colors: List[tuple]):
         bg, text = colors
         self.draw.rectangle(((self.code_x - 1, self.text_y - 1),
                              (self.code_x + self.coords['row']['width'] - 1, self.text_y + self.font_height - 1)),
                             bg)
-        self.draw.text((self.code_x, self.text_y), code, text, self.layout.font)
+        self.draw.text((self.code_x, self.text_y), code, text)
 
     def render_grid(self, grid: list):
         for item in grid:

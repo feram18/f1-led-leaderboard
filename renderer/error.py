@@ -2,7 +2,7 @@ import time
 
 from constants import ERROR_IMAGE, SLIDE_DELAY
 from renderer.renderer import Renderer
-from utils import Color, align_text, Position, load_image, align_image
+from utils import Color, align_text, Position, load_image, align_image, get_text_size
 
 
 class Error(Renderer):
@@ -31,7 +31,7 @@ class Error(Renderer):
         time.sleep(SLIDE_DELAY * 2)
 
     def render_error_msg(self):
-        x, y = align_text(self.layout.font_bold.getsize(self.msg),
+        x, y = align_text(get_text_size(self.draw, self.msg, self.layout.font_bold),
                           self.matrix.width,
                           self.matrix.height)
         self.draw.text((x, y), self.msg, Color.RED, self.layout.font_bold)

@@ -2,7 +2,7 @@ from PIL import ImageFont
 
 from data.standings import StandingsItem
 from renderer.renderer import Renderer
-from utils import Color, align_text, Position, load_image
+from utils import Color, align_text, Position, load_image, get_text_size
 
 
 class DriverStandings(Renderer):
@@ -42,7 +42,7 @@ class DriverStandings(Renderer):
         self.text_y, self.flag_y = self.coords['place']['position']['y'], self.coords['flag']['position']['y']  # Reset
 
     def render_header(self):
-        x, y = align_text(self.layout.font_bold.getsize('Drivers'),
+        x, y = align_text(get_text_size(self.draw, 'Drivers', self.layout.font_bold),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
@@ -55,7 +55,7 @@ class DriverStandings(Renderer):
     def render_row(self, driver: StandingsItem):
         # self.driver_x = self.coords['driver']['x']
         bg, self.text_color = driver.item.constructor.colors
-        font = self.layout.font
+        font = self.draw.getfont()
         if driver.champion:
             bg, self.text_color = Color.GOLD, Color.WHITE
             font = self.layout.font_bold
@@ -83,7 +83,7 @@ class DriverStandings(Renderer):
                              (self.coords['place']['width'] - 1, self.text_y + self.font_height - 1)),
                             bg)
 
-        x = align_text(font.getsize(position),
+        x = align_text(get_text_size(self.draw, position, font),
                        col_width=self.coords['place']['width'] + 1,
                        x=Position.CENTER)[0]
         self.draw.text((x, self.text_y), position, text, font)
@@ -99,7 +99,7 @@ class DriverStandings(Renderer):
         self.draw.text((self.driver_x, self.text_y), name, self.text_color, font)
 
     def render_points(self, points: str, font: ImageFont):
-        x = align_text(font.getsize(points),
+        x = align_text(get_text_size(self.draw, points, font),
                        col_width=self.matrix.width,
                        x=Position.RIGHT)[0]
         self.draw.text((x, self.text_y), points, self.text_color, font)

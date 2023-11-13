@@ -3,7 +3,7 @@ import time
 from constants import SLIDE_DELAY
 from data.session_status import SessionStatus
 from renderer.renderer import Renderer
-from utils import Color, align_text, Position, align_image, load_image
+from utils import Color, align_text, Position, align_image, load_image, get_text_size
 
 
 class NextGP(Renderer):
@@ -48,7 +48,7 @@ class NextGP(Renderer):
 
     # TODO: Name text can be too long to fit on canvas
     def render_gp_name(self):
-        x, y = align_text(self.layout.font_bold.getsize(self.gp.name),
+        x, y = align_text(get_text_size(self.draw, self.gp.name, self.layout.font_bold),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
@@ -68,21 +68,21 @@ class NextGP(Renderer):
             self.canvas.paste(logo, (x, y))
 
     def render_date(self):
-        x, y = align_text(self.layout.font.getsize(self.gp.date),
+        x, y = align_text(get_text_size(self.draw, self.gp.date, self.draw.getfont()),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.BOTTOM)
         y -= self.font_height
-        self.draw.text((x, y + 1), self.gp.date, Color.WHITE, self.layout.font)
+        self.draw.text((x, y + 1), self.gp.date, Color.WHITE)
 
     def render_time(self):
-        x, y = align_text(self.layout.font.getsize(self.gp.time),
+        x, y = align_text(get_text_size(self.draw, self.gp.time, self.draw.getfont()),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.BOTTOM)
-        self.draw.text((x, y + 1), self.gp.time, Color.WHITE, self.layout.font)
+        self.draw.text((x, y + 1), self.gp.time, Color.WHITE)
 
     def render_track(self):
         track = load_image(self.gp.circuit.track, tuple(self.coords['track']['size']))
@@ -96,17 +96,17 @@ class NextGP(Renderer):
 
     def render_location(self):
         location = f'{self.gp.circuit.locality} {self.gp.circuit.country}'
-        x, y = align_text(self.layout.font.getsize(location),
+        x, y = align_text(get_text_size(self.draw, location, self.draw.getfont()),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.BOTTOM)
-        self.draw.text((x, y), location, Color.WHITE, self.layout.font)
+        self.draw.text((x, y), location, Color.WHITE)
 
     def render_status(self):
-        x, y = align_text(self.layout.font.getsize(self.gp.status.value),
+        x, y = align_text(get_text_size(self.draw, self.gp.status.value, self.draw.getfont()),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.BOTTOM)
-        self.draw.text((x, y), self.gp.status.value, Color.WHITE, self.layout.font)
+        self.draw.text((x, y), self.gp.status.value, Color.WHITE)

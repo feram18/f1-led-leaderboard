@@ -1,6 +1,6 @@
 from constants import F1_LOGO
 from renderer.renderer import Renderer
-from utils import Color, align_text, Position, load_image, align_image
+from utils import Color, align_text, Position, load_image, align_image, get_text_size
 from version import __version__
 
 
@@ -23,12 +23,12 @@ class Loading(Renderer):
         self.matrix.SetImage(self.canvas)
 
     def render_version(self):
-        x, y = align_text(self.layout.font.getsize(__version__),
+        x, y = align_text(get_text_size(self.draw, __version__, self.draw.getfont()),
                           self.matrix.width,
                           self.matrix.height,
                           Position.CENTER,
                           Position.BOTTOM)
-        self.draw.text((x, y), __version__, Color.WHITE, self.layout.font)
+        self.draw.text((x, y), __version__, Color.WHITE)
 
     def render_logo(self):
         logo = load_image(F1_LOGO, tuple(self.coords['image']['size']))
