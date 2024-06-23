@@ -9,14 +9,15 @@ from utils import Color
 # Constructors' Background & Text Colors
 COLORS = {   # [Background, Text]
     "ALFA": [(153, 0, 0), Color.WHITE],
-    "ALPHATAURI": [(39, 40, 79), Color.WHITE],
     "ALPINE": [(14, 29, 45), Color.WHITE],
     "ASTON_MARTIN": [(3, 87, 78), Color.WHITE],
     "FERRARI":  [(255, 0, 0), Color.BLACK],
     "HAAS": [(236, 27, 59), Color.WHITE],
     "MCLAREN": [(255, 134, 1), Color.BLACK],
     "MERCEDES": [(0, 210, 190), Color.BLACK],
+    "RB": [(30, 52, 198), Color.WHITE],
     "RED_BULL": [(22, 25, 94), Color.WHITE],
+    "SAUBER": [(105, 288, 68), Color.BLACK],
     "WILLIAMS": [(3, 168, 235), Color.BLACK]
 }
 
