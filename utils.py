@@ -9,8 +9,8 @@ from typing import Tuple
 
 from PIL import Image, ImageFont, BdfFontFile
 try:
-    from rgbmatrix import RGBMatrix
-except ModuleNotFoundError: # used for testing
+    from rgbmatrix import RGBMatrix, RGBMatrixOptions
+except ModuleNotFoundError:  # used for testing
     from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
 
 from constants import FONTS_DIR, LIB_FONTS_DIR
