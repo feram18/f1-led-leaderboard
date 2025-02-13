@@ -13,16 +13,16 @@ LIB_FONTS_DIR = 'rpi-rgb-led-matrix/fonts'
 FONTS_DIR = 'assets/fonts'
 
 # ERGAST F1 API
-BASE_URL = 'https://ergast.com/api/f1/current'
-CONSTRUCTORS_URL = f'{BASE_URL}/constructors.json'
-DRIVERS_URL = f'{BASE_URL}/drivers.json'
-CONSTRUCTOR_STANDINGS_URL = f'{BASE_URL}/constructorStandings.json'
-DRIVER_STANDINGS_URL = f'{BASE_URL}/driverStandings.json'
-LAST_GP_RESULTS_URL = f'{BASE_URL}/last/results.json'
-NEXT_GP_URL = f'{BASE_URL}/next.json'
-QUALIFYING_RESULTS_URL = f'{BASE_URL}/next/qualifying.json'
-SPRINT_URL = f'{BASE_URL}/next/sprint.json'
-SCHEDULE_URL = f'{BASE_URL}.json'
+BASE_URL = 'https://api.jolpi.ca/ergast/f1/{}'
+CONSTRUCTORS_URL = f'{BASE_URL}/constructors'
+DRIVERS_URL = f'{BASE_URL}/drivers'
+CONSTRUCTOR_STANDINGS_URL = f'{BASE_URL}/constructorStandings'
+DRIVER_STANDINGS_URL = f'{BASE_URL}/driverStandings'
+LAST_GP_RESULTS_URL = f'{BASE_URL}/last/results'
+NEXT_GP_URL = f'{BASE_URL}/next'
+QUALIFYING_RESULTS_URL = f'{BASE_URL}/next/qualifying'
+SPRINT_URL = f'{BASE_URL}/next/sprint'
+SCHEDULE_URL = f'{BASE_URL}/'
 
 # Date/Time Formatting
 DATE_FORMAT = '%a, %b %d'  # eg. Sun, Nov 14

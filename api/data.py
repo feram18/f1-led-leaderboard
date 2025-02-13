@@ -1,3 +1,4 @@
+import datetime
 import logging
 import time
 from dataclasses import dataclass, field
@@ -31,10 +32,12 @@ class Data:
     last_gp: GPResult = None
     next_gp: GrandPrix = None
     schedule: List[GrandPrix] = None
+    season: str = 'current'
     status: UpdateStatus = UpdateStatus.SUCCESS
     last_updated: float = None
 
     def __post_init__(self):
+        self.determine_season()
         self.fetch_constructors()
         self.fetch_drivers()
         self.constructor_standings = self.fetch_constructor_standings()
@@ -62,13 +65,23 @@ class Data:
 
         self.last_updated = time.time()
 
+    def determine_season(self):
+        """
+        Determine which season year to query for
+        """
+        response = requests.get(constants.CONSTRUCTOR_STANDINGS_URL.format(self.season)).json()
+
+        if len(list(response['MRData']['StandingsTable']['StandingsLists'])) < 1:
+            # current year season not yet started, roll back to query last season's stats
+            self.season = str(datetime.datetime.today().year - 1)
+
     def fetch_constructors(self):
         """
         Fetch list of constructors
         """
         logging.debug('Fetching Constructors List')
 
-        response = requests.get(constants.CONSTRUCTORS_URL).json()
+        response = requests.get(constants.CONSTRUCTORS_URL.format(self.season)).json()
         constructors = response['MRData']['ConstructorTable']['Constructors']
 
         for constructor in constructors:
@@ -82,7 +95,7 @@ class Data:
         """
         logging.debug('Fetching Drivers List')
 
-        response = requests.get(constants.DRIVER_STANDINGS_URL).json()
+        response = requests.get(constants.DRIVER_STANDINGS_URL.format(self.season)).json()
         drivers = response['MRData']['StandingsTable']['StandingsLists'][0]['DriverStandings']
 
         for driver in drivers:
@@ -102,7 +115,7 @@ class Data:
         """
         logging.debug('Fetching Constructor Standings')
 
-        response = requests.get(constants.CONSTRUCTOR_STANDINGS_URL).json()
+        response = requests.get(constants.CONSTRUCTOR_STANDINGS_URL.format(self.season)).json()
         constructors = response['MRData']['StandingsTable']['StandingsLists'][0]['ConstructorStandings']
 
         return Standings([StandingsItem(self.constructors.get(constructor['Constructor']['constructorId']),
@@ -116,7 +129,7 @@ class Data:
         """
         logging.debug('Fetching Driver Standings')
 
-        response = requests.get(constants.DRIVER_STANDINGS_URL).json()
+        response = requests.get(constants.DRIVER_STANDINGS_URL.format(self.season)).json()
         drivers = response['MRData']['StandingsTable']['StandingsLists'][0]['DriverStandings']
 
         return Standings([StandingsItem(self.drivers.get(driver['Driver']['driverId']),
@@ -130,7 +143,7 @@ class Data:
         """
         logging.debug("Fetching Last Grand Prix's data")
 
-        response = requests.get(constants.LAST_GP_RESULTS_URL).json()
+        response = requests.get(constants.LAST_GP_RESULTS_URL.format(self.season)).json()
         gp = response['MRData']['RaceTable']['Races'][0]
         gp = GrandPrix(int(gp['round']),
                        gp['raceName'],
@@ -171,7 +184,7 @@ class Data:
             if status is SessionStatus.FINISHED:
                 logging.debug('Fetching Qualifying Results')
 
-                response = requests.get(constants.QUALIFYING_RESULTS_URL).json()
+                response = requests.get(constants.QUALIFYING_RESULTS_URL.format(self.season)).json()
 
                 if int(response['MRData']['total']) > 0:  # Qualifying results available
                     results = response['MRData']['RaceTable']['Races'][0]['QualifyingResults']
@@ -191,7 +204,7 @@ class Data:
             if status is SessionStatus.FINISHED:
                 logging.debug('Fetching Sprint Results')
 
-                response = requests.get(constants.SPRINT_URL).json()
+                response = requests.get(constants.SPRINT_URL.format(self.season)).json()
 
                 if int(response['MRData']['total']) > 0:  # Sprint results available
                     results = response['MRData']['RaceTable']['Races'][0]['SprintResults']
@@ -206,7 +219,7 @@ class Data:
         """
         logging.debug('Fetching Grand Prix Schedule')
 
-        response = requests.get(constants.SCHEDULE_URL).json()
+        response = requests.get(constants.SCHEDULE_URL.format(self.season)).json()
         schedule = response['MRData']['RaceTable']['Races']
 
         return [
