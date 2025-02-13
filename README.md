@@ -159,19 +159,19 @@ are written to the `f1-led-leaderboard.log` file.
 - [ ] World Drivers' Championship Winner
 - [ ] World Constructors' Championship Winner
 - [ ] Customization options
-  - [ ] Preferred Constructor Summary
+  - [ ] Favorite Constructor Summary
 
 ## Sources
 This project relies on the following:
-- [Ergast API] to retrieve Formula 1 data.
+- [Jolpica API] to retrieve Formula 1 data.
 - [rpi-rgb-led-matrix] library to make everything work with the LED matrix. It is included into this repository as a 
   submodule.
 
 ## Limitations
-Unfortunately [Ergast API] does not provide live data, though it is updated within a few hours after results are up.
+Unfortunately [Jolpica API] does not provide live data, though it is updated within a few hours after results are up.
 
 ## Disclaimer
-This application is dependent on the [Ergast API] relaying accurate and updated data.
+This application is dependent on the [Jolpica API] relaying accurate and updated data.
 
 ## License
 GNU General Public License v3.0
@@ -180,5 +180,5 @@ GNU General Public License v3.0
 [64×32]: <https://www.adafruit.com/product/2279>
 [HAT]: <https://www.adafruit.com/product/2345>
 [Bonnet]: <https://www.adafruit.com/product/3211>
-[Ergast API]: <http://ergast.com/mrd/>
+[Jolpica API]: <https://github.com/jolpica/jolpica-f1>
 [rpi-rgb-led-matrix]: <https://github.com/hzeller/rpi-rgb-led-matrix>
