@@ -1,0 +1,42 @@
+name: F1-LED-Leaderboard CI
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+  pull_request:
+    branches:
+      - master
+      - dev
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        architecture: [arm64]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: ${{ matrix.architecture }}
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git python3-pip
+          python3 -m pip install -r requirements.txt -r requirements_dev.txt
+          # rgbmatrix library
+          chmod +x install.sh
+          ./install.sh --ci
+
+      - name: Run tests
+        run: python3 -m pytest -m "not slow"

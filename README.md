@@ -1,6 +1,5 @@
 # F1 LED Leaderboard
 
-![Travis (.org)](https://img.shields.io/travis/feram18/f1-led-leaderboard?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/feram18/f1-led-leaderboard?style=for-the-badge)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/feram18/f1-led-leaderboard?style=for-the-badge)
 ![GitHub Release Date](https://img.shields.io/github/release-date/feram18/f1-led-leaderboard?style=for-the-badge)
