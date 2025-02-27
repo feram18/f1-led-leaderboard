@@ -74,6 +74,7 @@ class Data:
         if len(list(response['MRData']['StandingsTable']['StandingsLists'])) < 1:
             # current year season not yet started, roll back to query last season's stats
             self.season = str(datetime.datetime.today().year - 1)
+            logging.debug(f'{datetime.datetime.today().year} season data not yet available. Fetching {self.season} results.' )
 
     def fetch_constructors(self):
         """
