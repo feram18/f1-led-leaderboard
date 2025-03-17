@@ -134,8 +134,8 @@ class Data:
         drivers = response['MRData']['StandingsTable']['StandingsLists'][0]['DriverStandings']
 
         return Standings([StandingsItem(self.drivers.get(driver['Driver']['driverId']),
-                                        int(driver['position']),
-                                        float(driver['points'])) for driver in drivers])
+                                        i,
+                                        float(driver['points'])) for i, driver in enumerate(drivers, 1)])
 
     def fetch_last_gp(self) -> GPResult:
         """
