@@ -10,12 +10,12 @@ function clean() {
 function updateRepository() {
   printf "Updating repository...\n"
   git reset --hard
-  git fetch --tags
-  tag="$(git describe --abbrev=0)"
+  git fetch --tags --force
+  tag="$(git tag --sort=-v:refname | head -n 1)"
   git checkout tags/"$tag"
 }
 
-function installDependencies(){
+function installDependencies() {
   printf "\nInstalling dependencies...\n"
   sudo pip3 install -r requirements.txt
 }
