@@ -18,7 +18,7 @@ COLORS = {   # [Background, Text]
     "RB": [(30, 52, 198), Color.WHITE],
     "RED_BULL": [(22, 25, 94), Color.WHITE],
     "SAUBER": [(105, 288, 68), Color.BLACK],
-    "WILLIAMS": [(3, 168, 235), Color.BLACK]
+    "WILLIAMS": [(3, 168, 235), Color.BLACK],
     "AUDI": [(255, 45, 0), Color.WHITE],
     "CADILLAC": [(170, 170, 173), Color.BLACK],
 }
